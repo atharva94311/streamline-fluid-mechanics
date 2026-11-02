@@ -1,0 +1,305 @@
+@import 'tailwindcss';
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Space Grotesk Variable', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+}
+
+:root {
+  --bg: #f5f6fb;
+  --surface: #ffffff;
+  --surface-2: #f1f3f9;
+  --line: #e2e6ef;
+  --ink: #0f172a;
+  --ink-2: #334155;
+  --ink-3: #64748b;
+  --plot-1: #4f46e5;
+  --plot-2: #0891b2;
+  --plot-3: #d97706;
+  --plot-4: #e11d48;
+  --plot-5: #059669;
+  --plot-6: #7c3aed;
+  --plot-7: #475569;
+  --plot-8: #db2777;
+  --grid: #e5e8f0;
+  --axis: #64748b;
+  --band: rgba(99, 102, 241, 0.08);
+  --field-bg: #fbfcff;
+  --streamline: #2563eb;
+  --equipotential: #d97706;
+  --quiver: #475569;
+  --body-fill: #cbd5e1;
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #0a0f1e;
+  --surface: #111a2e;
+  --surface-2: #17223a;
+  --line: #24314d;
+  --ink: #e7ecf6;
+  --ink-2: #b9c3d9;
+  --ink-3: #8592ad;
+  --plot-1: #818cf8;
+  --plot-2: #22d3ee;
+  --plot-3: #fbbf24;
+  --plot-4: #fb7185;
+  --plot-5: #34d399;
+  --plot-6: #a78bfa;
+  --plot-7: #94a3b8;
+  --plot-8: #f472b6;
+  --grid: #223050;
+  --axis: #8592ad;
+  --band: rgba(129, 140, 248, 0.1);
+  --field-bg: #0d1528;
+  --streamline: #60a5fa;
+  --equipotential: #fbbf24;
+  --quiver: #94a3b8;
+  --body-fill: #334155;
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- markdown ---------- */
+.md {
+  line-height: 1.7;
+  color: var(--ink);
+}
+.md > * + * {
+  margin-top: 0.75em;
+}
+.md-tight > * + * {
+  margin-top: 0.45em;
+}
+.md strong {
+  font-weight: 650;
+  color: var(--ink);
+}
+.md em {
+  font-style: italic;
+}
+.md ul {
+  list-style: disc;
+  padding-left: 1.35em;
+}
+.md ol {
+  list-style: decimal;
+  padding-left: 1.45em;
+}
+.md li + li {
+  margin-top: 0.3em;
+}
+.md li > ul,
+.md li > ol {
+  margin-top: 0.3em;
+}
+.md a {
+  color: #4f46e5;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.dark .md a {
+  color: #a5b4fc;
+}
+.md h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin-top: 1.1em;
+}
+.md h4 {
+  font-weight: 650;
+  margin-top: 0.9em;
+}
+.md blockquote {
+  border-left: 3px solid var(--line);
+  padding-left: 0.9em;
+  color: var(--ink-2);
+}
+.md code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--surface-2);
+  padding: 0.1em 0.35em;
+  border-radius: 0.3em;
+}
+.md hr {
+  border-color: var(--line);
+}
+.md-table {
+  overflow-x: auto;
+}
+.md table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92em;
+}
+.md th,
+.md td {
+  border: 1px solid var(--line);
+  padding: 0.4em 0.65em;
+  text-align: left;
+  vertical-align: top;
+}
+.md th {
+  background: var(--surface-2);
+  font-weight: 650;
+}
+.md .katex-display {
+  margin: 0.6em 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.2em 0;
+}
+.md-inline .katex-display {
+  display: inline-block;
+  margin: 0;
+}
+
+/* ---------- math ---------- */
+.math-block {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25rem 0;
+}
+.math-block .katex-display {
+  margin: 0;
+}
+.formula-eq .katex {
+  font-size: 1.22em;
+}
+.katex {
+  font-size: 1.07em;
+}
+.vars-table .katex {
+  font-size: 1em;
+}
+.axis-label .katex {
+  font-size: 1.05em;
+}
+
+/* ---------- buttons & inputs ---------- */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: 0.75rem;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: white;
+  transition: background-color 0.15s, transform 0.1s;
+}
+.btn-primary:active {
+  transform: translateY(1px);
+}
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  padding: 0.45rem 0.8rem;
+  font-size: 0.85rem;
+  font-weight: 550;
+  color: var(--ink-2);
+  transition: border-color 0.15s, color 0.15s, background-color 0.15s;
+}
+.btn-ghost:hover {
+  border-color: var(--ink-3);
+  color: var(--ink);
+}
+
+input[type='range'].range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #14b8a6, #6366f1);
+  outline: none;
+}
+input[type='range'].range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid #0d9488;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  cursor: grab;
+}
+input[type='range'].range::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid #0d9488;
+  cursor: grab;
+}
+
+/* ---------- misc ---------- */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+.hero-grid {
+  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.18) 1px, transparent 0);
+  background-size: 22px 22px;
+}
+@keyframes flow-dash {
+  to {
+    stroke-dashoffset: -40;
+  }
+}
+.flow-dash {
+  stroke-dasharray: 6 8;
+  animation: flow-dash 1.6s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .flow-dash {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ---------- print (formula sheet) ---------- */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: white;
+  }
+  .print-full {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+  }
+  .formula-card {
+    break-inside: avoid;
+  }
+}
