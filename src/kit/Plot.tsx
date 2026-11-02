@@ -294,7 +294,7 @@ export function Plot({
               )
             })}
             {overlay?.({ sx, sy, width: iw, height: ih })}
-            {marks?.map((mk, i) => (
+            {marks?.filter((mk) => Number.isFinite(sx(mk.x)) && Number.isFinite(sy(mk.y))).map((mk, i) => (
               <g key={`m${i}`}>
                 <circle cx={sx(mk.x)} cy={sy(mk.y)} r={5} fill={mk.color ?? 'var(--plot-4)'} stroke="var(--surface)" strokeWidth={2} />
                 {mk.label ? (
