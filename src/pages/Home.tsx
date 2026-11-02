@@ -33,7 +33,7 @@ export function Home() {
           ))}
         </svg>
         <div className="relative grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
-          <div>
+          <div className="min-w-0">
             <div className="text-xs font-bold uppercase tracking-[0.2em] text-white/80">CH21207 · Fluid Mechanics · Exam preparation</div>
             <h1 className="mt-3 font-display text-3xl font-bold leading-tight sm:text-5xl">Understand the flow, not just the formulas.</h1>
             <p className="mt-4 max-w-2xl text-base text-white/90 sm:text-lg">
@@ -51,7 +51,7 @@ export function Home() {
               </a>
             </div>
           </div>
-          <div className="flex items-center gap-5 rounded-2xl bg-white/10 p-5 ring-1 ring-white/25 backdrop-blur">
+          <div className="flex flex-wrap items-center gap-5 rounded-2xl bg-white/10 p-5 ring-1 ring-white/25 backdrop-blur">
             <ProgressRing value={all.pct} size={110} stroke={10} color="white" track="rgba(255,255,255,0.25)" />
             <div className="space-y-1 text-sm">
               <div className="font-display text-3xl font-bold">{Math.round(all.pct * 100)}%</div>
