@@ -3,6 +3,7 @@ import { UNITS } from '@/content/units'
 import { useProgress } from '@/lib/store'
 import { topicProgress } from '@/lib/progressCalc'
 import { UNIT_THEME } from '@/lib/theme'
+import { PDFS_AVAILABLE } from '@/lib/sources'
 import type { TopicModule } from '@/lib/types'
 import { TopicContext } from '@/kit/context'
 import { Md, M } from '@/kit/Md'
@@ -40,7 +41,7 @@ export function TopicBody({ m }: { m: TopicModule }) {
             <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1"><Sigma className="h-3.5 w-3.5" /> {m.formulas.length} formulas</span>
           </div>
           <div className="mt-5 rounded-2xl bg-white/95 p-3 text-ink shadow-sm dark:bg-surface/95">
-            <div className="mb-1.5 text-[11px] font-bold uppercase tracking-wider text-ink-3">Sources for this topic — click to open the PDF page</div>
+            <div className="mb-1.5 text-[11px] font-bold uppercase tracking-wider text-ink-3">{PDFS_AVAILABLE ? 'Sources for this topic — click to open the PDF page' : 'Sources for this topic — slide / page in your course PDFs'}</div>
             <SourceChips src={m.meta.sources} />
           </div>
           <div className="mt-4 flex items-center gap-3">
