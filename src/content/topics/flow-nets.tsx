@@ -123,7 +123,7 @@ export const formulas: FormulaDef[] = [
       md`course sign convention ($+\nabla\phi$): $\phi$ **increases** in the flow direction. Fox & McDonald use $\vb V = -\nabla\phi$ (Table 6.1, p. 224), so their $\phi$ is the negative of ours`,
     ],
     use: md`For an irrotational flow the velocity can be written as the gradient of one scalar function, which replaces three velocity components. Any smooth $\phi$ automatically gives an irrotational field, because mixed partial derivatives are equal ($\pd{v}{x} = \frac{\partial^2\phi}{\partial x\,\partial y} = \pd{u}{y}$).`,
-    src: S4,
+    src: [S4, { doc: 'fox', pages: '222', note: 'Eq. (6.27), Fox sign: V = −∇φ' }],
   },
   {
     id: 'vel-phi-plane',
@@ -271,7 +271,7 @@ export const formulas: FormulaDef[] = [
       'plane potential flow (both ψ and φ exist)',
       md`$u$ and $v$ not both zero: at a **stagnation point** both slopes are $0/0$ and the lines may meet at other angles`,
     ],
-    use: md`Slopes with product $-1$ belong to perpendicular lines, so equipotentials cut streamlines at right angles wherever they intersect. Fox notes that this property is what makes graphical flow-net analysis possible.`,
+    use: md`Slopes with product $-1$ belong to perpendicular lines, so equipotentials cut streamlines at right angles wherever they intersect. Fox notes that this property is useful in graphical analyses of flow fields — the flow nets of concept 3.`,
     src: [S5, { doc: 'fox', pages: '224' }],
   },
   {
@@ -630,7 +630,7 @@ Stagnation point: $2x + 2 = 0$ and $-2y = 0$, i.e. $(-1, 0)$ m. There both slope
     difficulty: 1,
     q: md`At a point in a plane potential flow the streamline makes $35^\circ$ with the $x$ axis. What is the slope of the equipotential through that point, and what angle does it make with the $x$ axis?`,
     hint: md`Perpendicular lines have slopes that are negative reciprocals: $m_\phi = -1/m_\psi$.`,
-    answer: md`$m_\psi = \tan 35^\circ = 0.700$; $m_\phi = -1/0.700 = -1.428$; the equipotential is at $125^\circ$ (equivalently $-55^\circ$) to the $x$ axis.`,
+    answer: md`$m_\psi = \tan 35^\circ = 0.7002$; $m_\phi = -1/0.7002 = -1.428$; the equipotential is at $125^\circ$ (equivalently $-55^\circ$) to the $x$ axis.`,
     solution: md`$m_\psi = \tan 35^\circ = 0.7002 = v/u$. From Eqs. (6.34)–(6.35), $m_\phi = -u/v = -1/m_\psi = -1.428$. Its inclination is $\tan^{-1}(-1.428) = -55^\circ$, i.e. $35^\circ + 90^\circ = 125^\circ$ measured the other way round. The velocity points along the streamline (at $35^\circ$ or $215^\circ$, depending on the sign of $u$) and therefore always straight across the equipotential.`,
     check: [{ label: 'equipotential slope', value: -1.428 }],
   },
@@ -670,7 +670,7 @@ Bernoulli (Fox Eq. 6.26, $z$ constant): $p_1 - p_2 = \tfrac12\rho\left(V_2^2 - V
     difficulty: 3,
     q: md`For the corner flow $\psi = 2xy$ (m²/s; $x, y$ in m), the streamlines $\psi = 1.9$ and $\psi = 2.1$ pass on either side of the point $(1, 1)$ m. (a) Find the distance $\Delta n$ between them along the normal through $(1, 1)$. (b) Estimate the speed there from the flow net, $V \approx \Delta\psi/\Delta n$, and compare with the exact speed.`,
     hint: md`At $(1, 1)$, $\nabla\psi = (2y, 2x) = (2, 2)$, so the normal is along $(1, 1)/\sqrt2$: points $(1 + t, 1 + t)$ have $\psi = 2(1 + t)^2$.`,
-    answer: md`$\Delta n = 0.0707$ m; $V \approx 0.2/0.0707 = 2.828$ m/s versus the exact $2\sqrt2 = 2.828$ m/s (about $0.03\%$ low).`,
+    answer: md`$\Delta n = 0.07073$ m; $V \approx 0.2/0.07073 = 2.8275$ m/s versus the exact $2\sqrt2 = 2.8284$ m/s (about $0.03\%$ low).`,
     solution: md`(a) Along the normal, $\psi = 2(1 + t)^2$. For $\psi = 2.1$: $(1 + t)^2 = 1.05$, $t = 0.024695$. For $\psi = 1.9$: $(1 + t)^2 = 0.95$, $t = -0.025321$. Each unit of $t$ is a distance $\sqrt2$, so $\Delta n = \sqrt2\,(0.024695 + 0.025321) = 0.07073$ m.
 
 (b) $V \approx \Delta\psi/\Delta n = 0.2/0.07073 = 2.8275$ m/s. Exact: $u = 2x = 2$, $v = -2y = -2$ m/s, $\vert\vb V\vert = 2\sqrt2 = 2.8284$ m/s. The difference is $-0.03\%$: in a fine net the spacing rule is very accurate (the residual error comes from the slight change of speed across the gap).`,
@@ -795,7 +795,7 @@ export const quiz: QuizQ[] = [
     id: 'q-crowding',
     concept: 'flow-net',
     difficulty: 1,
-    src: S7,
+    src: [S7, F222],
     q: md`In a flow net, where the streamlines are closer together the speed is…`,
     options: [
       'higher, and (by Bernoulli) the pressure is lower',
@@ -822,7 +822,7 @@ export const quiz: QuizQ[] = [
     difficulty: 2,
     q: md`A flow net is drawn with equal increments $\Delta\phi = \Delta\psi$. Its cells are then approximately…`,
     options: [
-      'squares (Δs ≈ Δn) everywhere, large where the flow is slow',
+      'squares (Δs ≈ Δn) everywhere away from stagnation points, large where the flow is slow',
       'rectangles with Δs = 2Δn',
       'all the same size everywhere',
       'squares only where the flow is uniform',
@@ -924,7 +924,7 @@ export default function Content() {
     <>
       {/* ============================================================== Concept 1 */}
       <Concept id="phi-psi-velocities">
-        <Step kind="intro" src={{ doc: 'lec12', pages: '2–4' }}>
+        <Step kind="intro" src={[{ doc: 'lec12', pages: '2–4' }, { doc: 'fox', pages: '222, 224', note: 'Eq. (6.27), Table 6.1 — sign convention' }]}>
           <Md>{md`Unit A ended with two scalar functions for a plane flow — the stream function $\psi$ and the velocity potential $\phi$. **Lecture 12 opens Unit B by putting them to work.**
 
           **Slide 2** restates the governing equation. If a flow is **incompressible and irrotational**, the velocity potential satisfies $\nabla^2\phi = 0$, where $\nabla^2$ is the **Laplacian operator**; written out in Cartesian coordinates this is **Laplace's equation**. Flow fields that are **inviscid, incompressible and irrotational** are governed by Laplace's equation, and the lecture calls them **potential flows** — the subject of this whole unit.
@@ -935,13 +935,15 @@ export default function Content() {
           <Callout kind="note" title="Sign convention used in this course">
             <Md>{md`Lecture 12 uses $\vb V = +\nabla\phi$, so $\phi$ **increases** in the flow direction. Fox & McDonald (Table 6.1, p. 224) use $\vb V = -\nabla\phi$, so their $\phi$ **decreases** downstream. Fox's $\phi$ is simply the negative of ours: every line, slope and flow net in this topic is the same in both books. Always state which convention you use in an exam answer.`}</Md>
           </Callout>
-          <Md>{md`**Why it matters.** These few relations are the toolkit for the rest of Unit B. Each elementary flow (uniform flow, source, sink, vortex) is specified by its $\phi$ or $\psi$; the velocity follows by differentiation, and the pressure then follows from Bernoulli. The fact that $\phi$ and $\psi$ give the **same** velocity is also what makes the flow net of this topic work.`}</Md>
+          <Supplement title="Why it matters">
+            <Md>{md`These few relations are the toolkit for the rest of Unit B. Each elementary flow (uniform flow, source, sink, vortex) is specified by its $\phi$ or $\psi$; the velocity follows by differentiation, and the pressure then follows from Bernoulli. The fact that $\phi$ and $\psi$ give the **same** velocity is also what makes the flow net of this topic work.`}</Md>
+          </Supplement>
         </Step>
 
         <Step kind="intuition">
           <Md>{md`**φ as a landscape.** Picture $\phi(x, y)$ as the height of a smooth hill. With $\vb V = \nabla\phi$, the fluid at each point moves in the direction in which the hill climbs most steeply, at a speed equal to the steepness. Contour lines of the hill are the **equipotentials**; the velocity always cuts straight across them. Where the contours are crowded the slope is steep and the flow is fast.
 
-          **ψ as a ledger.** The contour lines of $\psi$ are the **streamlines**, and the drop in $\psi$ between two of them is the flow squeezed between them. The velocity runs **along** these contours, and again crowded contours mean fast flow.
+          **ψ as a ledger.** The contour lines of $\psi$ are the **streamlines**, and the difference in $\psi$ between two of them is the flow squeezed between them. The velocity runs **along** these contours, and again crowded contours mean fast flow.
 
           **One arrow, two bookkeepers.** Both functions describe the same arrow $\vb V$. In fact $\nabla\psi = (-v, u)$ is exactly $\nabla\phi = (u, v)$ turned through $90^\circ$ — same length, perpendicular direction. Remember that sentence: it is the whole of the next two concepts in disguise.`}</Md>
           <Compare
@@ -1058,7 +1060,7 @@ export default function Content() {
 
           Because $(v/u)(-u/v) = -1$, **equipotential lines are orthogonal to the streamlines at all points where they intersect**. The slide's small sketch makes the point with two slope triangles: $\frac{a}{b}\times\left(-\frac{b}{a}\right) = -1$.
 
-          Fox & McDonald (p. 224) obtain the same two slopes, **Eqs. (6.34) and (6.35)**, by setting $d\psi = 0$ along a line of constant $\psi$ and $d\phi = 0$ along a line of constant $\phi$, and remark that this orthogonality is what makes **graphical analysis with flow nets** useful. The same page summarises, in **Table 6.1**, what each function satisfies automatically and when it satisfies Laplace's equation.`}</Md>
+          Fox & McDonald (p. 224) obtain the same two slopes, **Eqs. (6.34) and (6.35)**, by setting $d\psi = 0$ along a line of constant $\psi$ and $d\phi = 0$ along a line of constant $\phi$, and remark that this orthogonality is useful in **graphical analyses of flow fields** — the flow nets of the next concept. The same page summarises, in **Table 6.1**, what each function satisfies automatically and when it satisfies Laplace's equation.`}</Md>
         </Step>
 
         <Step kind="intuition">
@@ -1066,7 +1068,7 @@ export default function Content() {
 
           **Everyday versions.** On a map, water running downhill crosses the contour lines at right angles. In a heated plate, heat flows along lines that cut the isotherms at right angles (Fox uses exactly this analogy for $\phi$). Streamlines and equipotentials are the "flow lines" and "contour lines" of the same picture.
 
-          **Where it breaks.** The argument needs a direction for $\vb V$. At a **stagnation point** the velocity is zero, there is no direction, and both slope formulas become $0/0$ — the lines through such a point can meet at any angle.`}</Md>
+          **Where it breaks.** The argument needs a direction for $\vb V$. At a **stagnation point** the velocity is zero, there is no direction, and both slope formulas become $0/0$ — the lines through such a point need not meet at right angles (in corner flow they meet at $45^\circ$).`}</Md>
           <Callout kind="warning" title="Common mistake">
             <Md>{md`"$\psi$ always satisfies Laplace's equation." No: **continuity** is what $\psi$ satisfies automatically. $\nabla^2\psi = 0$ needs **irrotational** flow (in general $\nabla^2\psi = -2\omega_z$). A rotational flow has streamlines but no equipotentials, and no flow net.`}</Md>
           </Callout>
@@ -1156,7 +1158,9 @@ export default function Content() {
           <Md>{md`**Slide 6** gives $\psi$ its physical meaning. Take two neighbouring streamlines, $\psi$ and $\psi + d\psi$, and let $dq$ be the volume flow (per unit depth) passing between them. Join them by any small curve $AC$, and complete the triangle with a horizontal step $AB$ ($dx$) and a vertical step $BC$ ($dy$). Mass conservation for $ABC$: what crosses $AC$ leaves through $BC$ ($u\,dy$) and $AB$ ($-v\,dx$), so $dq = u\,dy - v\,dx$. With $u = \pd{\psi}{y}$ and $v = -\pd{\psi}{x}$ this is exactly the total differential: **$dq = d\psi$** — the change in the value of the stream function measures the volume rate of flow. Between two streamlines, $q = \psi_2 - \psi_1$, flowing **to the right** if the upper streamline has the larger value and **to the left** if it has the smaller.
 
           **Slide 7** puts both families together. A **flow net** is the family of streamlines plus the family of equipotential lines — an orthogonal grid (concept 2). Its key reading rule, in red on the slide: **velocity is inversely proportional to the streamline spacing.** The slide's example is the flow net of a **90° bend**: in the straight inlet the streamlines divide the channel into equal passages of width $d$ with speed $V$; in the bend the passages widen near the outer wall ($d_1 > d$, so $V_1 < V$) and narrow near the inner wall ($d_2 < d$, so $V_2 > V$).`}</Md>
-          <Md>{md`**Why it matters.** A flow net is a picture you can measure: speeds from line spacing, flow rates from $\psi$ values, and — with Bernoulli — pressures, without solving any equation by hand. Before computers, sketching nets was a standard way to solve potential-flow problems; it is still the fastest way to **read** and sanity-check a computed flow field (the same idea is used for seepage under dams, which also obeys Laplace's equation).`}</Md>
+          <Supplement title="Why it matters">
+            <Md>{md`A flow net is a picture you can measure: speeds from line spacing, flow rates from $\psi$ values, and — with Bernoulli — pressures, without solving any equation by hand. Before computers, sketching nets was a standard way to solve potential-flow problems; it is still the fastest way to **read** and sanity-check a computed flow field (the same idea is used for seepage under dams, which also obeys Laplace's equation).`}</Md>
+          </Supplement>
         </Step>
 
         <Step kind="intuition">
