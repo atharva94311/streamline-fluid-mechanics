@@ -194,7 +194,7 @@ At 90 km/h = 25 m/s this would be $V_m\approx8.3$ m/s.
 **3. Use of the plateau (c).** Above $V_m=4$ m/s the force ratio $F_D/\rho V^2L^2$ is constant — the drag is independent of $\Rey$, as for the bus of Example 7.5. The prototype Reynolds number is larger than the model's at 4 m/s:
 
 $$
-\frac{\Rey_p}{\Rey_m}=\frac{V_pL_p/\nu_p}{V_mL_m/\nu_m}=\frac{25\times5}{4}\times\frac{1.00\times10^{-6}}{1.51\times10^{-5}}=2.08
+\frac{\Rey_p}{\Rey_m}=\frac{V_pL_p/\nu_p}{V_mL_m/\nu_m}=\frac{25\times5}{4}\times\frac{1.00\times10^{-6}}{1.51\times10^{-5}}=2.07
 $$
 
 so the prototype also lies on the plateau and the 4 m/s data can be scaled even though $\Rey$ is not matched (incomplete similarity).
@@ -248,7 +248,7 @@ $$
 
 (b) At dynamically similar conditions the model drag is 628 N. Evaluate the drag on the full-scale torpedo.`,
         hint: md`Lowest pressure ↔ lowest density ↔ highest allowed speed (115 m/s). Match $\rho VL/\mu$; air viscosity is fixed by the temperature, so solve for $\rho_m$ and use $p=\rho RT$.`,
-        answer: md`(a) $\rho_m\approx35.8$ kg/m³, $p_m\approx3.06$ MPa (abs). (b) $F_p\approx66.5$ kN. (Assumed: water at 20°C, $\rho=998$ kg/m³, $\nu=1.00\times10^{-6}$ m²/s; air at 25°C, $\mu=1.84\times10^{-5}$ N·s/m², $R=287$ J/kg·K.)`,
+        answer: md`(a) $\rho_m\approx35.8$ kg/m³, $p_m\approx3.07$ MPa (abs). (b) $F_p\approx66.4$ kN. (Assumed: water at 20°C, $\rho=998$ kg/m³, $\nu=1.00\times10^{-6}$ m²/s; air at 25°C, $\mu=1.84\times10^{-5}$ N·s/m², $R=287$ J/kg·K.)`,
         solution: md`**Assumed properties:** sea/fresh water at 20°C, $\rho_p=998$ kg/m³, $\mu_p=1.00\times10^{-3}$ N·s/m² ($\nu_p=1.00\times10^{-6}$ m²/s); air at 25°C, $\mu_m=1.84\times10^{-5}$ N·s/m² (independent of pressure), $R=287$ J/(kg·K).
 
 **1. Similarity requirement.** Deeply submerged torpedo (no waves, no cavitation) and an incompressible tunnel flow: $F/\rho V^2L^2=f(\rho VL/\mu)$, so $\Rey_m=\Rey_p$. Base $\Rey$ on length; $L_m=7.1/7=1.014$ m.
@@ -264,7 +264,7 @@ $$
 $$
 
 $$
-p_m=\rho_mRT=35.8\times287\times298.15=3.06\times10^{6}\ \text{Pa}\approx3.06\ \text{MPa (abs)}
+p_m=\rho_mRT=35.8\times287\times298.15=3.07\times10^{6}\ \text{Pa}\approx3.07\ \text{MPa (abs)}
 $$
 
 about 30 atmospheres.
@@ -272,13 +272,13 @@ about 30 atmospheres.
 **3. Prototype drag.**
 
 $$
-F_p=F_m\,\frac{\rho_p}{\rho_m}\left(\frac{V_p}{V_m}\right)^2\left(\frac{L_p}{L_m}\right)^2=628\times\frac{998}{35.8}\times\left(\frac{32}{115}\right)^2\times49=6.65\times10^{4}\ \text{N}
+F_p=F_m\,\frac{\rho_p}{\rho_m}\left(\frac{V_p}{V_m}\right)^2\left(\frac{L_p}{L_m}\right)^2=628\times\frac{998}{35.8}\times\left(\frac{32}{115}\right)^2\times49=6.64\times10^{4}\ \text{N}
 $$
 
-**Check.** With $\Rey$ matched, $F\propto\mu^2/\rho$, so $F_p/F_m=(\mu_p^2/\rho_p)/(\mu_m^2/\rho_m)=(1.00\times10^{-9})/(9.46\times10^{-12})=106$, and $106\times628\ \text{N}=66.5$ kN. ✓`,
+**Check.** With $\Rey$ matched, $F\propto\mu^2/\rho$, so $F_p/F_m=(\mu_p^2/\rho_p)/(\mu_m^2/\rho_m)=(1.00\times10^{-9})/(9.46\times10^{-12})=106$, and $106\times628\ \text{N}=66.6$ kN ✓ (agreement to 0.3%; the difference is rounding of the water properties).`,
         check: [
-          { label: 'minimum tunnel pressure', value: 3.06, units: 'MPa', tol: 0.03 },
-          { label: 'prototype drag', value: 66.5, units: 'kN', tol: 0.03 },
+          { label: 'minimum tunnel pressure', value: 3.07, units: 'MPa', tol: 0.03 },
+          { label: 'prototype drag', value: 66.4, units: 'kN', tol: 0.03 },
         ],
       },
       {
@@ -288,7 +288,7 @@ $$
         src: P272('7.46'),
         q: md`A smooth sphere of diameter $D$ moves at speed $V$ through a fluid. A 3-m diameter weather balloon moves through air at 1.5 m/s. To find its drag, a 50-mm diameter sphere is tested in water; under dynamically similar conditions the model drag is 3.8 N. Find the model test speed and the expected drag on the full-scale balloon.`,
         hint: md`Same procedure as Example 7.4, but in reverse (prototype in air, model in water). Match $VD/\nu$, then equate $F/\rho V^2D^2$.`,
-        answer: md`$V_m\approx6.2$ m/s; $F_p\approx0.99$ N (assumed standard air $\rho=1.23$ kg/m³, $\nu=1.46\times10^{-5}$ m²/s; water at 20°C $\rho=998$ kg/m³, $\nu=1.00\times10^{-6}$ m²/s).`,
+        answer: md`$V_m\approx6.16$ m/s; $F_p\approx1.0$ N (assumed standard air $\rho=1.23$ kg/m³, $\nu=1.46\times10^{-5}$ m²/s; water at 20°C $\rho=998$ kg/m³, $\nu=1.00\times10^{-6}$ m²/s).`,
         solution: md`**Assumed properties:** standard air $\rho_p=1.23$ kg/m³, $\mu_p=1.79\times10^{-5}$ N·s/m² ($\nu_p=1.46\times10^{-5}$ m²/s); water at 20°C $\rho_m=998$ kg/m³, $\nu_m=1.00\times10^{-6}$ m²/s.
 
 **1. Groups.** Smooth sphere, incompressible flow (Fox p.258): $F/\rho V^2D^2=f(\rho VD/\mu)$. Geometric similarity is automatic for smooth spheres; $D_p/D_m=3/0.05=60$.
@@ -296,7 +296,7 @@ $$
 **2. Model speed.**
 
 $$
-V_m=V_p\,\frac{D_p}{D_m}\,\frac{\nu_m}{\nu_p}=1.5\times60\times\frac{1.00\times10^{-6}}{1.46\times10^{-5}}=6.20\ \text{m/s}
+V_m=V_p\,\frac{D_p}{D_m}\,\frac{\nu_m}{\nu_p}=1.5\times60\times\frac{1.00\times10^{-6}}{1.46\times10^{-5}}=6.16\ \text{m/s}
 $$
 
 (Here $\Rey=1.5\times3/1.46\times10^{-5}=3.1\times10^{5}$ in both tests.)
@@ -304,13 +304,13 @@ $$
 **3. Prototype drag.**
 
 $$
-F_p=F_m\,\frac{\rho_p}{\rho_m}\left(\frac{V_p}{V_m}\right)^2\left(\frac{D_p}{D_m}\right)^2=3.8\times\frac{1.23}{998}\times\left(\frac{1.5}{6.20}\right)^2\times3600=0.99\ \text{N}
+F_p=F_m\,\frac{\rho_p}{\rho_m}\left(\frac{V_p}{V_m}\right)^2\left(\frac{D_p}{D_m}\right)^2=3.8\times\frac{1.23}{998}\times\left(\frac{1.5}{6.16}\right)^2\times3600=1.00\ \text{N}
 $$
 
 **Comment.** The prototype drag is about **one quarter** of the model drag: with $\Rey$ matched, $F\propto\mu^2/\rho$, and $\mu^2/\rho$ is about 3.8 times larger for water than for air. A $\Rey$ of $3\times10^5$ lies close to the drag crisis of a smooth sphere, so in practice the test should be repeated at slightly different speeds to check sensitivity.`,
         check: [
-          { label: 'model speed', value: 6.2, units: 'm/s', tol: 0.03 },
-          { label: 'prototype drag', value: 0.99, units: 'N', tol: 0.04 },
+          { label: 'model speed', value: 6.16, units: 'm/s', tol: 0.03 },
+          { label: 'prototype drag', value: 1.0, units: 'N', tol: 0.04 },
         ],
       },
       {
@@ -324,7 +324,7 @@ $$
 
 (b) What is the ratio of the forces measured on the model to those on the prototype wing?`,
         hint: md`Match $\Rey$ on the chord, then $F_m/F_p=(\rho_m/\rho_p)(V_m/V_p)^2(L_m/L_p)^2$.`,
-        answer: md`(a) $V_m\approx13.8$ m/s; (b) $F_m/F_p\approx3.85$ (assumed standard air $\rho=1.23$ kg/m³, $\nu=1.46\times10^{-5}$ m²/s; water 20°C $\rho=998$ kg/m³, $\nu=1.00\times10^{-6}$ m²/s).`,
+        answer: md`(a) $V_m\approx13.7$ m/s; (b) $F_m/F_p\approx3.8$ (assumed standard air $\rho=1.23$ kg/m³, $\nu=1.46\times10^{-5}$ m²/s; water 20°C $\rho=998$ kg/m³, $\nu=1.00\times10^{-6}$ m²/s).`,
         solution: md`**Assumed properties:** standard air $\rho_p=1.23$ kg/m³, $\mu_p=1.79\times10^{-5}$ N·s/m² ($\nu_p=1.46\times10^{-5}$ m²/s); water at 20°C $\rho_m=998$ kg/m³, $\mu_m=1.00\times10^{-3}$ N·s/m² ($\nu_m=1.00\times10^{-6}$ m²/s).
 
 **1. Criterion.** Lift and drag coefficients $F/\rho V^2L^2$ depend on $\Rey=\rho Vc/\mu$ (and on geometry, angle of attack, aspect ratio — all identical in a geometrically similar model at the same attitude). Chord: $c_p=2$ m, $c_m=0.1$ m.
@@ -332,7 +332,7 @@ $$
 **2. Water speed (a).**
 
 $$
-V_m=V_p\,\frac{c_p}{c_m}\,\frac{\nu_m}{\nu_p}=10\times20\times\frac{1.00\times10^{-6}}{1.46\times10^{-5}}=13.8\ \text{m/s}
+V_m=V_p\,\frac{c_p}{c_m}\,\frac{\nu_m}{\nu_p}=10\times20\times\frac{1.00\times10^{-6}}{1.46\times10^{-5}}=13.7\ \text{m/s}
 $$
 
 ($\Rey=10\times2/1.46\times10^{-5}=1.37\times10^{6}$ in both.)
@@ -340,13 +340,13 @@ $$
 **3. Force ratio (b).**
 
 $$
-\frac{F_m}{F_p}=\frac{\rho_m}{\rho_p}\left(\frac{V_m}{V_p}\right)^2\left(\frac{c_m}{c_p}\right)^2=\frac{998}{1.23}\times(1.377)^2\times\frac{1}{400}=3.85
+\frac{F_m}{F_p}=\frac{\rho_m}{\rho_p}\left(\frac{V_m}{V_p}\right)^2\left(\frac{c_m}{c_p}\right)^2=\frac{998}{1.23}\times(1.370)^2\times\frac{1}{400}=3.81
 $$
 
-Equivalently $F_m/F_p=(\mu_m^2/\rho_m)/(\mu_p^2/\rho_p)=1.00\times10^{-9}/2.60\times10^{-10}=3.85$. The tiny water model carries almost four times the load of the full-size wing — a structural consideration for the model and its balance.`,
+Equivalently $F_m/F_p=(\mu_m^2/\rho_m)/(\mu_p^2/\rho_p)\approx1.00\times10^{-9}/2.60\times10^{-10}\approx3.8$ (the last digit differs only through rounding of the tabulated properties). The tiny water model carries almost four times the load of the full-size wing — a structural consideration for the model and its balance.`,
         check: [
-          { label: 'water speed', value: 13.8, units: 'm/s', tol: 0.03 },
-          { label: 'F_m / F_p', value: 3.85, tol: 0.03 },
+          { label: 'water speed', value: 13.7, units: 'm/s', tol: 0.03 },
+          { label: 'F_m / F_p', value: 3.81, tol: 0.03 },
         ],
       },
       {
@@ -497,13 +497,13 @@ $$
 With $(V_m/V_p)^2=1/20$:
 
 $$
-p_m-p_{v,m}=(101.3-1.0)\times\frac{986}{1000}\times\frac{1}{20}=4.95\ \text{kPa}
+p_m-p_{v,m}=(101.3-1.0)\times\frac{986}{1000}\times\frac{1}{20}=4.94\ \text{kPa}
 $$
 
 **3. Ambient test pressure.**
 
 $$
-p_m=15.0+4.95=19.9\ \text{kPa (abs)}
+p_m=15.0+4.94=19.9\ \text{kPa (abs)}
 $$
 
 The basin must be evacuated to about one-fifth of an atmosphere. Heating the water helps: the higher vapor pressure at 54°C lets the required absolute pressure stay well above zero ($Ca_p\approx0.22$ in both flows). Reynolds number is **not** matched — this is a deliberately incomplete similarity in which gravity (waves) and cavitation are modeled and viscous effects are corrected separately.`,
@@ -611,7 +611,7 @@ $$
 Prototype: $V_p=88/3.6=24.4$ m/s, $W_p=8\times0.305=2.44$ m:
 
 $$
-\Rey_p=\frac{V_pW_p}{\nu}=\frac{24.4\times2.44}{1.46\times10^{-5}}=4.10\times10^{6}
+\Rey_p=\frac{V_pW_p}{\nu}=\frac{24.4\times2.44}{1.46\times10^{-5}}=4.08\times10^{6}
 $$
 
 The pressurized tunnel (density ≈ 2.6× atmospheric) lets the model match the prototype $\Rey$ at 88 km/h almost exactly — and both exceed the SAE recommendation $\Rey\ge2\times10^6$ quoted in Example 7.5.
