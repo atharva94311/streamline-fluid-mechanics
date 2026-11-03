@@ -167,7 +167,10 @@ export function DrainingTankSim() {
 
   const items: ReadoutItem[] = [
     { label: md`$v_\theta$ at $r_p$`, value: vth, unit: 'm/s' },
-    { label: md`$z_s$ at $r_p$`, value: 1000 * zp, unit: 'mm', tone: 'accent' },
+    // below the tank floor the formula no longer describes a real surface (the funnel has reached the floor/drain)
+    -zp > TANK.H
+      ? { label: md`$z_s$ at $r_p$ (deeper than the tank — model invalid here)`, value: 1000 * zp, unit: 'mm', tone: 'bad' }
+      : { label: md`$z_s$ at $r_p$`, value: 1000 * zp, unit: 'mm', tone: 'accent' },
     { label: md`$z_s$ at $r_p$ if $\Gamma$ doubled`, value: 1000 * surfaceZ(rp, 2 * G, g, R), unit: 'mm' },
     { label: 'radius where the dip is 10 mm', value: r10 == null ? '—' : 100 * r10, unit: r10 == null ? undefined : 'cm' },
     rc != null

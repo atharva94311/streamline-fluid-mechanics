@@ -1163,7 +1163,7 @@ export const quiz: QuizQ[] = [
     id: 'q-c-3',
     concept: 'circulation',
     difficulty: 2,
-    src: lec12('15'),
+    src: lec12('14–15', 'path ABCD drawn on slide 15; zero by the slide-14 result'),
     q: 'In the free vortex, a closed path like ABCD on slide 15 does not enclose the origin. Its circulation is:',
     options: ['zero', md`$2\pi K$`, md`$K\,d\theta$`, md`$-K\,d\theta$`],
     answer: 0,
@@ -1252,9 +1252,14 @@ export const flashcards: Flashcard[] = [
   },
   {
     id: 'fc-ff-1',
-    front: 'Forced vortex: velocity, rotation, potential?',
-    back: md`$v_\theta = K_1r$ — rigid-body rotation at $K_1$; $\omega_z = K_1$, $\zeta_z = 2K_1$; rotational, so **no** $\phi$; $\psi = -\tfrac12K_1r^2$.`,
-    src: lec12('12–13'),
+    front: 'Forced vortex: velocity distribution and character?',
+    back: md`$v_\theta = K_1r$ ($v_\theta \sim r$) — the **rotational (forced) vortex**. Being rotational, it has **no** velocity potential (a potential exists only for irrotational flow).`,
+    src: [lec12('12–13'), lec12('4')],
+  },
+  {
+    id: 'fc-ff-4',
+    front: 'Forced vortex: rotation, vorticity, stream function?',
+    back: md`Rigid-body rotation at angular velocity $K_1$: $\omega_z = \frac{1}{2r}\frac{d(K_1r^2)}{dr} = K_1$ at every point, $\zeta_z = 2K_1$; being plane and incompressible it still has $\psi = -\tfrac12K_1r^2$.`,
   },
   {
     id: 'fc-ff-2',
@@ -1276,7 +1281,7 @@ export const flashcards: Flashcard[] = [
     id: 'fc-c-2',
     front: 'Circulation of a free vortex?',
     back: md`$\Gamma = \int_0^{2\pi}(K/r)\,r\,d\theta = 2\pi K$ round any loop enclosing the centre once (independent of $r$); $0$ round loops that miss it. So $\phi = \Gamma\theta/2\pi$, $\psi = -(\Gamma/2\pi)\ln r$.`,
-    src: lec12('15'),
+    src: lec12('14–15'),
   },
   {
     id: 'fc-c-3',
