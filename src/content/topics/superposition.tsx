@@ -13,6 +13,7 @@ import { HalfBodyDesigner } from '../sims/superposition/HalfBodyDesigner'
 import { AxisCpPlot, PressureArrows, SurfaceCpPlot, SurfaceExplorer } from '../sims/superposition/SurfacePressure'
 
 const S2: Src = { doc: 'lec12', pages: '2' }
+const S5: Src = { doc: 'lec12', pages: '5' }
 const S8: Src = { doc: 'lec12', pages: '8' }
 const S10: Src = { doc: 'lec12', pages: '10' }
 const S16: Src = { doc: 'lec12', pages: '16' }
@@ -939,10 +940,10 @@ export default function Content() {
     <>
       {/* ============================================================ concept 1 */}
       <Concept id="superposition-method">
-        <Step kind="intro" src={[S2, S16]}>
+        <Step kind="intro" src={[S2, S5, S16]}>
           <Md>{md`Lecture 12 builds a toolbox of **elementary plane potential flows** — uniform flow, source and sink, free vortex. Each is
           *inviscid, incompressible and irrotational*, the class of flows governed by **Laplace's equation** $\nabla^2\phi = 0$ (slide 2);
-          in plane flow the stream function obeys it too.
+          in plane irrotational flow the stream function obeys it too (slide 5).
 
           The **method of superposition** (slide 16) builds new and far more interesting flows by **adding** the $\phi$'s and $\psi$'s of
           elementary flows. The slide's example — and the subject of this whole topic — is a **uniform stream $U$** along $+x$ combined with

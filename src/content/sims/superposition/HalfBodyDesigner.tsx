@@ -36,7 +36,6 @@ export function HalfBodyDesigner() {
       vel: velUS(U, m),
       inside: insideHalfBody(b),
       levels,
-      highlight: [{ level: m / 2, color: 'var(--plot-4)', width: 2.6, label: 'dividing streamline ψ = m/2 = πbU' }],
       markers,
       outline: bodyOutline(b, X[1] + 2, BOX, 0.02),
     }
@@ -48,7 +47,13 @@ export function HalfBodyDesigner() {
     const yDim = -Math.min(0.35 * b, 0.6)
     return (
       <g pointerEvents="none">
+        {/* dividing streamline ψ = m/2 = πbU drawn exactly (upstream axis + body outline); a FlowField highlight contour
+            would also trace the +x axis inside the body when m < 1.2U (θ's 2π jump is then below the branch-cut filter) */}
         <path d={toPath(f.outline, sx, sy, true)} fill={solid ? 'var(--body-fill)' : 'var(--plot-3)'} fillOpacity={solid ? 1 : 0.1} stroke="var(--plot-4)" strokeWidth={2.4} />
+        <line x1={sx(X[0])} y1={sy(0)} x2={sx(-b)} y2={sy(0)} stroke="var(--plot-4)" strokeWidth={2.4} strokeLinecap="round" />
+        <Label x={sx(X[0]) + 6} y={sy(0) - 8} size={11} className="fill-rose-700 dark:fill-rose-300">
+          ψ = m/2 = πbU
+        </Label>
         {pb < Y[1] - 0.05
           ? [pb, -pb].map((yy) => (
               <g key={yy}>
@@ -115,7 +120,6 @@ export function HalfBodyDesigner() {
         equipotentials={phiOn}
         vel={f.vel}
         psiLevels={f.levels}
-        highlight={f.highlight}
         body={solid ? f.inside : undefined}
         markers={f.markers}
         particles={110}
@@ -123,6 +127,7 @@ export function HalfBodyDesigner() {
         Uref={U}
         overlay={overlay}
       />
+      <p className="mt-1 text-center text-[11px] text-ink-3">Axes x, y in m, source at the origin; streamlines drawn every Δψ = 0.3U (0.3 m apart far upstream).</p>
     </SimPanel>
   )
 }

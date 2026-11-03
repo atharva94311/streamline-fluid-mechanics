@@ -1,12 +1,13 @@
 import { useMemo, useState, type PointerEvent as RPointerEvent } from 'react'
 import { FlowField, M, md, Segmented, SimPanel, Slider, Toggle, num, type FlowMarker } from '@/kit'
-import { bOf, phiUS, psiUS, theta02, TWO_PI, velUS, type Pt } from './halfbody'
+import { bodyOutline, bOf, phiUS, psiUS, theta02, toPath, TWO_PI, velUS, type Box, type Pt } from './halfbody'
 import { ArrowLine, Label } from './svg'
 import { Tiles } from './Tiles'
 
 type Mode = 'uniform' | 'source' | 'sum'
 const X: [number, number] = [-3, 5]
 const Y: [number, number] = [-2.5, 2.5]
+const BOX: Box = [X[0], X[1], Y[0], Y[1]]
 /** Arrow length (m) = speed (m/s) × TAU (s). */
 const TAU = 0.3
 const MAX_LEN = 2.2
@@ -32,7 +33,7 @@ export function VectorAdditionSim() {
     let phi: (x: number, y: number) => number
     let vel: (x: number, y: number) => Pt
     let levels: number[] = []
-    let highlight: { level: number; color?: string; width?: number; label?: string }[] | undefined
+    let outline: Pt[] = []
     if (mode === 'uniform') {
       psi = (_x, y) => U * y
       phi = (x) => U * x
@@ -55,12 +56,15 @@ export function VectorAdditionSim() {
       vel = velUS(U, m)
       const K = Math.min(50, Math.ceil(Math.max(m / 2, 2.6 * U) / dU) + 1)
       for (let j = -K; j <= K; j++) if (j !== 0) levels.push(m / 2 + j * dU)
-      highlight = [{ level: m / 2, color: 'var(--plot-4)', width: 2.4, label: 'dividing streamline ψ = m/2' }]
+      // The dividing streamline ψ = m/2 is drawn exactly in the overlay (upstream axis + body outline) rather than as a
+      // contour: when m < 4Δψ the 2π jump of θ on the +x axis is too small for FlowField's branch-cut filter, and a
+      // ψ = m/2 contour would wrongly appear along the +x axis inside the body.
+      outline = bodyOutline(b, X[1] + 2, BOX, 0.02)
     }
     const markers: FlowMarker[] = []
     if (mode !== 'uniform') markers.push({ x: 0, y: 0, kind: 'source' })
     if (mode === 'sum') markers.push({ x: -b, y: 0, kind: 'stagnation', label: 'S' })
-    return { psi, phi, vel, levels, highlight, markers }
+    return { psi, phi, vel, levels, outline, markers }
   }, [mode, U, m, k, b])
 
   // contributions at P
@@ -133,6 +137,15 @@ export function VectorAdditionSim() {
           }}
         />
         <g pointerEvents="none">
+          {mode === 'sum' ? (
+            <g>
+              <line x1={x0p} y1={sy(0)} x2={sx(-b)} y2={sy(0)} stroke="var(--plot-4)" strokeWidth={2.4} strokeLinecap="round" />
+              <path d={toPath(field.outline, sx, sy)} fill="none" stroke="var(--plot-4)" strokeWidth={2.4} strokeLinejoin="round" />
+              <Label x={x0p + 6} y={sy(0) - 8} size={11} className="fill-rose-700 dark:fill-rose-300">
+                dividing streamline ψ = m/2
+              </Label>
+            </g>
+          ) : null}
           {mode === 'source' ? <line x1={sx(0)} y1={sy(0)} x2={x1p} y2={sy(0)} stroke="var(--streamline)" strokeWidth={1.35} /> : null}
           {mode === 'sum' && okR ? (
             <g>
@@ -235,13 +248,12 @@ export function VectorAdditionSim() {
         equipotentials={phiOn}
         vel={field.vel}
         psiLevels={field.levels}
-        highlight={field.highlight}
         markers={field.markers}
         particles={70}
         Uref={U}
         overlay={overlay}
       />
-      <p className="mt-1 text-center text-[11px] text-ink-3">Tap or click anywhere in the field to move the probe P.</p>
+      <p className="mt-1 text-center text-[11px] text-ink-3">Axes x, y in m (source at the origin). Tap or click anywhere in the field to move the probe P.</p>
     </SimPanel>
   )
 }
