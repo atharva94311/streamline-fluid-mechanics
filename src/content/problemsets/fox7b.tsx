@@ -724,7 +724,7 @@ export const sets: ProblemSet[] = [
         q: md`Tank-bottom deflection (Problem 7.23): $\delta = f(D, h, d, \gamma, E)$. In $\dimM\dimL\dimT$, $\gamma$ and $E$ contain all three dimensions. How many repeating parameters are needed?`,
         options: ['2', '3', '4', '6'],
         answer: 0,
-        explain: md`In the dimensional matrix the $\dimT$ row is $-2$ times the $\dimM$ row ($\dimM$ and $\dimT$ only ever appear as $\dimM\dimT^{-2}$, i.e. as a force), so the rank is 2, not 3. The number of repeating parameters equals the rank, giving $6 - 2 = 4$ groups. Counting the three letters that appear (3) is the tempting mistake.`,
+        explain: md`In the dimensional matrix the $\dimT$ row is $-2$ times the $\dimM$ row ($\dimM$ and $\dimT$ only ever appear together as $\dimM\dimT^{-2}$, i.e. only through the force dimension $\dimF = \dimM\dimL\dimT^{-2}$), so the rank is 2, not 3. The number of repeating parameters equals the rank, giving $6 - 2 = 4$ groups. Counting the three letters that appear (3) is the tempting mistake.`,
       },
       {
         id: 'fox7b-q2',
