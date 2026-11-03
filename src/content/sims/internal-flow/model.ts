@@ -45,9 +45,11 @@ export const SOUND_SPEED_AIR = 343 // m/s at 20 °C (supplementary)
  * Developing velocity profile in the entrance region (schematic boundary-layer + core model).
  * ξ = x / L_e (station relative to the entrance length), ρ = r/R in [0, 1].
  * Boundary-layer thickness δ/R grows like ξ^0.5 (laminar) or ξ^0.8 (turbulent) and reaches the centreline at
- * ξ = XI_MEET. Inside the core u = u_c; inside the layer u/u_c = 1 − s² (laminar) or s^(1/7) (turbulent),
- * with s the distance from the wall over δ. u_c follows from mass conservation, so the profile always carries the
- * same flow rate Q = V̄ A.
+ * ξ = XI_MEET. Inside the core u = u_c; inside the layer u/u_c = 1 − (1 − s)^m (laminar) or s^(1/7) (turbulent),
+ * with s the distance from the wall over δ. For laminar flow m = 2.5 (a slightly fuller layer) until the layers meet,
+ * then m relaxes linearly to 2 (the parabola) at ξ = 1 — so, as Fox p. 277 says, the profile shape still changes
+ * slightly after the inviscid core has disappeared and only becomes fully developed at x = L.
+ * u_c follows from mass conservation, so the profile always carries the same flow rate Q = V̄ A.
  */
 export const XI_MEET = { laminar: 0.78, turbulent: 0.7 }
 
@@ -58,27 +60,35 @@ export function deltaOverR(xi: number, turbulent: boolean): number {
   return Math.min(1, (xi / m) ** p)
 }
 
+/** Exponent of the laminar layer shape 1 − (1 − s)^m: 2.5 before the layers meet, → 2 (parabola) at ξ = 1. */
+function laminarShapeExp(xi: number): number {
+  const w = (1 - xi) / (1 - XI_MEET.laminar)
+  return 2 + 0.5 * Math.min(1, Math.max(0, w))
+}
+
 /** ∫0^1 2ρ (u/u_c) dρ for core radius a = 1 − δ/R (closed form). */
-function shapeIntegral(d: number, turbulent: boolean): number {
+function shapeIntegral(d: number, turbulent: boolean, m = 2): number {
   const a = 1 - d
   if (turbulent) return a * a + 2 * d * (7 / 8 - (7 * d) / 15)
-  return a * a + 2 * d * ((2 * a) / 3 + d / 4)
+  // layer: ∫0^1 2(1 − d s)[1 − (1 − s)^m] d ds = 2d[m/(m+1) − d(1/2 − 1/((m+1)(m+2)))]
+  return a * a + 2 * d * (m / (m + 1) - d * (0.5 - 1 / ((m + 1) * (m + 2))))
 }
 
 /** Centreline velocity over average velocity, u_c / V̄. */
 export function centreRatio(xi: number, turbulent: boolean): number {
-  return 1 / shapeIntegral(deltaOverR(xi, turbulent), turbulent)
+  return 1 / shapeIntegral(deltaOverR(xi, turbulent), turbulent, laminarShapeExp(xi))
 }
 
 /** Local velocity u / V̄ at radius ρ = r/R and station ξ. */
 export function uOverVbar(rho: number, xi: number, turbulent: boolean): number {
   const d = deltaOverR(xi, turbulent)
-  const uc = 1 / shapeIntegral(d, turbulent)
+  const m = laminarShapeExp(xi)
+  const uc = 1 / shapeIntegral(d, turbulent, m)
   const yw = 1 - Math.abs(rho) // distance from wall / R
   if (yw <= 0) return 0
   if (d <= 0 || yw >= d) return uc
   const s = yw / d
-  return uc * (turbulent ? s ** (1 / 7) : 1 - (1 - s) * (1 - s))
+  return uc * (turbulent ? s ** (1 / 7) : 1 - (1 - s) ** m)
 }
 
 /* ---------------------------------------------------------------- stress split (schematic) */

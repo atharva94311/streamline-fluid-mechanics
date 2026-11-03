@@ -358,6 +358,8 @@ export const examples: ExampleDef[] = [
     id: 'ex-lab-chip',
     concept: 'laminar-turbulent',
     title: 'Reynolds number in a lab-on-a-chip mixer',
+    src: { doc: 'fox', pages: '275', note: 'Case Study data' },
+    solutionBy: 'platform',
     difficulty: 1,
     given: md`From the Fox case study (p. 275): average velocity less than 2 mm/s in ducts about 200 μm wide, flow rate about 25 nL/s. Treat the liquid as water, $\nu \approx 1.0\times10^{-6}$ m²/s, and use the duct width as the length scale.`,
     find: md`An order-of-magnitude $\Rey$, and whether a square $200\ \mu$m duct is consistent with the quoted speed.`,
@@ -725,6 +727,22 @@ export const quiz: QuizQ[] = [
     explain: 'L ≃ 0.06 Re D ≤ (0.06)(2300) D = 138 D, i.e. nearly 140 diameters. 25 D is the lower end of the turbulent range; 2300 D forgets the factor 0.06.',
   },
   {
+    id: 'q-el-meet',
+    concept: 'entrance-length',
+    difficulty: 3,
+    src: F277,
+    q: 'In laminar entrance flow, the boundary layers growing from the wall have just met on the centreline. Is the flow fully developed at that station?',
+    options: [
+      'Not quite — the profile shape still changes slightly after the inviscid core disappears',
+      'Yes — fully developed flow begins exactly where the boundary layers meet',
+      'No — the flow is fully developed only once the pressure stops falling',
+      'Yes, because the flow has become entirely viscous and the core velocity is now uniform',
+    ],
+    answer: 0,
+    explain:
+      'Fox notes that once the boundary layer reaches the centreline the flow is entirely viscous, but the velocity-profile shape still changes slightly afterwards; it is fully developed only when the shape no longer changes with x (in Fig. 8.1 the dashed edges meet before the end of the entrance length). The pressure keeps falling in fully developed flow, so "pressure stops falling" is never the criterion; and once the core is gone there is no uniform core velocity left.',
+  },
+  {
     id: 'q-ss-linear',
     concept: 'shear-stress-distribution',
     difficulty: 1,
@@ -822,6 +840,8 @@ export const flashcards: Flashcard[] = [
   { id: 'fc-core', front: 'Why does the core speed up in the entrance region?', back: 'No-slip slows the fluid in the growing boundary layers; with incompressible flow the same Q must pass, so the inviscid core accelerates and (Bernoulli) its pressure drops.', src: F277 },
   { id: 'fc-tau', front: md`Shear-stress distribution in fully developed pipe flow`, back: md`$\tau_{rx} = \tfrac{r}{2}\pd{p}{x}$ (Eq. 8.15): linear, zero on the axis, maximum at the wall — laminar **and** turbulent. $\tau_w = -\tfrac{R}{2}\pd{p}{x} = D\Delta p/(4L)$.`, src: F293 },
   { id: 'fc-total', front: md`Total stress in turbulent flow (Eq. 8.17)`, back: md`$\tau = \mu\,d\bar u/dy - \rho\overline{u'v'}$; the Reynolds stress is positive ($u'$, $v'$ negatively correlated) and dominates in the core.`, src: F293 },
+  { id: 'fc-factors', front: 'Three factors that tend to reduce the pressure in a pipe flow', back: 'A decrease in pipe area, an upward slope, and friction. To isolate friction, Part B analyses horizontal, constant-area pipes; friction losses are split into major (constant-area sections) and minor (valves, elbows…) losses.', src: F293 },
+  { id: 'fc-c1', front: md`Why is $c_1 = 0$ in Eq. 8.10, and what results?`, back: md`$c_1/r$ would make the stress infinite on the centreline, so $c_1 = 0$ and $\tau_{rx} = \tfrac{r}{2}\pd{p}{x}$ (Eq. 8.15) — linear in $r$ for laminar **and** turbulent fully developed flow.`, src: F293 },
   { id: 'fc-wall-layer', front: 'What is the wall layer?', back: md`The region very close to the wall where viscous shear dominates; the Reynolds stress falls to zero at the wall, so $\tau_w = \mu(d\bar u/dy)_{y=0}$. Between the wall layer and the core both stresses matter.`, src: F294 },
 ]
 

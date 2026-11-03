@@ -146,7 +146,8 @@ export function EntranceExplorer() {
       footer={
         <span>
           <b>Try this:</b> in the laminar range drag the probe from 0 to 1 and read u_c/V̄ climb from 1 toward 2 (the parabola) — the
-          core must speed up because the same Q passes while the wall layers slow down. Now raise Re to 2000 (L ≈ 120 D) and then past
+          core must speed up because the same Q passes while the wall layers slow down. Note that δ/R reaches 1 (layers meet) at about
+          x = 0.78 L, yet u_c/V̄ keeps creeping up until x = L: the shape still changes slightly after the core is gone. Now raise Re to 2000 (L ≈ 120 D) and then past
           2300: the required length collapses to 25–40 D because turbulent mixing thickens the boundary layer much faster. Open the chart
           to see both rules side by side. (Profile shapes are a schematic model; L comes from Fox.)
         </span>
