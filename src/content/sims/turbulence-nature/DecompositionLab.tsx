@@ -122,8 +122,8 @@ export function DecompositionLab() {
       footer={
         <span>
           <b>Try this:</b> with T = 20 ms, drag the window along the record — the window mean jumps by several per cent. Now stretch T to a few seconds:
-          the running average (lower plot) settles inside the shrinking ±σ funnel and the error falls below about 0.5 %. That is why Wilkes averages over a
-          few seconds for millisecond fluctuations. Finally switch on the drifting mean: no single T gives a unique answer any more.
+          the running average (lower plot) settles inside the shrinking ±σ funnel and the error drops to about 1 % (≈ 0.5 % over the full 8 s), shrinking
+          only like 1/√T. That is why Wilkes averages over a few seconds for millisecond fluctuations. Finally switch on the drifting mean: no single T gives a unique answer any more.
         </span>
       }
     >

@@ -133,7 +133,7 @@ export function CascadeExplorer() {
       footer={
         <span>
           <b>Try this:</b> on the water-pipe preset, double the eddy velocity. Re<sub>L</sub> doubles, but η shrinks only by 2<sup>3/4</sup> ≈ 1.7 and
-          the cascade gains just one more halving — every extra generation costs a factor 2<sup>4/3</sup> ≈ 2.5 in Re. Then try the atmosphere: about 17
+          the cascade gains just ¾ of a halving — each full extra generation costs a factor 2<sup>4/3</sup> ≈ 2.5 in Re. Then try the atmosphere: about 17
           generations separate 100-m gusts from sub-millimetre eddies.
         </span>
       }

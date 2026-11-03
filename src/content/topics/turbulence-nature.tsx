@@ -99,7 +99,7 @@ export const formulas: FormulaDef[] = [
     conditions: [
       'High Reynolds number (a well-developed cascade). Order-of-magnitude estimate: a constant of order one is dropped.',
       'Independent of viscosity: the large eddies set the rate; viscosity only decides *where* the energy is finally turned into heat.',
-      md`For a whole pipe an average can also be found from the pumping power: $\varepsilon_{\text{avg}} = (-\mathrm{d}p/\mathrm{d}z)\,\overline{v}/\rho = 2f_F\,\overline{v}^{3}/D$ ($f_F$ = Fanning friction factor).`,
+      md`For a whole pipe an average can also be found from the pumping power: $\varepsilon_{\text{avg}} = (-\mathrm{d}p/\mathrm{d}z)\,\overline{v}/\rho = 2f_F\,\overline{v}^{3}/D$ ($f_F$ = Fanning friction factor; in Fox's notation, with the Darcy factor $f = 4f_F$, this is $f\,\overline{V}^{3}/2D$).`,
     ],
     use: md`A large eddy holds kinetic energy $\sim \widetilde{v'}^{2}$ per unit mass and hands it on within about one turnover time $L/\widetilde{v'}$, so $\varepsilon \sim \widetilde{v'}^{2}/(L/\widetilde{v'}) = \widetilde{v'}^{3}/L$. Because the flux is the same at every stage of the cascade (Wilkes p. 481), this single number fixes the whole cascade, including the Kolmogorov scales. *Supplementary (G. I. Taylor's estimate).*`,
   },
@@ -243,7 +243,7 @@ export const formulas: FormulaDef[] = [
       { sym: md`\widetilde{v'}/\overline{v}`, desc: 'turbulence intensity — typically 1 % to 10 %', units: md`[-]` },
     ],
     conditions: [
-      'A typical range, not a law: values outside it occur (e.g. very quiet wind tunnels, or near walls where the mean velocity is small).',
+      'A typical range (“typically”, says Wilkes), not a law: values outside it occur — e.g. very quiet wind tunnels, or near walls where the mean velocity is small (supplementary examples).',
       md`Each component has its own RMS ($\widetilde{v_x'}$, $\widetilde{v_y'}$, $\widetilde{v_z'}$); they are usually unequal in shear flows (supplementary).`,
     ],
     use: md`Measures how violent the turbulence is relative to the mean motion. Note the order of operations: RMS first, then divide by the mean.`,
@@ -362,7 +362,7 @@ Pipe benchmark: laminar if $\Rey \lesssim 2000$.`,
     concept: 'energy-cascade',
     title: 'How small are the smallest eddies in a water pipe?',
     difficulty: 2,
-    given: md`Water ($\nu = 1.0\times10^{-6}$ m²/s) in a pipe of diameter $D = 5.0$ cm, mean velocity $\overline{v} = 2.0$ m/s, turbulence intensity 5 %. Take the largest eddies to be about the pipe diameter, $L \approx D$ (Wilkes p. 481), with velocity scale $\widetilde{v'}$. For the whole-pipe comparison, the Fanning friction factor at this Re is $f_F = 0.0790\,\Rey^{-1/4} \approx 0.0044$ (Blasius law, from the friction-factor topic).`,
+    given: md`Water ($\nu = 1.0\times10^{-6}$ m²/s) in a pipe of diameter $D = 5.0$ cm, mean velocity $\overline{v} = 2.0$ m/s, turbulence intensity 5 %. Take the largest eddies to be about the pipe diameter, $L \approx D$ (Wilkes p. 481), with velocity scale $\widetilde{v'}$. For the whole-pipe comparison, the Fanning friction factor at this Re is $f_F = 0.0790\,\Rey^{-1/4} \approx 0.0044$ (Blasius law, from the friction-factor topic; Fox's Darcy factor is $f = 4f_F \approx 0.0178$).`,
     find: md`(a) the pipe Re; (b) $\varepsilon$ from the large eddies; (c) the Kolmogorov length, time and velocity; (d) the number of halvings from $L$ to $\eta$; (e) $\varepsilon$ and $\eta$ from the pumping power instead.`,
     assumptions: 'Order-of-magnitude (Kolmogorov) estimates — supplementary to Wilkes’s qualitative description.',
     steps: [
@@ -929,7 +929,7 @@ export const quiz: QuizQ[] = [
     ],
     answer: 0,
     explain:
-      'Wilkes stresses that turbulence is inherently 3-D: at any point all three components fluctuate in time. His footnote that useful results can be obtained with only r and z of primary interest concerns the mean flow analysis — the fluctuations themselves remain three-dimensional, and cross-stream ones exist even where the mean is purely axial.',
+      'Wilkes stresses that turbulence is inherently 3-D: at any point all three components fluctuate in time. His footnote 4 only says that useful information can still be obtained when just two coordinates (r and z in pipe flow) are of primary interest — it does not say the fluctuations become two-dimensional. Cross-stream fluctuations exist even where the mean flow is purely axial.',
   },
   {
     id: 'q-intensity-range',
@@ -976,7 +976,7 @@ export const flashcards: Flashcard[] = [
   {
     id: 'fc-hinze',
     front: 'Hinze’s definition of turbulence (quoted by Wilkes)',
-    back: 'An irregular condition of flow in which the quantities vary randomly with time and space coordinates, so that statistically distinct average values can still be discerned.',
+    back: 'Irregular flow: velocity, pressure etc. change randomly in time and from point to point — yet well-defined (statistically distinct) averages still exist. Both halves matter: random detail, reproducible means.',
     src: { doc: 'wilkes', pages: '480' },
   },
   {
@@ -1065,7 +1065,7 @@ export const takeaways: string[] = [
   md`**Reynolds number = inertial vs viscous effects:** at low Re viscosity damps perturbations; at high Re the nonlinear inertial terms amplify them into eddies. Wall shear and wakes also promote turbulence.`,
   md`**Unsteady ≠ turbulent:** the Re = 100 Kármán vortex street is unstable but *regular*, hence laminar. The test is randomness.`,
   md`**Energy cascade (Fig. 9.1):** large eddies (≈ pipe diameter, fed by the pressure energy of the flow, formed near the wall) → medium → small → annihilated by viscosity. Energy per eddy falls, but the total passed down stays essentially constant (Richardson's “big whorls have little whorls”).`,
-  md`**Kolmogorov limit:** the cascade ends where velocity varies over very short distances and viscosity turns the energy into heat; supplementary estimates $\eta = (\nu^{3}/\varepsilon)^{1/4}$, $\tau_\eta = (\nu/\varepsilon)^{1/2}$ give tens of micrometres and about a millisecond in water pipes.`,
+  md`**Kolmogorov limit:** the cascade ends where velocity varies over very short distances and viscosity turns the energy into heat; supplementary estimates $\eta = (\nu^{3}/\varepsilon)^{1/4}$, $\tau_\eta = (\nu/\varepsilon)^{1/2}$ give tens of micrometres and about 1–7 ms in a typical water pipe.`,
   md`**Time average:** overbar = mean over $T \gg$ fluctuation time scale (millisecond fluctuations → $T$ of a few seconds). Turbulence is 3-D, so every component fluctuates.`,
   md`**Eqs. (9.1)–(9.3):** $v = \overline{v} + v'$ (also for $p$); $\overline{v'} = 0$; $\overline{\overline{v}} = \overline{v}$. Flows such as pipes and jets are *steady in the mean*.`,
   md`**Trap:** averages of products of fluctuations do **not** vanish — $\overline{v'^{2}} > 0$, $\overline{v_x'v_y'} \ne 0$, and $\overline{v^{2}} = \overline{v}^{2} + \widetilde{v'}^{2}$. This is where the Reynolds stresses (next topic) come from.`,
@@ -1300,7 +1300,7 @@ These are examples Wilkes gives, not a complete list. Both keep the Reynolds num
             - **By definition**, the time averages of the fluctuations are zero, since on the average they are equally likely to lie above or below the mean — Eq. (9.2). **Therefore** the time averages of the mean quantities are the mean quantities themselves — Eq. (9.3).
           `}</Md>
           <Callout kind="note" title="Cross-reference — Fox & McDonald's (secondary)">
-            <Md>{md`Fox §8.4 writes the same split for pipe flow as a time-mean velocity $\bar u$ plus random fluctuations $u'$ (axial) and $v'$ (wall-normal), with the overbar again meaning a time average. Dictionary: Wilkes $\overline{v}_x \leftrightarrow$ Fox $\bar u$, Wilkes $v_x' \leftrightarrow$ Fox $u'$. The name “Reynolds decomposition” is common usage; Wilkes does not use it on p. 483.`}</Md>
+            <Md>{md`Fox §8.4 writes the same split for pipe flow: at each point a time-mean velocity $\bar u$ plus randomly fluctuating components $u'$ and $v'$ in the $x$ and $y$ directions, with the overbar again meaning a time average. Dictionary: Wilkes $\overline{v}_x \leftrightarrow$ Fox $\bar u$, Wilkes $v_x' \leftrightarrow$ Fox $u'$. The name “Reynolds decomposition” is common usage; Wilkes does not use it on p. 483.`}</Md>
             <div className="mt-2">
               <SourceChips src={{ doc: 'fox', pages: '293', note: '§8.4' }} />
             </div>
