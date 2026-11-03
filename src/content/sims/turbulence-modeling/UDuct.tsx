@@ -248,8 +248,10 @@ export function UDuctExplorer() {
     const inlet = lam < split ? V2 : V1
     return i < 2 ? inlet : 0.6 * inlet + 0.4 * Vbar
   }
+  const gateIndex = (u: number) => (Number.isFinite(u) ? Math.max(0, Math.min(GATES.length - 2, Math.floor(u))) : 0)
   const pos = (t: Tracer): [number, number] => {
-    const i = Math.min(GATES.length - 2, Math.floor(t.u))
+    if (!Number.isFinite(t.u) || t.u < 0) t.u = 0
+    const i = gateIndex(t.u)
     const f = t.u - i
     const a = GATES[i].g(t.lam, split)
     const b = GATES[i + 1].g(t.lam, split)
@@ -261,14 +263,15 @@ export function UDuctExplorer() {
       const h = Math.min(dt, 0.04)
       const VIS = 0.045
       for (const t of tracers.current!) {
-        const i = Math.min(GATES.length - 2, Math.floor(t.u))
+        if (!Number.isFinite(t.u) || t.u < 0) t.u = 0
+        const i = gateIndex(t.u)
         const a = GATES[i].g(t.lam, split)
         const b = GATES[i + 1].g(t.lam, split)
         const seg = Math.max(0.02, Math.hypot(b[0] - a[0], b[1] - a[1]))
         const f = t.u - i
         const v = (1 - f) * speedAt(i, t.lam) + f * speedAt(i + 1, t.lam)
-        t.u += (Math.min(v, 60) * VIS * h) / seg
-        if (t.u >= GATES.length - 1) {
+        t.u += Number.isFinite(v) ? (Math.min(v, 60) * VIS * h) / seg : 0
+        if (!Number.isFinite(t.u) || t.u >= GATES.length - 1) {
           t.u = 0
           t.lam = 0.03 + 0.94 * rng.current()
         }
