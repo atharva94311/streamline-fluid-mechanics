@@ -20,7 +20,8 @@ function circleStream(c: number): [number, number][] {
   for (let i = 0; i <= 48; i++) {
     const x = -3 + (6 * i) / 48
     const f = (y: number) => y * (1 - 1 / (x * x + y * y)) - c
-    const y = num.bisect(f, Math.max(1e-6, c) + (Math.abs(x) < 1 ? Math.sqrt(1 - x * x) : 0) + 1e-6, c + 3)
+    // Bracket: just outside the body (f ≈ −c < 0 there) up to y = c + 3 (f > 0). For |x| ≥ 1 the lower end is y → 0⁺.
+    const y = num.bisect(f, (Math.abs(x) < 1 ? Math.sqrt(1 - x * x) : 0) + 1e-6, c + 3)
     pts.push([x, y])
   }
   return pts

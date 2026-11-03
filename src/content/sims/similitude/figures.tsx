@@ -199,8 +199,10 @@ export function SonarSketch() {
 /* ------------------------------------------------------------------------------------------------ distorted river model */
 
 export function DistortedRiverFigure() {
-  // three cross-sections: prototype (exaggerated), undistorted 1:1000, distorted 1:1000 H / 1:100 V
-  const row = (y: number, depthPx: number, label: string, sub: string, rough = false, warn = false) => {
+  // Three cross-sections drawn to TRUE width : depth proportions (300 px = full width):
+  // prototype 500 m × 10 m (50 : 1), undistorted 1:1000 model (same 50 : 1 shape, 10 mm deep),
+  // distorted model H 1:1000, V 1:100 (0.5 m × 0.1 m, 5 : 1 — ten times "deeper" in shape).
+  const row = (y: number, depthPx: number, label: string, sub: string, sub2: string, rough = false, warn = false) => {
     const w = 300
     const x0 = 160
     const d = `M${x0},${y} Q${x0 + w * 0.12},${y + depthPx} ${x0 + w * 0.5},${y + depthPx} Q${x0 + w * 0.88},${y + depthPx} ${x0 + w},${y}`
@@ -222,22 +224,19 @@ export function DistortedRiverFigure() {
         <Tx x={8} y={y + 22} size={11} cls={warn ? 'fill-rose-600 dark:fill-rose-400' : 'fill-ink-3'}>
           {sub}
         </Tx>
+        <Tx x={8} y={y + 36} size={11} cls={warn ? 'fill-rose-600 dark:fill-rose-400' : 'fill-ink-3'}>
+          {sub2}
+        </Tx>
       </g>
     )
   }
   return (
     <svg viewBox="0 0 470 250" className="h-auto w-full" role="img" aria-label="River cross-sections: prototype, undistorted model and distorted model">
-      {row(20, 50, 'Prototype', 'width 500 m, depth 10 m')}
-      {row(110, 5, 'Same scale 1:1000', 'depth 10 mm → viscosity &', false, true)}
-      <Tx x={8} y={147} size={11} cls="fill-rose-600 dark:fill-rose-400">
-        surface tension dominate
-      </Tx>
-      {row(180, 50, 'Distorted model', 'H 1:1000, V 1:100 → 0.5 m wide,')}
-      <Tx x={8} y={218} size={11} cls="fill-ink-3">
-        100 mm deep + roughness
-      </Tx>
+      {row(20, 6, 'Prototype', 'width 500 m, depth 10 m', '(wide and shallow, 50 : 1)')}
+      {row(84, 6, 'Same scale 1:1000', 'same shape, depth only 10 mm →', 'viscosity & surface tension dominate', false, true)}
+      {row(148, 60, 'Distorted model', 'H 1:1000, V 1:100 → 0.5 m wide,', '100 mm deep; roughness adds friction', true)}
       <Tx x={466} y={245} size={10} anchor="end" cls="fill-ink-3">
-        prototype drawn with vertical exaggeration; numbers illustrative
+        all three drawn to true width : depth proportions (widths not to common scale)
       </Tx>
     </svg>
   )

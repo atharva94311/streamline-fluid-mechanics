@@ -19,6 +19,7 @@ import { TunnelLab } from '../sims/similitude/TunnelLab'
 import { EX75_POINTS, NU_LADDER } from '../sims/similitude/data'
 
 const F245: Src = { doc: 'fox', pages: '245' }
+const F256: Src = { doc: 'fox', pages: '256' }
 const F257: Src = { doc: 'fox', pages: '257' }
 const F258: Src = { doc: 'fox', pages: '258' }
 const F259: Src = { doc: 'fox', pages: '259' }
@@ -31,6 +32,7 @@ const F265: Src = { doc: 'fox', pages: '265' }
 const F266: Src = { doc: 'fox', pages: '266' }
 const F267: Src = { doc: 'fox', pages: '267' }
 const F268: Src = { doc: 'fox', pages: '268' }
+const F269: Src = { doc: 'fox', pages: '269' }
 
 /* ------------------------------------------------------------------------------------------------ meta */
 
@@ -150,7 +152,7 @@ export const formulas: FormulaDef[] = [
     ],
     conditions: ['$M^2$ = inertia force / compressibility force', md`truly incompressible flow: $c = \infty$, $M = 0$`, md`flow is essentially incompressible for $M \lesssim 0.3$ (Fox p.245)`],
     use: md`Whenever a Reynolds-matched model is run in air at high speed, compute $M$: if compressibility appears in the model but not in the prototype, the flows are no longer kinematically similar.`,
-    src: [F257, F245],
+    src: [{ ...F256, note: 'Eq. (7.16)' }, F257, F245],
   },
   {
     id: 'fr-matching',
@@ -591,7 +593,7 @@ export const examples: ExampleDef[] = [
       { title: 'Apply the laws', md: md`$Q_2 = 68\times1.25^3 = 132.8$ m³/h; $\quad H_2 = 6.68\times1.25^2 = 10.44$ m; $\quad \mathcal{P}_2 = 1.24\times1.25^5 = 3.78$ kW.` },
       { title: 'Specific speed', md: md`$N_{s_{cu}} = \dfrac{1170\sqrt{132.8}}{10.44^{3/4}} = 2322$ — the same as before: $D$ cancels out of $N_s$ by construction.` },
     ],
-    answer: md`$Q_2 \approx 133$ m³/h, $H_2 \approx 10.4$ m, $\mathcal{P}_2 \approx 3.78$ kW, $N_{s_{cu}} \approx 2323$.`,
+    answer: md`$Q_2 \approx 133$ m³/h, $H_2 \approx 10.4$ m, $\mathcal{P}_2 \approx 3.78$ kW, $N_{s_{cu}} \approx 2322$ — the design value 2323 within rounding.`,
     insight: 'A 25 % larger impeller roughly doubles flow (×1.95) but triples power (×3.05).',
   },
   {
@@ -764,7 +766,7 @@ export const practice: PracticeDef[] = [
     answer: md`$N_s \approx 0.731$.`,
     solution: md`$\omega = 1170\times2\pi/60 = 122.5$ rad/s; $\quad Q = 68/3600 = 0.01889$ m³/s; $\quad h = 9.81\times6.68 = 65.53$ J/kg.
 
-    $$N_s = \frac{122.5\times(0.01889)^{1/2}}{(65.53)^{3/4}} = \frac{122.5\times0.1374}{23.02} = 0.731$$
+    $$N_s = \frac{122.5\times(0.01889)^{1/2}}{(65.53)^{3/4}} = \frac{122.5\times0.1374}{23.03} = 0.731$$
 
     Generally $N_s = N_{s_{cu}}\times\dfrac{2\pi/60}{\sqrt{3600}\,g^{3/4}} = 3.15\times10^{-4}N_{s_{cu}}$, and $2323\times3.15\times10^{-4} = 0.731$ ✓.`,
     check: [{ label: 'N_s', value: 0.731 }],
@@ -892,7 +894,7 @@ export const quiz: QuizQ[] = [
     id: 'q-trip',
     concept: 'incomplete-similarity',
     difficulty: 2,
-    q: 'Why are studs fitted near the bow of a towing-tank ship model?',
+    q: 'Why were “studs” fitted to the 1:80 ship model whose data appear in Fig. 7.2?',
     options: [
       'to trip the boundary layer so that it becomes turbulent where it does on the full-size ship',
       'to add the roughness correction to the measured total resistance',
@@ -1138,7 +1140,7 @@ export default function Content() {
           </Callout>
         </Step>
 
-        <Step kind="visual" src={[F260, F261, F262]}>
+        <Step kind="visual" src={[F260, F261, F262, F263]}>
           <Figure caption="Required model/prototype kinematic-viscosity ratio for matching Re as well as Fr, versus model scale. Real liquids stop about one decade below water." src={F260}>
             <Plot
               x={{ label: 'Model scale $L_m/L_p$', domain: [0.004, 1], log: true }}
@@ -1166,7 +1168,7 @@ export default function Content() {
           <Figure caption="Why rivers are modelled with two scales: an undistorted 1:1000 model would be millimetres deep." src={F262}>
             <DistortedRiverFigure />
           </Figure>
-          <Md>{md`**Automobiles.** Fuel economy made drag reduction important; most low-drag development uses model tests. Car models were traditionally built at **3/8 scale** — a full-size car model then has a frontal area of about **0.3 m²**, so a tunnel with a test section of **6 m² or more** suffices. Modelling the legal speed limit then needs about **240 km/h** of wind (Re matching in air: $240\times3/8 = 90$ km/h). Compressibility is not a problem, but scale models are expensive and slow to build. **General Motors'** full-scale tunnel (test section **5.4 m high × 10.4 m wide × 21.3 m long**, up to **250 km/h** empty) takes production cars or clay mock-ups, and the low speed allows flow visualisation with **tufts or smoke** — so stylists and engineers can work together. Many manufacturers have similar facilities; Fig. 7.4 shows a sedan in the Volvo tunnel.`}</Md>
+          <Md>{md`**Automobiles.** Fuel economy made drag reduction important; most low-drag development uses model tests. Car models were traditionally built at **3/8 scale** — a full-size car model then has a frontal area of about **0.3 m²**, so a tunnel with a test section of **6 m² or more** suffices. Modelling a car at the legal speed limit then needs about **240 km/h** of wind (our arithmetic: Re matching in air corresponds to a prototype at $240\times3/8 = 90$ km/h). Compressibility is not a problem, but scale models are expensive and slow to build. **General Motors'** full-scale tunnel (test section **5.4 m high × 10.4 m wide × 21.3 m long**, up to **250 km/h** empty) takes production cars or clay mock-ups, and the low speed allows flow visualisation with **tufts or smoke** — so stylists and engineers can work together. Many manufacturers have similar facilities; Fig. 7.4 shows a sedan in the Volvo tunnel.`}</Md>
           <Figure caption="Recreation of the idea of Fig. 7.4: a smoke streakline traces the flow over a full-size car in a wind tunnel." src={{ ...F262, note: 'Fig. 7.4 (photograph) — schematic recreation' }}>
             <SmokeStreak />
           </Figure>
@@ -1323,7 +1325,7 @@ export default function Content() {
 
       {/* ============================================================== 4. model-testing */}
       <Concept id="model-testing">
-        <Step kind="intro" src={[F267, F268]}>
+        <Step kind="intro" src={[F267, F268, F269]}>
           <Md>{md`Model testing is **not** simple, and it does not automatically deliver results that are easy to interpret, accurate and complete. As with all experimental work, valid results need careful **planning and execution**. Fox closes §7.5 with practical advice and a tour of the special facilities that exist for conditions a university or company laboratory cannot reach — above all, very large Reynolds numbers.
 
           The chapter summary (§7.6) recalls what the whole chapter did: nondimensionalising governing equations, the Buckingham Pi theorem, the named groups (Re, Eu, Ca, Fr, We, M) and their physical meaning, and the ideas of modelling — **geometric, kinematic and dynamic similarity, incomplete modelling, and predicting prototype results from model tests**. Its useful-equations table also lists the specific speed in both forms, (7.22a) and (7.22b).`}</Md>
@@ -1337,7 +1339,7 @@ export default function Content() {
         </Step>
 
         <Step kind="visual" src={[F267, F268]}>
-          <Figure caption="Where model-test errors come from in a wind tunnel (schematic). Numbers match the checklist below." src={{ ...F267, note: 'requirements listed in the text' }}>
+          <Figure caption="Where model-test errors come from in a wind tunnel (schematic). Items 3–6 are the requirements Fox lists on p.267; items 1–2 (screens, contraction) and the tunnel layout are general background added here." src={{ ...F267, note: 'items 3–6 listed in the text' }}>
             <TunnelSchematic />
           </Figure>
           <Md>{md`**Fox's checklist (p.267):**

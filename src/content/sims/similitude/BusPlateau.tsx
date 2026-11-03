@@ -66,7 +66,7 @@ export function BusPlateau() {
         />
         <Plot
           x={{ label: 'Prototype speed (km/h)', domain: [0, 130] }}
-          y={{ label: 'Drag power (kW)', domain: [0, 110] }}
+          y={{ label: 'Drag power (kW)', domain: [0, 120] }}
           series={[{ label: 'P = ½ C_D ρ A V³', fn: (k) => (0.5 * CD * RHO * AP * (k / 3.6) ** 3) / 1000, color: 'var(--plot-3)', width: 2.2 }]}
           marks={[
             { x: kmh, y: P / 1000, label: `${(P / 1000).toFixed(1)} kW`, color: 'var(--plot-3)' },
