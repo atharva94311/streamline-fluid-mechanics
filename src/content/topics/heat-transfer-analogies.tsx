@@ -25,7 +25,7 @@ export const meta: TopicMeta = {
   minutes: 75,
   sources: [
     { doc: 'wilkes', pages: '520–524', note: '§9.13, Example 9.6' },
-    { doc: 'wilkes', pages: '498–500', note: 'Eqs. (9.51), (9.56)–(9.62) used in §9.13' },
+    { doc: 'wilkes', pages: '490–491, 496, 498–500', note: 'Table 9.1, Eqs. (9.27), (9.51), (9.54)–(9.62) used in §9.13' },
     { doc: 'fox', pages: '294, 296', note: 'cross-reference only' },
   ],
   concepts: [
@@ -48,7 +48,7 @@ export const meta: TopicMeta = {
       summary: 'Nusselt numbers from both analogies against the Dittus–Boelter correlation at Re = 50 000 (Table E9.6), and why the Reynolds analogy works only near Pr = ν/α ≈ 1.',
     },
   ],
-  sourceNote: md`**Primary source: Wilkes, Ch. 9 (pp. 520–524 — §9.13 and Example 9.6; supporting equations from pp. 490 and 495–500). Fox & McDonald's is cited only as a secondary cross-reference.** There is no lecture deck on turbulence, so, as the course instruction for this unit asks, every explanation, equation and worked example here is built from Wilkes and uses Wilkes's notation ($\overline{v}_{zm}$, $\tau_w$, $\overline{v}_z^{*}$, Fanning $f_\mathrm{F}$ …); Fox-notation equivalents ($\bar V$, $u_*$, Darcy $f = 4f_\mathrm{F}$) appear only in clearly labelled cross-reference boxes.`,
+  sourceNote: md`**Primary source: Wilkes, Ch. 9 (pp. 520–524 — §9.13 and Example 9.6; supporting equations and definitions from pp. 490–491 and 496–500). Fox & McDonald's is cited only as a secondary cross-reference.** There is no lecture deck on turbulence, so, as the course instruction for this unit asks, every explanation, equation and worked example here is built from Wilkes and uses Wilkes's notation ($\overline{v}_{zm}$, $\tau_w$, $\overline{v}_z^{*}$, Fanning $f_\mathrm{F}$ …); Fox-notation equivalents ($\bar V$, $u_*$, Darcy $f = 4f_\mathrm{F}$) appear only in clearly labelled cross-reference boxes.`,
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -217,7 +217,7 @@ export const formulas: FormulaDef[] = [
     vars: [
       { sym: md`\mu`, desc: 'fluid viscosity', units: U.mu },
       { sym: md`\delta`, desc: 'thickness of the laminar sublayer', units: U.m },
-      { sym: md`\overline{v}_{z\delta}`, desc: 'mean velocity at the outer edge of the sublayer ($y = \delta$); the "− 0" is the wall velocity', units: U.vel },
+      { sym: md`\overline{v}_{z\delta}`, desc: md`mean velocity at the outer edge of the sublayer ($y = \delta$); the "− 0" is the wall velocity`, units: U.vel },
       { sym: 'm', desc: 'eddy mass flux between the sublayer edge and the mainstream', units: U.flux },
       { sym: md`\tau_w,\ \overline{v}_{zm}`, desc: 'wall shear stress and mean mainstream velocity', units: md`\mathrm{Pa},\ \mathrm{m\,s^{-1}}` },
     ],
@@ -297,7 +297,7 @@ export const formulas: FormulaDef[] = [
       { sym: 'y', desc: 'distance from the wall', units: U.m },
       { sym: 'a', desc: 'pipe radius, $a = D/2$', units: U.m },
     ],
-    conditions: ['smooth pipe; turbulent core (not inside the laminar sublayer)', md`consistent with the Blasius law, so roughly $\Rey < 10^5$`],
+    conditions: ['smooth pipe; turbulent core (not inside the laminar sublayer)', md`an empirical profile; like the Blasius law it is best used for moderate Reynolds numbers, roughly $\Rey < 10^5$ (supplementary)`],
     use: md`Evaluated at $y = \delta$ it gives $\overline{v}_{z\delta}/\overline{v}_{zc}$; dividing by the mean-to-centreline ratio $49/60$ leads to (9.103).`,
     src: wil('500', 'Eq. (9.61)'),
   },
@@ -311,7 +311,10 @@ export const formulas: FormulaDef[] = [
       { sym: 'D', desc: 'pipe diameter', units: U.m },
       { sym: md`\Rey`, desc: 'pipe Reynolds number (dimensionless)' },
     ],
-    conditions: ['linear sublayer profile joined to the one-seventh power law, with the Blasius friction factor', 'smooth pipe'],
+    conditions: [
+      md`smooth pipe; a linear sublayer joined to the one-seventh power law (9.61) instead of the logarithmic core (9.55)`,
+      md`Wilkes notes the result is only marginally different from the two-piece value (9.60), $\delta/D = 58.3/\Rey^{7/8}$`,
+    ],
     use: md`At $\Rey = 50\,000$: $\delta/D = 61.7/50\,000^{7/8} = 0.0048$ — an extremely thin layer, as Wilkes stresses on p. 500.`,
     src: wil('500', 'Eq. (9.62)'),
   },
@@ -545,7 +548,7 @@ The printed values differ from the recomputed ones by at most about 2 % (the aut
     steps: [
       {
         title: 'Wall shear stress from a force balance',
-        md: md`Pressure force on the cross-section balances wall friction (Wilkes's Eq. 9.27 evaluated at the wall, $r = a$): $\tau_w = \dfrac{D}{4}\left(-\dfrac{\dd p}{\dd z}\right) = \dfrac{0.050}{4}\times38 = 0.475$ Pa.`,
+        md: md`Pressure force on the cross-section balances wall friction (magnitude of Wilkes's Eq. 9.27, $\tau_{rz} = \tfrac{r}{2}\,\dd p/\dd z$, evaluated at the wall, $r = a = D/2$): $\tau_w = \dfrac{D}{4}\left(-\dfrac{\dd p}{\dd z}\right) = \dfrac{0.050}{4}\times38 = 0.475$ Pa.`,
       },
       {
         title: 'Eddy mass flux, from (9.95)',
@@ -712,7 +715,7 @@ $\nu$ and $\alpha$ are the rates at which momentum and heat diffuse by **molecul
       { title: 'Errors relative to DB', md: md`RA: $558.6/210.4 - 1 = +166$ %. PTA: $155.4/210.4 - 1 = -26$ %.` },
     ],
     answer: md`$h_\mathrm{DB} \approx 5.2$ kW/(m²·K). The RA over-predicts by about 166 % (≈ 13.9 kW/(m²·K)); the PTA under-predicts by about 26 % (≈ 3.9 kW/(m²·K)).`,
-    insight: 'For liquids (Pr well above 1) never use the Reynolds analogy; even the Prandtl–Taylor analogy needs the buffer-region refinement Wilkes mentions. Use the experimental correlation.',
+    insight: 'For liquids (Pr well above 1) never use the Reynolds analogy, and even the simple two-layer Prandtl–Taylor model is about 26 % low here. Use the experimental correlation (or a more refined model, e.g. with the buffer region Wilkes mentions as a further refinement).',
   },
 ]
 
@@ -824,7 +827,7 @@ export const practice: PracticeDef[] = [
 
 (b) $\Nu_\mathrm{DB} = 0.023\times5743.5\times100^{0.4} = 132.1\times6.310 = 834$.
 
-The PTA puts all the extra resistance of a high-$\Pran$ fluid into a sublayer of fixed thickness; once conduction across it dominates, Nu stops growing with $\Pran$. Real data keep rising, so the PTA should not be pushed to $\Pran \gg 1$ either — this is where Wilkes's suggested refinement (a buffer region between the sublayer and the core) is needed.`,
+The PTA puts all the extra resistance of a high-$\Pran$ fluid into a sublayer of fixed thickness; once conduction across it dominates, Nu stops growing with $\Pran$. Real data keep rising, so the PTA should not be pushed to $\Pran \gg 1$ either. A natural next step is one of the refinements Wilkes lists after (9.103) — a buffer region between the sublayer and the core — although the book itself does not test it (this last remark is supplementary).`,
     check: [
       { label: md`$\Nu_\infty$`, value: 209.3 },
       { label: md`$\Nu_\mathrm{DB}$ at Pr = 100`, value: 833.5 },

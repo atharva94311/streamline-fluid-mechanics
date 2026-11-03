@@ -85,7 +85,7 @@ export function EddyLab() {
       }
       footer={
         <Md inline>
-          {String.raw`**Try this:** double $m$ — both $\tau_w$ and $q$ double, yet $\St/(f_\mathrm{F}/2)$ stays exactly 1. Then switch air → water: $\tau_w$, $q$ and $h$ change by orders of magnitude, but the model *still* says $\St = f_\mathrm{F}/2$, because $\mu$ and $k$ (hence $\Pran$) never enter it. That blind spot is what Concepts 2 and 3 fix.`}
+          {String.raw`**Try this:** double $m$ — both $\tau_w$ and $q$ double, yet $\St/(f_\mathrm{F}/2)$ stays exactly 1. Then switch air → water: $h = mc_p$ and $q$ jump by a factor of about 300 (and $\tau_w$ by about 6), but the model *still* says $\St = f_\mathrm{F}/2$, because $\mu$ and $k$ (hence $\Pran$) never enter it. That blind spot is what Concepts 2 and 3 fix.`}
         </Md>
       }
     >

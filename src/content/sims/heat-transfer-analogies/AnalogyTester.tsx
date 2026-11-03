@@ -89,7 +89,7 @@ export function AnalogyTester() {
       }
       footer={
         <Md inline>
-          {md`**Try this:** press *Book case* and check that the dots (the printed Table E9.6) sit on the curves. Slide $\Pran$ from 0.5 to 2: the Reynolds analogy swings from about −34 % to about +50 % while Prandtl–Taylor stays within about 7 %. Then try *water ≈ 7*: even Prandtl–Taylor is now roughly a third too low — the "further refinements" (a buffer region) that Wilkes mentions are needed for liquids.`}
+          {md`**Try this:** press *Book case* and check that the dots (the printed Table E9.6) sit on the curves. Slide $\Pran$ from 0.5 to 2: the Reynolds analogy swings from about −34 % to about +52 % while Prandtl–Taylor stays within about 7 %. Then try *water ≈ 7*: even Prandtl–Taylor is now roughly a third too low — the simple two-layer model is not enough for liquids (Wilkes lists a buffer region as one further refinement).`}
         </Md>
       }
     >
