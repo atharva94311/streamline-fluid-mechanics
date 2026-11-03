@@ -820,7 +820,7 @@ Other repeating sets give different-looking but equivalent groups (Fox: groups a
         difficulty: 2,
         src: P270('7.18'),
         q: md`The power $\mathscr{P}$ used by a vacuum cleaner is to be correlated with the suction it provides, indicated by the pressure drop $\Delta p$ below ambient room pressure. It also depends on the impeller diameter $D$ and width $d$, the motor speed $\omega$, the air density $\rho$, and the cleaner's inlet and exit widths $d_i$ and $d_0$. Determine the dimensionless parameters that characterize the problem.`,
-        hint: md`$n=8$, rank 3. Repeat $\rho$, $\omega$, $D$ — the turbomachine choice. The four lengths other than $D$ just become ratios.`,
+        hint: md`$n=8$, rank 3. Repeat $\rho$, $\omega$, $D$ — the turbomachine choice. The three lengths other than $D$ ($d$, $d_i$, $d_0$) just become ratios.`,
         answer: md`$\dfrac{\mathscr{P}}{\rho\omega^3D^5}=f\!\left(\dfrac{\Delta p}{\rho\omega^2D^2},\ \dfrac{d}{D},\ \dfrac{d_i}{D},\ \dfrac{d_0}{D}\right)$`,
         check: [
           { label: 'number of Π groups', value: 5, tol: 0.01 },
