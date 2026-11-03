@@ -127,8 +127,8 @@ export function DimensionBuilder() {
       footer={
         <>
           <strong>Try this:</strong> load <M tex={md`\rho VD/\mu`} />, then change the power of <M tex="D" /> from 1 to 2 — the L-walk
-          now ends at +1, so the group picks up a length. Then load the trap <M tex={md`\rho V^2/\mu`} />: which single variable (and
-          power) fixes it?
+          now ends at +1, so the group picks up a length. Then load the trap <M tex={md`\rho V^2/\mu`} /> (it comes out as{' '}
+          <M tex={md`\dimT^{-1}`} />): change just two powers — those of <M tex="V" /> and <M tex="D" /> — to turn it into the Reynolds number.
         </>
       }
     >

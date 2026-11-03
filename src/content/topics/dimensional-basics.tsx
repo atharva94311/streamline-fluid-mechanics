@@ -164,7 +164,7 @@ Bi &= \frac{hL}{k} &&\Rightarrow\ \text{cools at the surface first, or uniformly
       'raw data on $l$, $s$ and $V$ for horses, dogs, humans… show **no pattern**; plotted this way most animals fall approximately on **one curve**',
       'the book gives no numbers or curve for this correlation',
     ],
-    use: md`From fossils take $s/l$, read $V^2/gl$ off the curve, and solve for $V$ (since $l$ and $g$ are known). Fox's conclusion: humans could probably easily outrun *T. rex*. Note that $V^2/gl$ has the form of a Froude number squared based on leg length.`,
+    use: md`From fossils take $s/l$, read $V^2/gl$ off the curve, and solve for $V$ (since $l$ and $g$ are known). Fox's conclusion: humans could probably easily outrun *T. rex*. (Supplementary remark: $V^2/gl$ has the form of a Froude number squared, based on leg length.)`,
     src: F245,
   },
   {
@@ -183,8 +183,8 @@ Bi &= \frac{hL}{k} &&\Rightarrow\ \text{cools at the surface first, or uniformly
       'stationary **smooth** sphere immersed in a **uniform** stream',
       'the list might leave out a parameter that matters (e.g. surface roughness) or include one that does not — but every entry is controllable and measurable in the laboratory',
     ],
-    use: md`Measured brute force, this needs about $10^4$ tests (10 values each of $V$, $D$, $\rho$, $\mu$).`,
-    src: F247,
+    use: md`Measured brute force, this needs about $10^4$ tests (10 values each of $V$, $D$, $\rho$, $\mu$) — Fox p. 248.`,
+    src: [F247, F248],
   },
   {
     id: 'sphere-drag-pi',
@@ -364,8 +364,8 @@ g(q_1, q_2, \ldots, q_n) = 0 \;&\longrightarrow\; G(\Pi_1, \Pi_2, \ldots, \Pi_{n
       { sym: md`[\ \cdot\ ]`, desc: md`"the dimensions of" (Fox's notation; the slides use $\doteq$)`, units: DL },
     ],
     conditions: [
-      'holds for every equation that follows from physical laws',
-      'an empirical formula with *dimensional* constants is valid only in the units its constants were fitted in',
+      'holds for every equation that follows from physical laws (supplementary remark)',
+      'an empirical formula with *dimensional* constants is valid only in the units its constants were fitted in (supplementary remark)',
     ],
     use: md`Check every derived equation term by term — a mismatch proves an algebra error. Homogeneity is also the precondition for the Buckingham pi theorem (slides 5–6, next topic).`,
     src: L6,

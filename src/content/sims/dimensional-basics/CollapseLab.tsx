@@ -126,7 +126,15 @@ export function CollapseLab() {
   const pi1 = pipePi1(Re)
   const dpl = (pi1 * fl.rho * V * V) / D
   const regime = pipeRegime(Re)
-  const inModel = Re >= COL_X[0] && Re <= RE_BLASIUS_MAX && Number.isFinite(pi1)
+  const inModel = Re <= RE_BLASIUS_MAX && Number.isFinite(pi1)
+  const regimeText =
+    regime === 'transition'
+      ? 'transition: no single curve'
+      : Re > RE_BLASIUS_MAX
+        ? 'beyond Blasius range (Re > 10⁵)'
+        : Re < COL_X[0]
+          ? 'laminar (left of the chart)'
+          : regime
 
   const curve = useMemo(() => {
     const lam = num.logspace(COL_X[0], RE_LAM, 40).map((r) => [nrm(r, COL_X), nrm(32 / r, COL_Y)] as const)
@@ -318,8 +326,8 @@ export function CollapseLab() {
               { label: md`$\Delta p_\ell$`, value: Number.isFinite(dpl) ? dpl : '—', unit: Number.isFinite(dpl) ? 'Pa/m' : undefined, digits: 3 },
               {
                 label: 'regime (model)',
-                value: !inModel && regime !== 'transition' ? 'outside model range' : regime,
-                tone: regime === 'transition' || !inModel ? 'bad' : 'accent',
+                value: regimeText,
+                tone: !inModel ? 'bad' : 'accent',
               },
               ...pins.map((pn) => {
                 const ff = FLUIDS[pn.fluid]

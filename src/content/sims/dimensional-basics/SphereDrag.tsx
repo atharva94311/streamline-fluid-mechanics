@@ -29,7 +29,7 @@ function annotations({ sx, sy }: PlotCtx) {
   )
   return (
     <g>
-      {txt(0.12, 4, 'slope ≈ −1')}
+      {txt(0.12, 25, 'slope ≈ −1')}
       {txt(130, 2.2, 'C_D ≈ 1 near Re ≈ 100')}
       {txt(3e3, 0.25, 'plateau ≈ 0.4–0.5')}
       <line x1={sx(2.9e5)} x2={sx(2.9e5)} y1={sy(0.75)} y2={sy(0.2)} stroke="var(--plot-3)" strokeWidth={1.4} />
@@ -130,7 +130,7 @@ export function SphereDragLab() {
             </div>
             <Segmented label="fluid (typical values near 20 °C)" value={fluid} onChange={setFluid} options={FL_OPTS} />
             <Slider label={md`sphere diameter $D$`} value={D} min={1e-4} max={20} log onChange={setD} unit="m" digits={2} />
-            <Slider label={md`stream speed $V$`} value={V} min={1e-3} max={100} log onChange={setV} unit="m/s" digits={2} />
+            <Slider label={md`stream speed $V$`} value={V} min={1e-3} max={300} log onChange={setV} unit="m/s" digits={2} />
           </>
         }
         readout={

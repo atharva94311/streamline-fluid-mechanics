@@ -129,8 +129,8 @@ export function BoundaryLayerSketch() {
         </span>
       </div>
       <p className="mt-1 text-xs text-ink-3">
-        Illustration (supplementary): laminar estimate δ ≈ 5x/√Re_x and a quartic profile shape. For Re_L of order 10² the &ldquo;thin&rdquo;
-        layer is as thick as the plate is long, and the boundary-layer picture itself breaks down.
+        Illustration (supplementary): laminar estimate δ ≈ 5x/√Re_x and a quartic profile shape. At Re_L = 10² the &ldquo;thin&rdquo;
+        layer is already half as thick as the plate is long (δ/L ≈ 0.5), and the boundary-layer picture itself breaks down.
       </p>
           </>
         }
