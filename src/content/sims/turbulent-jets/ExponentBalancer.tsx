@@ -23,7 +23,7 @@ export function ExponentBalancer() {
   const series = [
     { label: md`inertia terms $\sim ${v}^{-(1+2q)}$`, fn: (x: number) => Math.pow(x, kIn), color: 'var(--plot-1)', width: 2.4 },
     { label: md`turbulent-stress term $\sim ${v}^{-(p+2q)}$`, fn: (x: number) => Math.pow(x, kSt), color: 'var(--plot-2)', width: 2.4, dash: '7 4' },
-    { label: md`momentum flux $\dot{\mathcal M}/\rho \sim ${v}^{${round ? '2p-2q' : 'p-2q'}}$`, fn: (x: number) => Math.pow(x, kM), color: 'var(--plot-3)', width: 2.4 },
+    { label: md`momentum flux $\dot{\mathcal M}/\rho \sim ${v}^{${round ? '2p-2q' : 'p-2q'}}$`, fn: (x: number) => Math.pow(x, kM), color: 'var(--plot-5)', width: 2.4 },
   ]
   const f = (k: number) => (Math.abs(k) < 5e-4 ? '0' : k.toFixed(2))
   return (
@@ -79,7 +79,7 @@ export function ExponentBalancer() {
       }
     >
       <Plot
-        x={{ label: md`distance from the slot ${round ? '$z$' : '$x$'} (arbitrary units)`, domain: [1, 100], log: true }}
+        x={{ label: md`distance from the ${round ? 'orifice $z$' : 'slot $x$'} (arbitrary units)`, domain: [1, 100], log: true }}
         y={{ label: 'size of term (arbitrary units)', domain: [1e-6, 1e3], log: true }}
         series={series}
         height={320}

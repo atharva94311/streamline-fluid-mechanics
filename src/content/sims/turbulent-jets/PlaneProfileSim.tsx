@@ -81,7 +81,7 @@ export function PlaneProfileSim() {
       }
       footer={
         <Md inline>
-          {md`**Try this:** start at 4 steps — the curve is already roughly right but the edge and the sign-change point are off. Drag up to a few hundred steps and watch the edge converge on $4\pi/(3\sqrt3)\approx 2.418$ and the sign change on $\zeta\approx 1.2$ (the book reads "about 1.25" off its plot). Turn on the tanh overlay: it is a little wider beyond $\zeta\approx1.5$, exactly what Wilkes warns about.`}
+          {md`**Try this:** start at 4 steps — the curve is already roughly right but the edge and the sign-change point are off. Drag up to a few hundred steps and watch the edge converge on $4\pi/(3\sqrt3)\approx 2.418$ and the sign change on $\zeta\approx 1.2$ (the book's text says "approximately 1.25"). Turn on the tanh overlay: it lies above the mixing-length bell in the outer region (beyond $\zeta\approx1.7$ against each model's own $\zeta$), which is what Wilkes means by "slightly over-predicts the velocities for $\zeta > 1.5$".`}
         </Md>
       }
     >

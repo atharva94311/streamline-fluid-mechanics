@@ -137,7 +137,7 @@ export const formulas: FormulaDef[] = [
     ],
     conditions: [
       'constant pressure in the surroundings and **no external force** → $\\dot{\\mathcal M}$ is independent of $x$',
-      'far from the slot; for a uniform exit velocity $U_0$ through a slot of width $h_0$: $\\dot{\\mathcal M}=\\rho U_0^2h_0$ ✦',
+      'holds at every $x$, the slot exit included — so for a uniform exit velocity $U_0$ through a slot of width $h_0$: $\\dot{\\mathcal M}=\\rho U_0^2h_0$ ✦',
     ],
     use: md`This is the jet's "invariant": it sets the jet strength (the constant $\gamma$ or $V$) and links downstream velocities to the exit conditions.`,
     src: W('525', 'Eq. (9.106)'),
@@ -164,7 +164,9 @@ export const formulas: FormulaDef[] = [
     tex: md`\ell = c_1 b,\qquad b = c_2x^{p},\qquad \zeta = c_3\frac{y}{b} = c_4\frac{y}{x^{p}},\qquad \overline{v}_x = \frac{g(\zeta)}{x^{q}}`,
     vars: [
       { sym: md`b`, desc: 'half-width of the turbulent zone', units: md`\mathrm{m}` },
-      { sym: md`c_1,\ c_2,\ c_3,\ c_4`, desc: 'constants', units: md`-` },
+      { sym: md`c_1,\ c_3`, desc: 'dimensionless constants', units: md`-` },
+      { sym: md`c_2`, desc: md`constant in $b = c_2x^p$ (dimensionless once $p = 1$)`, units: md`\mathrm{m^{1-p}}` },
+      { sym: md`c_4`, desc: md`$c_3/c_2$, makes $\zeta$ dimensionless`, units: md`\mathrm{m^{p-1}}` },
       { sym: md`p,\ q`, desc: 'exponents to be found (spreading, velocity decay)', units: md`-` },
       zetaV,
       { sym: md`g(\zeta)`, desc: 'profile-shape function', units: md`\mathrm{m^{1+q}\,s^{-1}}` },
@@ -422,7 +424,7 @@ export const formulas: FormulaDef[] = [
     tex: md`\dot{\mathcal M} = \rho\int_{0}^{\infty}2\pi r\,\overline{v}_z^{\,2}\,dr`,
     vars: [MdotRound, rhoV, vzV, rV],
     conditions: ['constant pressure, no external force → independent of $z$', 'uniform nozzle exit ✦: $\\dot{\\mathcal M} = \\rho U_0^2\\pi d_0^2/4$'],
-    use: md`The single number that characterises a round jet far downstream (it is also the thrust/reaction force of the nozzle).`,
+    use: md`The single number that characterises a round jet far downstream (it is also the thrust/reaction force of the nozzle ✦).`,
     src: W('531', 'Eq. (9.126)'),
     tag: '9.126',
   },
@@ -447,7 +449,8 @@ export const formulas: FormulaDef[] = [
     name: 'Round jet: similarity forms',
     tex: md`b = c_2z^{p},\qquad \zeta = c_3\frac{r}{z^{p}},\qquad \overline{v}_z = \frac{g(\zeta)}{z^{q}}`,
     vars: [
-      { sym: md`c_2,\ c_3`, desc: 'constants', units: md`-` },
+      { sym: md`c_2`, desc: md`constant in $b = c_2z^p$`, units: md`\mathrm{m^{1-p}}` },
+      { sym: md`c_3`, desc: md`constant that makes $\zeta$ dimensionless`, units: md`\mathrm{m^{p-1}}` },
       { sym: md`p,\ q`, desc: 'spreading and decay exponents', units: md`-` },
       zetaV,
       { sym: md`g(\zeta)`, desc: 'profile-shape function', units: md`\mathrm{m^{1+q}\,s^{-1}}` },
@@ -933,7 +936,7 @@ export const quiz: QuizQ[] = [
     ],
     answer: 0,
     explain:
-      'p. 528: f′(0) = 1 is arbitrary; γ in ψ = γ√x f(ζ) then sets the real velocities. (9.115) is nonlinear, so the scaling argument is not "linearity"; symmetry only requires f = f″ = 0 on the axis, not f′ = 1.',
+      'p. 528: f′(0) = 1 is an arbitrary choice; γ in ψ = γ√x f(ζ) is then chosen to match the actual jet. (9.115) is not linear — it is homogeneous of degree 2 (if f solves it, so does A·f, and A merges into γ), which is why any starting slope would do. Symmetry only requires f = f″ = 0 on the axis, not f′ = 1.',
     src: W('528'),
   },
   {
@@ -1143,7 +1146,7 @@ export default function Content() {
               steps={[
                 { md: md`Add $\overline{v}_x\times$(9.105) $= 0$ to the left of (9.104): $\overline{v}_x\pd{\overline{v}_x}{x} + \overline{v}_y\pd{\overline{v}_x}{y} + \overline{v}_x\left(\pd{\overline{v}_x}{x} + \pd{\overline{v}_y}{y}\right) = \pd{\left(\overline{v}_x^{\,2}\right)}{x} + \pd{\left(\overline{v}_x\overline{v}_y\right)}{y}$`, why: 'conservative form' },
                 { md: md`Integrate across the jet: $\dfrac{d}{dx}\displaystyle\int_{-\infty}^{\infty}\overline{v}_x^{\,2}dy + \Big[\overline{v}_x\overline{v}_y\Big]_{-\infty}^{\infty} = \frac{1}{\rho}\Big[\overline{\tau}^{\,t}_{yx}\Big]_{-\infty}^{\infty}$`, why: 'integrate in y' },
-                { md: md`Far outside the jet $\overline{v}_x\to0$ and $\overline{\tau}^{\,t}_{yx}\to0$, so both brackets vanish: $\dfrac{d}{dx}\displaystyle\int\overline{v}_x^{\,2}dy = 0$ → $\dot{\mathcal M}$ = constant.`, why: 'no stress or momentum at ±∞' },
+                { md: md`Far outside the jet $\overline{v}_x\to0$ (while $\overline{v}_y$ stays finite — entrainment) and $\overline{\tau}^{\,t}_{yx}\to0$, so both brackets vanish: $\dfrac{d}{dx}\displaystyle\int\overline{v}_x^{\,2}dy = 0$ → $\dot{\mathcal M}$ = constant.`, why: 'no stress or momentum at ±∞' },
               ]}
             />
           </Supplement>
@@ -1259,7 +1262,8 @@ export default function Content() {
           | $\overline{v}_y\,\partial\overline{v}_x/\partial y$ | $x^{-(1+2q)}$ |
           | $(1/\rho)\,\partial\overline{\tau}^{\,t}_{yx}/\partial y$ | $x^{-(p+2q)}$ |
 
-          *Table 9.2 — Order of terms (Wilkes p. 527).* For (9.104) to balance, $1 + 2q = p + 2q$:`}</Md>
+          *Table 9.2 — Order of terms (Wilkes p. 527).* (Wilkes' text says continuity is "(9.108)" here — a mis-reference; the plane-jet
+          continuity equation is (9.105).) For (9.104) to balance, $1 + 2q = p + 2q$:`}</Md>
           <FormulaCard id="pq-plane" />
           <Supplement title="Where the orders in Table 9.2 come from">
             <Derivation
@@ -1308,8 +1312,8 @@ export default function Content() {
           specified jet flow rate. The output — $f'$ for $\overline{v}_x$ and $\zeta f' - f/2$ for $\overline{v}_y$ — is Fig. 9.16, from which
           the mean velocities follow for any $\gamma$ (jet strength) and any $x$.
 
-          - The numerical results agree **completely** with Förthmann's experiments.
-          - **Reichardt's** experiments give $\beta = 7.67$, corresponding to $\alpha = 0.0333$.
+          - The numerical results agree **completely** with Förthmann's experiments (as reported by Goldstein, footnote 19).
+          - **Reichardt's** experiments give $\beta = 7.67$, corresponding to $\alpha = 0.0333$ (as reported by Schlichting, footnote 20).
           - The axial velocity is a **bell symmetrical about the centre-line**; because the plot uses $f' = \overline{v}_x\sqrt{x}/(\beta\gamma)$,
             the real $\overline{v}_x$ *decreases* with $x$, and because $\zeta = \beta y/x$ the region where $\overline{v}_x$ is significant
             *widens*: **the jet spreads out and slows down at the same time.**
@@ -1397,8 +1401,14 @@ export default function Content() {
               height={300}
             />
           </Figure>
-          <Md>{md`Note that the two models define $\beta$ differently, so this side-by-side comparison (each against its own $\zeta$) is
-          approximate — exactly as in the book's remark.`}</Md>
+          <Md>{md`Wilkes simply says the tanh solution agrees quite well with Fig. 9.16 but **slightly over-predicts the velocities for
+          $\zeta > 1.5$**.`}</Md>
+          <Supplement title="Where exactly does the tanh curve lie higher?">
+            <Md>{md`Plotted as above (both normalised to $f'(0) = 1$, each against its own $\zeta$) the dashed bell lies above the
+          solid one beyond $\zeta \approx 1.73$ — it never reaches zero, whereas the mixing-length profile ends at $\zeta_e = 2.418$ — and
+          very slightly above it near the axis ($\zeta < 0.53$). The two models define $\beta$ differently, so this comparison is only
+          approximate.`}</Md>
+          </Supplement>
         </Step>
 
         <Step kind="equations" src={W('529–530', 'Eqs. (9.116)–(9.123)')}>
