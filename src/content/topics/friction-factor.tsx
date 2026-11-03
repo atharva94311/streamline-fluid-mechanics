@@ -1052,7 +1052,7 @@ export const quiz: QuizQ[] = [
       'The errors in the buffer region exactly cancel those in the sublayer',
     ],
     answer: 0,
-    explain: md`Wilkes's justification (p. 497) is that the sublayer is so thin it contributes virtually nothing to the flow — about 0.05 % of $Q$ at $\Rey = 10^5$. The velocity there is not zero (it rises linearly to about $11.6\,\overline{v}_z^{*}$), $\ln y^+ \to -\infty$ (not 0) as $y \to 0$, and no exact cancellation is involved — the error is simply negligible.`,
+    explain: md`Wilkes's justification (p. 497) is that the sublayer is so thin it contributes virtually nothing to the flow — about 0.05 % of $Q$ at $\Rey = 10^5$. The velocity there is not zero (it rises linearly, $v_z^+ = y^+$, to $5\,\overline{v}_z^{*}$ at the three-region sublayer edge, or $11.6\,\overline{v}_z^{*}$ in the two-region model), $\ln y^+ \to -\infty$ (not 0) as $y \to 0$, and no exact cancellation is involved — the error is simply negligible.`,
   },
   {
     id: 'q-implicit',
@@ -1631,8 +1631,9 @@ export default function Content() {
           <Md>{md`
             - **A power law is a ruler held against a logarithm.** Over one or two decades of $y^+$ the curve
               $5.5 + 2.5\ln y^+$ is well approximated by $8.74\,(y^+)^{1/7}$ — within 3 % for roughly $20 < y^+ < 1000$.
-              Further out the power law keeps climbing faster than the logarithm, which is why the Blasius law (built on it)
-              fails above $\Rey \approx 10^5$, where the centreline sits beyond $y^+ \approx 2000$.
+              Further out the power law keeps climbing faster than the logarithm. That is the profile-side view of why the
+              Blasius law, which goes hand in hand with the 1/7 profile, fails above $\Rey \approx 10^5$, where the
+              centreline already sits beyond $y^+ \approx 2000$.
             - **Why the exponents are locked together.** $f_{\mathrm F} = 2(\overline{v}_z^{*}/\overline{v}_{zm})^2$. If
               $\overline{v}_{zm}/\overline{v}_z^{*} \propto (a^+)^m$ and $\Rey = 2a^+(\overline{v}_{zm}/\overline{v}_z^{*}) \propto (a^+)^{1+m}$,
               then $f_{\mathrm F} \propto \Rey^{-2m/(1+m)}$; with $m = 1/7$ that is $\Rey^{-1/4}$. A **blunter** profile

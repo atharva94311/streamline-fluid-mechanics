@@ -38,10 +38,13 @@ export function AnnulusIntegration() {
   const uOf = (e: number) => uPlusThree(d.ap * (1 - e))
   const ringFill = (e: number) => 0.1 + 0.78 * Math.max(0, Math.min(1, uOf(e) / d.uc))
 
+  // Each ring is drawn as a true annulus (even-odd fill) so that semi-transparent fills do not stack up
+  // towards the centre — the shade of every ring then reflects only its own local velocity.
   const rings = Array.from({ length: RINGS }, (_, i) => {
     const outer = (RINGS - i) / RINGS
+    const inner = (RINGS - i - 1) / RINGS
     const mid = (RINGS - i - 0.5) / RINGS
-    return { r: outer * R, op: ringFill(mid) }
+    return { ro: outer * R, ri: inner * R, op: ringFill(mid) }
   })
 
   const selR = eta * R
@@ -54,7 +57,7 @@ export function AnnulusIntegration() {
       <div className="grid items-center gap-4 sm:grid-cols-[minmax(0,230px)_minmax(0,1fr)]">
         <svg viewBox="0 0 240 250" className="mx-auto h-auto w-full max-w-[250px]" role="img" aria-label="Pipe cross-section split into annuli">
           {rings.map((g, i) => (
-            <circle key={i} cx={CX} cy={CY} r={g.r} fill="var(--plot-1)" fillOpacity={g.op} stroke="var(--surface)" strokeWidth={0.4} />
+            <path key={i} d={ringPath(g.ro, g.ri)} fill="var(--plot-1)" fillOpacity={g.op} fillRule="evenodd" stroke="var(--surface)" strokeWidth={0.4} />
           ))}
           <circle cx={CX} cy={CY} r={R} fill="none" stroke="var(--ink-2)" strokeWidth={2.2} />
           {/* true-scale sublayer ring (usually far below one pixel) */}
@@ -118,6 +121,12 @@ export function AnnulusIntegration() {
           { label: 'difference', value: ((d.vmLog - d.vmNum) / d.vmNum) * 100, unit: '%', digits: 2, tone: 'good' },
         ]}
       />
+      <p className="text-sm text-ink-2">
+        Try this: slide the annulus towards the wall — the integrand 2(r/a)·v̄z/v̄zm peaks close to r/a ≈ 0.8–0.9 because the
+        outer rings have the most area and still move almost at full speed. Then lower Re from 10⁵ to 5×10³: the sublayer&apos;s share
+        of Q rises from about 0.05 % to about 1 %, and Eq. (9.49) now overestimates the three-region mean by about 5 % instead of
+        0.3 % — neglecting the sublayer is an approximation that improves as Re grows.
+      </p>
     </div>
   )
 }

@@ -85,7 +85,7 @@ export function MoodyChart() {
           ]}
         />
       }
-      footer="Try this: keep ε/D = 10⁻³ and sweep Re from 10⁴ to 10⁸. The operating point leaves the smooth-pipe curve once ε⁺ passes about 5, then flattens onto the dotted fully-rough line beyond ε⁺ ≈ 70 — from there on f_F no longer changes with Re. Switch to the Darcy axis to compare with a printed Moody chart (every value ×4)."
+      footer="Try this: keep ε/D = 10⁻³ and sweep Re from 10⁴ to 10⁸. At 10⁴ (ε⁺ ≈ 0.6) the operating point sits within about 5 % of the smooth-pipe curve; Colebrook–White blends gradually, so by ε⁺ ≈ 5 (Re ≈ 10⁵) it is already about 24 % above it. Beyond ε⁺ ≈ 70 it flattens onto the dotted fully-rough line — from there on f_F no longer changes with Re. Switch to the Darcy axis to compare with a printed Moody chart (every value ×4)."
     >
       <Plot
         height={360}

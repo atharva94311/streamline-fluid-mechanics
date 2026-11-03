@@ -42,7 +42,7 @@ export function PowerLawExplorer() {
 
   const outer: Series[] = [
     { label: md`power law $(y/a)^{m}$, $m = 1/${foxN}$`, points: pts, color: 'var(--plot-1)', width: 3 },
-    { label: md`log law (9.42) at $\Rey = ${num.fmtTeX(Re, 2)}$, scaled by its centreline value`, fn: (t) => uPlusThree(ap * t) / uc, color: 'var(--plot-5)', width: 2, samples: 400 },
+    { label: md`universal profile (9.44)–(9.46) at $\Rey = ${num.fmtTeX(Re, 2)}$, scaled by its centreline value`, fn: (t) => uPlusThree(ap * t) / uc, color: 'var(--plot-5)', width: 2, samples: 400 },
   ]
   if (n !== 4) outer.push({ label: md`reference: $m = 1/7$`, points: pts7, color: 'var(--plot-7)', dash: '5 4', width: 1.6 })
   if (lam) outer.push({ label: 'laminar parabola (supplementary)', fn: (t) => 2 * t - t * t, color: 'var(--plot-6)', dash: '6 4', width: 1.8 })
