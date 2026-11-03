@@ -617,7 +617,7 @@ The Pitot tube should sit 0.223 radius from the wall ($r = 0.777a$). The positio
         q: md`At Re $= 10^5$ (1/7 law), the laminar sublayer is about $0.26\,\%$ of the diameter. Roughly what fraction of the mean velocity is reached at its outer edge?`,
         options: [md`About 58 %`, md`About 5 %`, md`About 0.3 %`, md`About 100 %`],
         answer: 0,
-        explain: md`$\overline{v}_{z\delta}/\overline{v}_{zm} = 2.44/\mathrm{Re}^{1/8} = 0.58$. A tiny layer carries a large part of the velocity change. The wrong answer "0.3 %" assumes velocity scales with distance, as in the core.`,
+        explain: md`$\overline{v}_{z\delta}/\overline{v}_{zm} = 2.44/\mathrm{Re}^{1/8} = 0.58$. A tiny layer carries a large part of the velocity change. The wrong answer "0.3 %" assumes the velocity grows in proportion to distance from the wall all the way to the axis, which ignores the steep near-wall gradient.`,
         src: W('536', '9.8'),
       },
     ],
@@ -1134,7 +1134,7 @@ $$
         src: W('540', '9.25'),
         q: md`**The Prandtl number and the Reynolds analogy.** Table E9.6 showed that the Reynolds analogy *underestimates* the heat-transfer coefficient when $\mathrm{Pr} < 1$ and *overestimates* it when $\mathrm{Pr} > 1$. Using $\mathrm{Pr} = \nu/\alpha$ (kinematic viscosity over thermal diffusivity), explain physically why.
 
-As a quantitative check, use the Prandtl–Taylor analogy at Re $= 50{,}000$ to find the factor $\mathrm{St}/(f_F/2)$ for $\mathrm{Pr} = 0.5$ and $\mathrm{Pr} = 2$.`,
+As a quantitative extension (not part of the printed problem), use the Prandtl–Taylor analogy at the Re $= 50{,}000$ of Table E9.6 to find the factor $\mathrm{St}/(f_F/2)$ for $\mathrm{Pr} = 0.5$ and $\mathrm{Pr} = 2$.`,
         hint: md`The Reynolds analogy lets eddies carry heat and momentum identically all the way to the wall. Near the wall, though, transport is molecular: momentum diffuses at rate $\nu$ and heat at rate $\alpha$. Which one gets through the sublayer more easily when $\nu < \alpha$?`,
         answer: md`Near the wall, heat crosses by conduction (rate $\alpha$) and momentum by viscosity (rate $\nu$). For Pr < 1 heat gets through more easily than momentum, so the friction-based prediction is too low. For Pr > 1 heat is held back, so the prediction is too high. Prandtl–Taylor at Re $= 5\times10^4$: $\overline{v}_{z\delta}/\overline{v}_{zm} = 0.631$, giving factors $1.46$ (Pr $= 0.5$) and $0.613$ (Pr $= 2$).`,
         solution: md`**1. What the Reynolds analogy assumes.** One eddy mass flux $m$ carries both momentum and heat right up to the wall (Eqs. 9.95–9.96). This implicitly treats heat and momentum as diffusing identically everywhere, which is equivalent to Pr $= 1$. Molecular properties never enter.
@@ -1158,7 +1158,7 @@ $$
 - Pr $= 0.5$: factor $= 1/(1 - 0.316) = 1.46$, raising the Reynolds-analogy value (×1.46).
 - Pr $= 2$: factor $= 1/1.631 = 0.613$, lowering it.
 
-Both corrections move toward the Dittus–Boelter values and reproduce the PTA column of Table E9.6 (95 and 162) to within rounding. At Pr $= 1$ the factor is exactly 1, which is why all three methods agree there.`,
+Both corrections move toward the Dittus–Boelter values and reproduce the PTA column of Table E9.6 (95 and 162) to within about 2 % (recomputing from the formulas gives 96.5 and 162). At Pr $= 1$ the factor is exactly 1, which is why all three methods agree there.`,
         check: [
           { label: md`factor at Pr $= 0.5$`, value: 1.461, tol: 0.01 },
           { label: md`factor at Pr $= 2$`, value: 0.613, tol: 0.01 },
