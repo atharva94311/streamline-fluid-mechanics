@@ -169,7 +169,7 @@ export function HomogeneousKELab() {
   const tEnd = mode === 'decay' ? 100 : 30
   const data = useMemo(() => homogeneousKE(mode === 'decay' ? 0 : S, Ce2, tEnd, 360), [mode, S, Ce2, tEnd])
   const n = 1 / (Ce2 - 1)
-  const yDom: [number, number] = mode === 'decay' ? [1e-5, 30] : [1e-2, 1e6]
+  const yDom: [number, number] = mode === 'decay' ? [1e-5, 30] : [1e-4, 1e6]
   const inDom = (v: number) => v >= yDom[0] && v <= yDom[1]
   const kPts = data.filter((d) => d.t > 0 && inDom(d.k)).map((d) => [d.t, d.k] as [number, number])
   const ePts = data.filter((d) => d.t > 0 && inDom(d.e)).map((d) => [d.t, d.e] as [number, number])
@@ -222,7 +222,7 @@ export function HomogeneousKELab() {
       footer={
         mode === 'decay'
           ? 'Try this: watch the νT/νT0 curve — while k and ε collapse by orders of magnitude, k²/ε barely changes. Raise Cε2 and the decay becomes slower (n = 1/(Cε2 − 1) falls).'
-          : 'Try this: with shear on, production wins and k, ε and νT grow without bound, yet the ratio P/ε locks onto (Cε2 − 1)/(Cε1 − 1) ≈ 2.09 whatever shear you pick — a built-in property of the constants (9.94).'
+          : 'Try this: with the standard constants, production wins and k, ε and νT grow without bound, yet the ratio P/ε locks onto (Cε2 − 1)/(Cε1 − 1) ≈ 2.09 whatever shear you pick — a built-in property of the constants (9.94). Now lower Cε2 below Cε1 = 1.44: the locked ratio drops below 1, dissipation beats production and the turbulence dies even under steady shear.'
       }
     >
       <Plot

@@ -376,7 +376,7 @@ export const formulas: FormulaDef[] = [
       { sym: md`\sigma_k,\ \sigma_\varepsilon`, desc: md`divide the turbulent diffusivity of $k$ and $\varepsilon$`, units: md`-` },
     ],
     conditions: ['chosen so that k–ε predictions agree reasonably well with experiments — empirical, not universal'],
-    use: md`Memorise the set; they are the defaults in COMSOL's Turbulent Flow k–ε interface used in Examples 9.4 and 9.5.`,
+    use: md`Memorise the set. (They are also the standard default values in COMSOL's Turbulent Flow k–ε interface used in Examples 9.4 and 9.5 — a platform remark; Wilkes does not list COMSOL's settings.)`,
     src: wk('507', 'Eq. (9.94)'),
   },
   {
@@ -1184,7 +1184,7 @@ export const takeaways: string[] = [
   md`In fully developed pipe flow the **total** shear stress is exactly linear, $\tau_w r/a$ — a force balance (9.81)–(9.84). Turbulence only decides how it is **split** between viscous and Reynolds stress (9.85).`,
   md`The Reynolds stress vanishes at the wall and the viscous stress vanishes in the core; they are equal at $y^+ \approx 11$, right at the edge of the classical laminar sublayer.`,
   md`Churchill's correlation (9.86) gives the Reynolds-stress fraction $f(y^+, a^+)$ as a Churchill–Usagi blend (9.87) of a near-wall asymptote $0.7(y^+/10)^3$ and an outer asymptote, with $p = -8/7$.`,
-  md`Substituting (9.86) into (9.85) gives the ODE (9.88); integrating it yields $\overline{v}_z$, $\overline{v}_{zm}$ and $f_F$ almost exactly (within ≈ 2 % of the experimental law 9.53).`,
+  md`Substituting (9.86) into (9.85) gives the ODE (9.88); integrating it yields $\overline{v}_z$, $\overline{v}_{zm}$ and $f_F$ almost exactly (our integration: within ≈ 2–3 % of the experimental law 9.53).`,
   md`Mixing length is **local** and cannot handle complex geometry or turbulence carried from elsewhere; the k–ε model **transports** two turbulence properties, $k$ (L²/T²) and $\varepsilon$ (L²/T³).`,
   md`Reynolds stresses enter the mean momentum equation as an extra viscosity $\rho\nu_T$ (9.90a), with $\nu_T = C_\mu k^2/\varepsilon$ (9.91) — a flow property, often hundreds to thousands of times $\nu$.`,
   md`Know the five constants: $C_\mu = 0.09$, $C_{\varepsilon1} = 1.44$, $C_{\varepsilon2} = 1.92$, $\sigma_k = 1.0$, $\sigma_\varepsilon = 1.3$ (9.94). Walls are handled by log-law **wall functions**.`,
@@ -1223,7 +1223,7 @@ At the wall itself eddies cannot move (no slip, no penetration) — viscosity ca
 
         <Step kind="visual" src={wk('504', 'Fig. 9.12')}>
           <Figure
-            caption="Fig. 9.12 recreated: total stress τw r/a (straight line) = viscous + Reynolds stress, centreline at the bottom, wall at the top. Curves computed from (9.85)–(9.86) for a low a⁺ = 300 (Re ≈ 9,000) so the wall layer is visible on a linear scale (the book's sketch is 'not to scale'; at higher Re the wall layer is thinner still)."
+            caption="Fig. 9.12 recreated: total stress τw r/a (straight line) = viscous + Reynolds stress, centreline at the bottom, wall at the top. Curves computed from (9.85)–(9.86) for a low a⁺ = 300 (Re ≈ 9,300 from integrating 9.88) so the wall layer is visible on a linear scale (the book's sketch is 'not to scale'; at higher Re the wall layer is thinner still)."
             src={wk('504', 'Fig. 9.12')}
           >
             <StressPartitionFigure aPlus={300} />
@@ -1256,7 +1256,7 @@ At the wall itself eddies cannot move (no slip, no penetration) — viscosity ca
           <FormulaCard id="vel-ode" />
           <Supplement title="Integrating (9.88) — the route Wilkes describes in words">
             <FormulaCard id="ode-dimless" />
-            <Md>{md`Wilkes says (9.88), "after expressing $\overline{v}_z$ and $y$ in dimensionless form, may be integrated successively to give the velocity profile and the mean velocity, and hence — by a development similar to that in Section 9.7 — the friction factor." The formulas above are that development. Numerically: $a^+ = 500 \to f_F = 0.00692$ at Re $= 1.70\times10^4$; $a^+ = 2000 \to 0.00475$ at $8.21\times10^4$; $a^+ = 10^4 \to 0.00339$ at $4.86\times10^5$ — each within 2–3 % of (9.53).`}</Md>
+            <Md>{md`Wilkes only states that, once $\overline{v}_z$ and $y$ are made dimensionless, (9.88) can be integrated step by step — first the velocity profile, then the mean velocity, then (as in Section 9.7) the friction factor. The formulas above write that route out (our working, not printed in the book). Numerically: $a^+ = 500 \to f_F = 0.00692$ at Re $= 1.70\times10^4$ (3.0 % above 9.53); $a^+ = 2000 \to 0.00475$ at $8.21\times10^4$ (1.7 % above); $a^+ = 10^4 \to 0.00339$ at $4.86\times10^5$ (2.8 % above).`}</Md>
           </Supplement>
           <Callout kind="note" title="Cross-reference — Fox & McDonald's §8.4 (secondary)">
             <Md>{md`Fox writes the same stress split as Eq. (8.17), with mean velocity $\bar u$ and $y$ from the wall. His Fig. 8.8 (Laufer's data) shows the Reynolds stress following the straight total-stress line $1 - y/R$ over most of the radius, with no data closer than $y/R \approx 0.08$ — so the drop to zero at the wall (Wilkes Fig. 9.12) is not visible there. Fox's friction velocity $u^*$ is Wilkes's $v^*$, and his Darcy factor is $f = 4f_F$.`}</Md>
@@ -1336,7 +1336,7 @@ $k$ sets the eddies' **velocity** ($\sqrt{k}$); $k$ and $\varepsilon$ together s
             arrowLabels={['production  ρνT(∇v̄ + ∇v̄ᵀ)²', 'dissipation  ρε']}
           />
           <Md>{md`The $k$ budget (9.92) in one picture. The $\varepsilon$ equation (9.93) has the same structure, with each source term multiplied by $\varepsilon/k$ and a constant.`}</Md>
-          <Figure caption="What a wall function bridges: the universal velocity profile (Eqs. 9.42–9.43). Instead of resolving the viscous sublayer and buffer zone (shaded), COMSOL places the first computational point in the log region and imposes the log law between it and the wall." src={wk('496', 'Eqs. (9.42)–(9.43)')}>
+          <Figure caption="What a wall function bridges: the universal velocity profile (Eqs. 9.42–9.43). Wilkes: COMSOL assumes the wall-parallel velocity is logarithmic in wall distance. In typical practice (not detailed by Wilkes) the first computational point sits in the log region, so the viscous sublayer and buffer zone (shaded) are never resolved." src={wk('496', 'Eqs. (9.42)–(9.43)')}>
             <Plot
               height={260}
               x={{ label: '$y^+$ (log scale)', domain: [0.5, 1000], log: true }}
@@ -1374,7 +1374,7 @@ $k$ sets the eddies' **velocity** ($\sqrt{k}$); $k$ and $\varepsilon$ together s
           <FormulaCard id="eps-eq" />
           <FormulaCard id="ke-const" />
           <Callout kind="key" title="Implementation (Wilkes p. 507)">
-            <Md>{md`Solve (9.90a), (9.90b), (9.92) and (9.93) **simultaneously** — six scalar unknowns in 3-D ($\overline{\mathbf{v}}$, $\overline{p}$, $k$, $\varepsilon$) — "a daunting task" that needs a digital computer. Near walls the equations either break down in the viscous layer or need an impossibly fine mesh, so COMSOL uses **wall functions**: the wall-parallel velocity is assumed to be a logarithmic function of wall distance, as in the universal velocity profile (full details in the COMSOL documentation). Wilkes uses COMSOL (finite-element method) in this chapter and Fluent (finite-volume method) in Chapter 13.`}</Md>
+            <Md>{md`Solve (9.90a), (9.90b), (9.92) and (9.93) **simultaneously** — in 3-D that is six scalar unknowns ($\overline{\mathbf{v}}$, $\overline{p}$, $k$, $\varepsilon$; our count) — "a daunting task" that needs a digital computer. Near walls the equations either break down in the viscous layer or need an impossibly fine mesh, so COMSOL uses **wall functions**: the wall-parallel velocity is assumed to be a logarithmic function of wall distance, as in the universal velocity profile (full details in the COMSOL documentation). Wilkes uses COMSOL (finite-element method) in this chapter and Fluent (finite-volume method) in Chapter 13.`}</Md>
           </Callout>
           <FormulaCard id="log-law-wf" />
           <Supplement title="A homogeneous-turbulence check of the constants">
@@ -1417,7 +1417,7 @@ $k$ sets the eddies' **velocity** ($\sqrt{k}$); $k$ and $\varepsilon$ together s
       {/* =============================================================== 3. orifice */}
       <Concept id="cfd-orifice">
         <Step kind="intro" src={wk('508', 'Example 9.4')}>
-          <Md>{md`**Example 9.4** applies COMSOL's k–ε solver to a short length of pipe containing an **orifice plate** — the situation of Wilkes Fig. 2.19, where a macroscopic (Bernoulli + momentum) analysis gave the pressure drop. CFD now shows the **inside** of the flow.
+          <Md>{md`**Example 9.4** applies COMSOL's k–ε solver to a short length of pipe containing an **orifice plate** — the situation of Wilkes Fig. 2.19, which Chapter 2 treated with a macroscopic analysis (book p. 87). CFD now shows the **inside** of the flow.
 
 **Data:** water, $\rho = 62.4$ lbm/ft³, $\nu = 1.077\times10^{-5}$ ft²/s; pipe $L = 0.5$ ft, $D = 0.1$ ft; plate face $b = 0.1$ ft from the inlet; uniform axial inlet velocity $v_\text{inlet} = 1.0$ ft/s (zero radial velocity); zero exit pressure. $\mathrm{Re} = 9{,}285$ — "well in the turbulent-flow region even upstream of the orifice plate".
 
