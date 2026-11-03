@@ -125,7 +125,7 @@ export function VortexCompare() {
         />
       }
       footer={
-        <Md>{md`**Try this:** in the forced vortex, put point 2 outside point 1 — the true pressure **rises** outward (the pressure gradient supplies the centripetal force) while "Bernoulli across streamlines" predicts a **fall**: same magnitude, wrong sign, because $B$ grows as $\Omega^2 r^2$. Switch to the free vortex: the dashed and solid curves merge and the error is zero for any pair of points. Watch the crosses: they spin with the forced vortex but keep their orientation in the free vortex.`}</Md>
+        <Md>{md`**Try this:** in the forced vortex, put point 2 outside point 1 — the true pressure **rises** outward (the pressure gradient supplies the centripetal force) while "Bernoulli across streamlines" predicts a **fall**: same magnitude, wrong sign, because $B$ grows as $\Omega^2 r^2$. Switch to the free vortex: the dashed and solid curves merge and the error is zero for any pair of points. Watch the crosses: they spin with the forced vortex but show no net rotation in the free vortex (a real element would shear, its two arms turning equally in opposite senses; the cross marks its average orientation).`}</Md>
       }
     >
       <div ref={wrapRef} className="w-full space-y-3">

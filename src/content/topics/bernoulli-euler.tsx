@@ -23,6 +23,8 @@ const L10: Src = { doc: 'lec10', pages: '10' }
 const L910: Src = { doc: 'lec10', pages: '9–10' }
 const L11: Src = { doc: 'lec10', pages: '11' }
 const P2: Src = { doc: 'lec11', pages: '2', note: 'Problem 2' }
+/** Lecture 11 problem 2: the statement is on the slide, the derived results (ψ, Δp) are this platform's solution. */
+const P2S: Src = { doc: 'lec11', pages: '2', note: 'Problem 2 statement; solution written for this platform' }
 const F221: Src = { doc: 'fox', pages: '221' }
 const F222: Src = { doc: 'fox', pages: '222' }
 const F2212: Src = { doc: 'fox', pages: '221–222' }
@@ -1105,7 +1107,6 @@ export const quiz: QuizQ[] = [
     id: 'q-compressible-need',
     concept: 'euler-streamline',
     difficulty: 1,
-    src: L10,
     q: md`To use $\int dp/\rho + V^2/2 + gz = \text{constant}$ for a gas, what extra information is needed?`,
     options: [
       'A relation between density and pressure along the streamline (e.g. isothermal or isentropic)',
@@ -1184,7 +1185,6 @@ export const quiz: QuizQ[] = [
     id: 'q-head-units',
     concept: 'bernoulli',
     difficulty: 1,
-    src: L11,
     q: md`In $\dfrac{p}{\gamma} + \dfrac{V^2}{2g} + z = \text{constant}$, every term has units of…`,
     options: ['metres (energy per unit weight)', 'pascals (energy per unit volume)', 'J/kg (energy per unit mass)', 'm/s (a speed)'],
     answer: 0,
@@ -1253,7 +1253,7 @@ export const quiz: QuizQ[] = [
     id: 'q-lec11-streamlines',
     concept: 'pressure-from-potential',
     difficulty: 2,
-    src: P2,
+    src: P2S,
     q: md`In Lecture 11, problem 2 ($\phi = 8xy$), the points $(0,\ 0.5)$ and $(0,\ 2)$…`,
     options: [
       md`lie on different streamlines ($\psi = 1$ and $16$ m²/s), so the irrotational form of Bernoulli is needed`,
@@ -1366,7 +1366,7 @@ export const flashcards: Flashcard[] = [
     id: 'fc-lec11',
     front: md`Lecture 11, problem 2: $\phi = 8xy$, water — results`,
     back: md`$u = 8y$, $v = 8x$; $\psi = 4(y^2 - x^2) + C$; $p_{(0,\,0.5)} - p_{(0,\,2)} = \tfrac12\rho(16^2 - 4^2) = 1.20\times10^5$ Pa (horizontal plane, $\rho = 1000$ kg/m³).`,
-    src: P2,
+    src: P2S,
   },
   {
     id: 'fc-pressure-map',
@@ -1683,7 +1683,7 @@ export default function Content() {
 
         <Step kind="intuition">
           <Md>{md`
-            **Merry-go-round vs Ferris wheel.** Both carry their riders round in circles. A rider on a merry-go-round also *turns* — after half a revolution she faces the other way: that is rotational motion (a forced vortex). A Ferris-wheel gondola travels round the same circle but always stays upright — its orientation never changes: that is **irrotational** motion (a free vortex, $V = K/r$). Irrotationality is about particles **spinning**, not about streamlines being curved.
+            **Merry-go-round vs Ferris wheel.** Both carry their riders round in circles. A rider on a merry-go-round also *turns* — after half a revolution she faces the other way: that is rotational motion (a forced vortex). A Ferris-wheel gondola travels round the same circle but always stays upright — its orientation never changes: that is **irrotational** motion (a free vortex, $V = K/r$). Irrotationality is about particles **spinning**, not about streamlines being curved. (Strictly, a small cross of fluid in a free vortex does deform: its tangential arm turns one way at $K/r^2$ and its radial arm the other way at the same rate, so its **average** orientation — the particle rotation $\omega_z$ — stays zero.)
 
             **Why one constant?** Picture all the fluid coming from a large, calm reservoir: every particle starts with the same $B = p/\rho + V^2/2 + gz$. Along each streamline $B$ cannot change (concept 1). Across streamlines $B$ changes only through the Lamb term $\vb V\times(\nabla\times\vb V)$ — and with no shear stress nothing can ever give the particles rotation. So every streamline keeps the same $B$: one constant for the whole field.
 
@@ -1695,7 +1695,7 @@ export default function Content() {
         </Step>
 
         <Step kind="visual" src={F2212}>
-          <Figure caption="✦ Forced vortex (left): elements turn with the flow and every circle has its own Bernoulli constant. Free vortex (right): elements keep their orientation, ∇ × V = 0, and one constant holds everywhere outside the core.">
+          <Figure caption="✦ Forced vortex (left): elements turn with the flow and every circle has its own Bernoulli constant. Free vortex (right): elements have no net rotation (their arms shear equally in opposite senses; the crosses show the average orientation), ∇ × V = 0, and one constant holds everywhere outside the core.">
             <VortexFigure />
           </Figure>
           <FlowSteps
