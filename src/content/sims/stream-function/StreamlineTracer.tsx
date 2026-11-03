@@ -40,7 +40,7 @@ const PRESETS: Record<Key, Preset> = {
     def: 0.4,
     step: 0.05,
     bounds: [-4, 4, -2, 2],
-    tex: md`\psi = Uy + \tfrac{V_0}{k}\cos kx`,
+    tex: md`\psi = Uy + \tfrac{V_0}{k}\cos kx\ \ (U = 1\ \mathrm{m/s},\ k = \pi/2\ \mathrm{m^{-1}})`,
     psi: (k) => (x, y) => y + (k / (Math.PI / 2)) * Math.cos((Math.PI / 2) * x),
     vel: (k) => (x) => [1, k * Math.sin((Math.PI / 2) * x)],
     P0: [-3, 0.5],
@@ -69,7 +69,7 @@ const PRESETS: Record<Key, Preset> = {
     def: 0.45,
     step: 0.05,
     bounds: [-3, 3, -2, 2],
-    tex: md`\psi = Uy + \tfrac{m}{2\pi}\,\theta`,
+    tex: md`\psi = Uy + \tfrac{m}{2\pi}\,\theta\ \ (U = 1\ \mathrm{m/s})`,
     // ψ is left undefined inside the body (it is multivalued there) so no contour is drawn through it
     psi: (a) => {
       const inside = halfBody(a)
@@ -139,6 +139,20 @@ export function StreamlineTracer() {
     [psiP],
   )
 
+  // half-body surface y = a(π − θ): it is the dividing streamline ψ = πaU through the stagnation point (U = 1 here)
+  const outline = useMemo<V2[]>(() => {
+    if (key !== 'body') return []
+    const up: V2[] = []
+    for (let i = 0; i <= 160; i++) {
+      const th = 0.02 + ((Math.PI - 1e-4 - 0.02) * i) / 160
+      const y = k * (Math.PI - th)
+      const x = y / Math.tan(th)
+      if (x <= bx1 + 0.5) up.push([x, y])
+    }
+    // upper branch runs downstream → nose; continue through the nose along the mirrored lower branch
+    return [...up, ...up.slice().reverse().map(([x, y]) => [x, -y] as V2)]
+  }, [key, k, bx1])
+
   const clampX = (x: number) => num.clamp(x, bx0 + 0.05 * span, bx1 - 0.05 * span)
   const clampY = (y: number) => num.clamp(y, by0 + 0.05 * span, by1 - 0.05 * span)
   const slope = Math.abs(u) < 1e-9 ? '∞ (vertical)' : num.fmt(v / u, 3)
@@ -146,7 +160,7 @@ export function StreamlineTracer() {
   return (
     <SimPanel
       title="Streamline tracer — contour of ψ vs. integrating dy/dx = v/u"
-      subtitle={md`$${Pr.tex}$ · click in the field to move $P$`}
+      subtitle={md`$${Pr.tex}$ · axes in m · click in the field to move $P$`}
       wide
       controls={
         <>
@@ -188,8 +202,10 @@ export function StreamlineTracer() {
         <span>
           <b>Try this:</b> click anywhere in the field. The red curve is just the contour ψ = ψ(P); the amber dots come from
           integrating dy/dx = v/u step by step from P. They sit on top of each other and ψ stays constant along the dots to
-          round-off — lines of constant ψ <i>are</i> streamlines. On the blunt body, put P on the stagnation line (y ≈ 0, upstream)
-          to see the streamline split round the nose.
+          round-off — lines of constant ψ <i>are</i> streamlines. On the blunt body, set y<sub>P</sub> = 0.02 m (just above the
+          stagnation line): the streamline runs up to the nose and then hugs the body, because the body surface is itself the
+          dividing streamline ψ = πaU that meets the stagnation line at the nose. At y<sub>P</sub> = 0 the tracing stops at the
+          stagnation point, where V = 0 and dy/dx = v/u is undefined.
         </span>
       }
     >
@@ -220,6 +236,22 @@ export function StreamlineTracer() {
           }
           return (
             <g>
+              {outline.length > 1 ? (
+                <g pointerEvents="none">
+                  <path
+                    d={outline.map(([ox, oy], i) => `${i ? 'L' : 'M'}${sx(ox).toFixed(1)} ${sy(oy).toFixed(1)}`).join('')}
+                    fill="none"
+                    stroke="var(--ink-2)"
+                    strokeWidth={2}
+                  />
+                  <text x={sx(1.5)} y={sy(0) - 4} textAnchor="middle" className="fill-ink-2 text-[11px]">
+                    surface = dividing streamline
+                  </text>
+                  <text x={sx(1.5)} y={sy(0) + 11} textAnchor="middle" className="fill-ink-2 text-[11px]">
+                    ψ = πaU = {(Math.PI * k).toFixed(2)} m²/s
+                  </text>
+                </g>
+              ) : null}
               {showTrace && trace.length > 1
                 ? trace.map((q, i) => (i % 2 === 0 ? <circle key={i} cx={sx(q[0])} cy={sy(q[1])} r={2.3} fill="var(--plot-3)" /> : null))
                 : null}

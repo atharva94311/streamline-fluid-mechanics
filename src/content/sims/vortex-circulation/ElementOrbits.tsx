@@ -272,7 +272,10 @@ export function ElementOrbits() {
         <p className="text-xs text-ink-3">
           Free vortex: at the instant of release the radial (rose) arm turns clockwise at −K/r² and the tangential (indigo) arm counter-clockwise
           at +K/r² — equal and opposite, so ω_z = 0. The cross is sheared (deformed), not rotated. Forced vortex: both arms turn together
-          at K₁ — a rigid rotation with no deformation. The cross is re-dyed at A every cycle.
+          at K₁ — a rigid rotation with no deformation. The cross is re-dyed at A every cycle. ω_z is an instantaneous rate: pause, press
+          Reset, then Step 10° once and the free-vortex arms read −9° and +10° (nearly equal and opposite). Over longer travel the arms are no
+          longer perpendicular, so their total turns (about −16° and +30° after 30°) need not cancel — the slide's sketch shows the same
+          lopsided skew.
         </p>
       ) : (
         <p className="text-xs text-ink-3">

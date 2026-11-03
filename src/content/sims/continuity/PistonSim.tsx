@@ -43,7 +43,7 @@ export function PistonSim() {
   return (
     <SimPanel
       title="Unsteady compressible flow: gas in a cylinder"
-      subtitle="closed end at x = 0, piston at x = L(t)"
+      subtitle="closed end at x = 0, piston at x = L(t) moving at Uₚ = dL/dt (= −Vₚ while compressing, +Vₚ while expanding)"
       wide
       controls={
         <>

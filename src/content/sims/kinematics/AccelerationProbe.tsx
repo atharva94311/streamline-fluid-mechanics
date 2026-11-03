@@ -223,7 +223,8 @@ export function AccelerationProbe() {
   const L2: P2 = [L1[0] + cur.aC[0] * aScale * scale, L1[1] - cur.aC[1] * aScale * scale]
   const Vtip: P2 = [P[0] + cur.V[0] * quiver.kq * 1.6 * scale, P[1] - cur.V[1] * quiver.kq * 1.6 * scale]
 
-  const ymax = aMax * 1.12
+  // floor keeps a readable axis when every term is zero (e.g. pulsation amplitude ε = 0)
+  const ymax = Math.max(aMax * 1.12, 0.05)
 
   return (
     <SimPanel

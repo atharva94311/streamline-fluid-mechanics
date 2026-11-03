@@ -130,6 +130,14 @@ export function TankDrawing({ G, g, R = null, probe = null, labels = true }: { G
         </text>
       ) : null}
       <text x={X(-W) + 2} y={Z(zFloor) + 18} className="text-[10.5px]" fill="var(--ink-3)">true scale</text>
+      {/* 5 cm scale bar (the drawing is 1000 px per metre) */}
+      <path
+        d={`M${X(-W) + 2} ${Z(zFloor) + 26}v8M${X(-W) + 2} ${Z(zFloor) + 30}h${PX * 0.05}M${X(-W) + 2 + PX * 0.05} ${Z(zFloor) + 26}v8`}
+        fill="none"
+        stroke="var(--ink-3)"
+        strokeWidth={1.4}
+      />
+      <text x={X(-W) + 8 + PX * 0.05} y={Z(zFloor) + 34} className="text-[10.5px]" fill="var(--ink-3)">5 cm</text>
     </svg>
   )
 }
@@ -146,7 +154,9 @@ export function DrainingTankSim() {
   const R = rankine ? Rc : null
   const zp = surfaceZ(rp, G, g, R)
   const vth = rp >= (R ?? 0) ? G / (2 * Math.PI * rp) : (G * rp) / (2 * Math.PI * Rc * Rc)
-  const r10 = G / (2 * Math.PI * Math.sqrt(2 * g * 0.01))
+  // radius at which the surface is 10 mm below the far-field level (inside a Rankine core the paraboloid applies;
+  // null when even the axis is shallower than 10 mm)
+  const r10 = floorRadius(G, g, R, 0.01)
   const rc = floorRadius(G, g, R)
 
   const series: Series[] = [
@@ -159,7 +169,7 @@ export function DrainingTankSim() {
     { label: md`$v_\theta$ at $r_p$`, value: vth, unit: 'm/s' },
     { label: md`$z_s$ at $r_p$`, value: 1000 * zp, unit: 'mm', tone: 'accent' },
     { label: md`$z_s$ at $r_p$ if $\Gamma$ doubled`, value: 1000 * surfaceZ(rp, 2 * G, g, R), unit: 'mm' },
-    { label: 'radius where the dip is 10 mm', value: 100 * r10, unit: 'cm' },
+    { label: 'radius where the dip is 10 mm', value: r10 == null ? '—' : 100 * r10, unit: r10 == null ? undefined : 'cm' },
     rc != null
       ? { label: 'air core radius at the floor', value: 100 * rc, unit: 'cm' }
       : { label: 'deepest point (axis)', value: 1000 * surfaceZ(0, G, g, Rc), unit: 'mm', tone: 'good' },

@@ -127,7 +127,7 @@ export function ElementSandbox() {
     <SimPanel
       wide
       title="Fluid-element sandbox"
-      subtitle={md`linear field $u = u_0 + \pd{u}{x}x + \pd{u}{y}y,\;\; v = v_0 + \pd{v}{x}x + \pd{v}{y}y$ (x, y from the element's start)`}
+      subtitle={md`linear field $u = u_0 + \pd{u}{x}x + \pd{u}{y}y,\;\; v = v_0 + \pd{v}{x}x + \pd{v}{y}y$ ($x$, $y$ in m, measured from the element's initial centre)`}
       controls={
         <>
           <Segmented label="Show only this part of the motion" options={PARTS} value={part} onChange={setPart} />
@@ -171,8 +171,9 @@ export function ElementSandbox() {
       footer={
         <span>
           <b>Try this:</b> choose <i>Simple shear</i> and switch the view between <i>Rotation</i> and <i>Angular def.</i> — a simple
-          shear is half rotation (clockwise) and half angular deformation. Then set ∂u/∂y = −∂v/∂x: the corner angle stays 90° (an
-          undeformed block). Make ∂u/∂x = −∂v/∂y and the area stays exactly constant.
+          shear is half rotation (clockwise) and half angular deformation. Still in simple shear, set ∂v/∂x = −0.90 s⁻¹ so that
+          ∂u/∂y = −∂v/∂x: the corner angle stays at 90° (an undeformed block, turning clockwise). Make ∂u/∂x = −∂v/∂y and the
+          area stays exactly constant.
         </span>
       }
     >

@@ -92,7 +92,26 @@ export function MissingComponentFinder() {
       }
     >
       <div className="space-y-3">
-        <FlowField x={[-2, 2]} y={[-1.5, 1.5]} psi={psi} psiLevels={20} particles={70} quiver={11} markers={[{ x: X, y: Y, kind: 'point', label: '(1, 0.5)' }]} maxHeight={380} />
+        <FlowField
+          x={[-2, 2]}
+          y={[-1.5, 1.5]}
+          psi={psi}
+          psiLevels={20}
+          particles={70}
+          quiver={11}
+          markers={[{ x: X, y: Y, kind: 'point', label: '(1, 0.5)' }]}
+          maxHeight={380}
+          overlay={({ sx, sy }) => (
+            <g className="fill-ink-3 text-[10px]" fontStyle="italic" pointerEvents="none">
+              <text x={sx(2) - 6} y={sy(-1.5) - 16} textAnchor="end" paintOrder="stroke" stroke="var(--surface)" strokeWidth={2.5}>
+                x (m)
+              </text>
+              <text x={sx(-2) + 24} y={sy(1.5) + 13} paintOrder="stroke" stroke="var(--surface)" strokeWidth={2.5}>
+                y (m)
+              </text>
+            </g>
+          )}
+        />
         <Md className="md-tight text-sm">
           {md`$$
 \begin{aligned}

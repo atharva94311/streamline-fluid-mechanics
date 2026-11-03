@@ -68,8 +68,8 @@ export function FlowRateMeter() {
   const [k, setK] = useState(Pr.def)
   const [x1, setX1] = useState(0.3)
   const [y1, setY1] = useState(0.3)
-  const [x2, setX2] = useState(1.4)
-  const [y2, setY2] = useState(1.1)
+  const [x2, setX2] = useState(1.0)
+  const [y2, setY2] = useState(1.2)
   const [bulge, setBulge] = useState(0)
 
   const psi = useMemo(() => Pr.psi(k), [Pr, k])
@@ -131,7 +131,7 @@ export function FlowRateMeter() {
   return (
     <SimPanel
       title="Flow-rate meter — ψ₂ − ψ₁ against the measured flux"
-      subtitle={md`$${Pr.tex}$ · flux per unit depth across the black path`}
+      subtitle={md`$${Pr.tex}$ · flux per unit depth across the bold path · axes in m`}
       wide
       controls={
         <>
@@ -174,9 +174,10 @@ export function FlowRateMeter() {
       footer={
         <span>
           <b>Try this:</b> drag “bend the path” both ways — the local arrows change but the integral stays equal to ψ₂ − ψ₁ (only
-          the end streamlines matter). Slide point 2 along its purple streamline: q does not change. Swap the points: q changes sign.
-          In the corner flow, move both points close to the origin and then far out: the same streamlines are closer together far
-          out, where the flow is faster.
+          the end streamlines matter). In the corner flow, move point 2 from (1.0, 1.2) to (1.5, 0.8): it stays on the same purple
+          streamline xy = 1.2, so q does not change. Swap the points: q changes sign. Compare the gap between the two highlighted
+          streamlines where they cross the diagonal y = x and further out towards the x-axis: the same q squeezes through the
+          narrower gap, so the flow there is faster.
         </span>
       }
     >

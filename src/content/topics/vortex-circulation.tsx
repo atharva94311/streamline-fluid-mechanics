@@ -104,9 +104,11 @@ export const formulas: FormulaDef[] = [
     key: true,
     tex: md`v_\theta = \frac{1}{r}\pd{\phi}{\theta} = -\pd{\psi}{r} = \frac{K}{r}`,
     vars: [
-      { sym: md`v_\theta`, desc: 'tangential velocity', units: md`\mathrm{m/s}` },
+      { sym: md`v_\theta`, desc: md`tangential velocity, positive counter-clockwise`, units: md`\mathrm{m/s}` },
+      { sym: md`\phi = K\theta`, desc: 'velocity potential of the vortex', units: md`\mathrm{m^2/s}` },
+      { sym: md`\psi = -K\ln r`, desc: 'stream function of the vortex', units: md`\mathrm{m^2/s}` },
       { sym: md`K`, desc: 'vortex strength', units: md`\mathrm{m^2/s}` },
-      { sym: md`r`, desc: 'distance from the centre', units: md`\mathrm{m}` },
+      { sym: md`r,\ \theta`, desc: 'distance from the centre and polar angle', units: md`\mathrm{m},\ \mathrm{rad}` },
     ],
     conditions: [
       md`$v_r = \partial\phi/\partial r = 0$: purely circular motion`,
@@ -189,6 +191,7 @@ export const formulas: FormulaDef[] = [
       { sym: md`\zeta_z`, desc: 'vorticity (uniform)', units: md`\mathrm{s^{-1}}` },
       { sym: md`\psi`, desc: 'stream function', units: md`\mathrm{m^2/s}` },
       { sym: md`K_1`, desc: 'angular velocity of the rigid rotation', units: md`\mathrm{s^{-1}}` },
+      { sym: md`r`, desc: 'distance from the axis', units: md`\mathrm{m}` },
     ],
     conditions: [
       md`$\psi$ exists because the flow is plane and incompressible; $\phi$ does **not** exist`,
@@ -202,6 +205,8 @@ export const formulas: FormulaDef[] = [
     tex: md`\omega_z = \frac{1}{2}\Big(\underbrace{\frac{dv_\theta}{dr}}_{\text{radial arm}} + \underbrace{\frac{v_\theta}{r}}_{\text{tangential arm}}\Big) = \frac{1}{2r}\,\frac{d(r v_\theta)}{dr}`,
     vars: [
       { sym: md`\omega_z`, desc: 'rotation of the element, counter-clockwise positive', units: md`\mathrm{rad/s}` },
+      { sym: md`v_\theta(r)`, desc: md`tangential velocity, a function of $r$ only`, units: md`\mathrm{m/s}` },
+      { sym: md`r`, desc: 'distance from the axis', units: md`\mathrm{m}` },
       { sym: md`dv_\theta/dr`, desc: 'angular velocity of a short **radial** segment — it is sheared because its two ends move at different speeds', units: md`\mathrm{rad/s}` },
       { sym: md`v_\theta/r`, desc: 'angular velocity of a short **tangential** segment — it turns as it is carried round the circle', units: md`\mathrm{rad/s}` },
     ],
@@ -216,6 +221,7 @@ export const formulas: FormulaDef[] = [
     name: 'Rankine (combined) vortex — forced core + free outer flow',
     tex: md`v_\theta(r) = \begin{cases} \dfrac{K r}{R^2}, & r \le R \quad \text{(forced core)}\\[2mm] \dfrac{K}{r}, & r \ge R \quad \text{(free vortex outside)} \end{cases}`,
     vars: [
+      { sym: md`v_\theta(r)`, desc: 'tangential velocity', units: md`\mathrm{m/s}` },
       { sym: md`K`, desc: 'strength of the outer free vortex', units: md`\mathrm{m^2/s}` },
       { sym: md`R`, desc: 'core radius', units: md`\mathrm{m}` },
       { sym: md`r`, desc: 'distance from the axis', units: md`\mathrm{m}` },
@@ -250,9 +256,11 @@ export const formulas: FormulaDef[] = [
     key: true,
     tex: md`\vb{V} = \nabla\phi \;\Rightarrow\; \vb{V}\cdot d\vb{s} = \nabla\phi\cdot d\vb{s} = d\phi \;\Rightarrow\; \Gamma = \oint_C d\phi = 0`,
     vars: [
+      { sym: md`\vb{V}`, desc: 'local velocity vector', units: md`\mathrm{m/s}` },
       { sym: md`\phi`, desc: 'velocity potential', units: md`\mathrm{m^2/s}` },
+      { sym: md`d\vb{s}`, desc: md`line element of the closed curve $C$, pointing in the direction of travel`, units: md`\mathrm{m}` },
       { sym: md`d\phi`, desc: md`change of $\phi$ along the step $d\vb{s}$`, units: md`\mathrm{m^2/s}` },
-      { sym: md`\Gamma`, desc: 'circulation', units: md`\mathrm{m^2/s}` },
+      { sym: md`\Gamma`, desc: md`circulation round $C$`, units: md`\mathrm{m^2/s}` },
     ],
     conditions: [
       md`irrotational flow with a **single-valued** $\phi$ inside and on $C$`,
@@ -302,6 +310,7 @@ export const formulas: FormulaDef[] = [
     tex: md`v_\theta = \frac{\Gamma}{2\pi r}, \qquad v_r = 0`,
     vars: [
       { sym: md`v_\theta`, desc: 'tangential velocity', units: md`\mathrm{m/s}` },
+      { sym: md`v_r`, desc: 'radial velocity (zero: no flow crosses the circular streamlines)', units: md`\mathrm{m/s}` },
       { sym: md`\Gamma`, desc: 'circulation', units: md`\mathrm{m^2/s}` },
       { sym: md`r`, desc: 'distance from the centre', units: md`\mathrm{m}` },
     ],
@@ -313,9 +322,12 @@ export const formulas: FormulaDef[] = [
     name: 'Circulation = enclosed vorticity (Stokes theorem)',
     tex: md`\Gamma = \oint_C \vb{V}\cdot d\vb{s} = \iint_A \zeta_z\,dA`,
     vars: [
-      { sym: md`A`, desc: md`area enclosed by $C$`, units: md`\mathrm{m^2}` },
-      { sym: md`\zeta_z`, desc: 'vorticity', units: md`\mathrm{s^{-1}}` },
       { sym: md`\Gamma`, desc: 'circulation', units: md`\mathrm{m^2/s}` },
+      { sym: md`C`, desc: 'closed curve, traversed counter-clockwise' },
+      { sym: md`\vb{V},\ d\vb{s}`, desc: md`local velocity and line element of $C$ — as in the definition of $\Gamma$`, units: md`\mathrm{m/s},\ \mathrm{m}` },
+      { sym: md`A`, desc: md`area enclosed by $C$`, units: md`\mathrm{m^2}` },
+      { sym: md`dA`, desc: md`element of that area`, units: md`\mathrm{m^2}` },
+      { sym: md`\zeta_z = \pd{v}{x} - \pd{u}{y}`, desc: 'vorticity (twice the rotation)', units: md`\mathrm{s^{-1}}` },
     ],
     conditions: [
       md`plane flow; $C$ traversed counter-clockwise`,
@@ -333,6 +345,7 @@ export const formulas: FormulaDef[] = [
       { sym: md`V`, desc: 'flow speed', units: md`\mathrm{m/s}` },
       { sym: md`g`, desc: 'gravitational acceleration', units: md`\mathrm{m/s^2}` },
       { sym: md`z`, desc: 'elevation above a datum, positive upward', units: md`\mathrm{m}` },
+      { sym: md`1,\ 2`, desc: 'subscripts marking the two points' },
     ],
     conditions: [
       md`steady, inviscid, incompressible flow, points on the **same streamline** (Lec 10, slide 11)`,
@@ -764,6 +777,7 @@ Speed: $u = -2/5 = -0.40$ m/s, $v = 1/5 = 0.20$ m/s, $\vert\vb{V}\vert = \sqrt{0
     concept: 'free-vortex',
     difficulty: 1,
     q: md`In a free vortex the tangential velocity is $2$ m/s at $r = 0.3$ m. Find (a) $K$, (b) $v_\theta$ at $r = 5$ cm and (c) the radius at which the speed reaches $10$ m/s.`,
+    hint: md`In a free vortex $rv_\theta = K$ is the same on every circle. Convert 5 cm to metres first.`,
     answer: md`(a) $K = 0.60\ \mathrm{m^2/s}$; (b) $12$ m/s; (c) $r = 0.060$ m.`,
     solution: md`(a) $K = rv_\theta = 0.3(2) = 0.60\ \mathrm{m^2/s}$.
 
@@ -783,6 +797,7 @@ The product $rv_\theta$ is the same on every streamline — the quickest way to 
     concept: 'free-vs-forced',
     difficulty: 1,
     q: md`A cylindrical tank of liquid rotates as a rigid body at $30$ rpm. Find the speed at $r = 0.2$ m, the rotation $\omega_z$ and the vorticity $\zeta_z$ of the fluid elements.`,
+    hint: md`Convert to rad/s with $K_1 = 2\pi N/60$; rigid-body rotation is the forced vortex $v_\theta = K_1r$, and $\zeta_z = 2\omega_z$.`,
     answer: md`$K_1 = \pi = 3.14$ rad/s; $v_\theta = 0.628$ m/s; $\omega_z = 3.14$ rad/s; $\zeta_z = 6.28\ \mathrm{s^{-1}}$.`,
     solution: md`Rigid-body rotation is the forced vortex $v_\theta = K_1r$, with $K_1$ the angular velocity of the tank:
 
@@ -848,6 +863,7 @@ Fluid moving at constant speed on circles **does** rotate. Curved paths are neit
     concept: 'circulation',
     difficulty: 1,
     q: md`A free vortex has circulation $\Gamma = 3\ \mathrm{m^2/s}$ (counter-clockwise). Find (a) $K$ and $v_\theta$ at $r = 0.25$ m; (b) the circulation round a circle of radius $2$ m centred on the vortex; (c) the circulation round a circle of radius $0.5$ m centred at $(2,\ 0)$ m.`,
+    hint: md`$K = \Gamma/2\pi$. For (b) and (c), ask only whether the loop encloses the singular point $r = 0$.`,
     answer: md`(a) $K = 0.477\ \mathrm{m^2/s}$, $v_\theta = 1.91$ m/s; (b) $3\ \mathrm{m^2/s}$; (c) $0$.`,
     solution: md`(a) $K = \Gamma/2\pi = 3/2\pi = 0.477\ \mathrm{m^2/s}$, and $v_\theta = \Gamma/(2\pi r) = 3/(2\pi \times 0.25) = 1.91$ m/s.
 
@@ -905,6 +921,7 @@ Adding the stream changed the velocity everywhere but not the circulation — th
     concept: 'circulation',
     difficulty: 3,
     q: md`The shear flow $u = cy$, $v = 0$ ($c = 2\ \mathrm{s^{-1}}$) has perfectly straight, parallel streamlines. Compute the circulation round the unit square with corners $(0,0)$, $(1,0)$, $(1,1)$, $(0,1)$ m (counter-clockwise) and the rotation $\omega_z$. Is the flow irrotational?`,
+    hint: md`Go edge by edge: on the vertical edges $v = 0$, on the horizontal edges only $u$ counts — and the top edge is travelled in the $-x$ direction.`,
     answer: md`$\Gamma = -2\ \mathrm{m^2/s}$ and $\omega_z = -1$ rad/s (clockwise): the flow is **rotational** despite its straight streamlines.`,
     solution: md`Edges, counter-clockwise:
 
@@ -922,6 +939,7 @@ Straight paths **with** rotation here, circular paths **without** rotation in th
     concept: 'draining-tank',
     difficulty: 1,
     q: md`A draining-tank vortex has $\Gamma = 0.2\ \mathrm{m^2/s}$. Find the swirl speed and the depression of the free surface below the far-field level at $r = 5$ cm and at $r = 10$ cm ($g = 9.81\ \mathrm{m/s^2}$).`,
+    hint: md`$v_\theta = \Gamma/(2\pi r)$, and the surface sits one velocity head $v_\theta^2/2g$ below the far-field level.`,
     answer: md`$r = 5$ cm: $v_\theta = 0.637$ m/s, $z_s = -20.7$ mm. $r = 10$ cm: $v_\theta = 0.318$ m/s, $z_s = -5.16$ mm.`,
     solution: md`$v_\theta = \Gamma/(2\pi r)$ and $z_s = -v_\theta^2/(2g) = -\Gamma^2/(8\pi^2r^2g)$:
 
@@ -958,6 +976,7 @@ At $r = 3$ cm the radius is halved, so the depression is $2^2 = 4$ times larger:
     concept: 'draining-tank',
     difficulty: 2,
     q: md`(a) Show that the radial-equilibrium relation $dz_s/dr = v_\theta^2/(gr)$ reproduces the free-vortex surface $z_s = -\Gamma^2/(8\pi^2r^2g)$. (b) For contrast, a bucket of water spins as a rigid body at $\Omega = 10$ rad/s. How much higher is the surface at the wall, $r = 0.15$ m, than on the axis?`,
+    hint: md`(a) Substitute $v_\theta = \Gamma/2\pi r$, integrate in $r$ and fix the constant with $z_s \to 0$ as $r \to \infty$. (b) Use $v_\theta = \Omega r$ in the same relation.`,
     answer: md`(a) Integrating $\Gamma^2/(4\pi^2gr^3)$ gives $-\Gamma^2/(8\pi^2gr^2) + C$ with $C = 0$. (b) $\Delta z = \Omega^2R^2/(2g) = 0.115$ m.`,
     solution: md`(a) For the free vortex $v_\theta^2/(gr) = \Gamma^2/(4\pi^2gr^3)$. Integrating,
 
@@ -1348,12 +1367,12 @@ Streamlines: **circles**. Equipotentials: **radial lines**.`,
         <Md>{md`
           Picture the swirl above a bathtub drain. Far out the water drifts slowly; close to the drain it whips round. In the free vortex the product $r\,v_\theta$ — the angular momentum per unit mass — is the **same on every circle** ($= K$), just as a figure skater spins faster when she pulls her arms in.
 
-          Now float a tiny matchstick cross on that swirl. Two things happen at once:
+          Now float a tiny matchstick cross on that swirl, one arm along the circle and one along the radius. Two things happen at once:
 
-          - the cross is **carried round the circle**, which on its own would turn it counter-clockwise at the orbital rate $v_\theta/r$;
-          - the inner end of its radial arm moves **faster** than the outer end (because $v_\theta \propto 1/r$), which swings that arm clockwise at $dv_\theta/dr = -K/r^2$.
+          - the **tangential arm** is carried round the circle with the flow, so it turns counter-clockwise at the orbital rate $v_\theta/r = +K/r^2$;
+          - the inner end of the **radial arm** moves **faster** than its outer end (because $v_\theta \propto 1/r$), which swings that arm clockwise at $dv_\theta/dr = -K/r^2$.
 
-          For $v_\theta = K/r$ the two effects are **exactly equal and opposite** ($+K/r^2$ and $-K/r^2$), so the element as a whole does not turn — like a gondola on a Ferris wheel that travels round a circle yet stays upright.
+          For $v_\theta = K/r$ the two arms turn **equally fast in opposite directions**, so their average — the rotation $\omega_z$ of the element — is zero: the cross is sheared but, as a whole, does not turn. Picture a gondola on a Ferris wheel that travels round a circle yet stays upright.
         `}</Md>
         <Callout kind="tip" title="Path is not rotation">
           <Md>{md`Curved paths do not imply rotation, and straight paths do not rule it out: the shear flow $u = cy$ has straight streamlines but $\omega_z = -c/2$. Test rotation with velocity **gradients**, never with the shape of the streamlines.`}</Md>
@@ -1684,14 +1703,13 @@ function DrainingTankConcept() {
           Another view: water moving on a circle needs an inward (centripetal) force $\rho v_\theta^2/r$ per unit volume. It is supplied by a pressure that increases outward — that is, by a surface that slopes **up** away from the axis. The faster the swirl, the steeper the slope.
         `}</Md>
         <Callout kind="note" title="Contrast: the rotating bucket">
-          <Md>{md`In a forced vortex the speed *increases* outward, and the same centripetal reasoning gives a paraboloid that **rises** towards the wall. Same physics, opposite-looking profile — because $v_\theta(r)$ is different.`}</Md>
+          <Md>{md`In **both** vortices the surface rises away from the axis — the outward pressure rise must supply the centripetal force. What differs is *where* it is steep. Free vortex: the slope $dz_s/dr \propto v_\theta^2/r \propto 1/r^3$ is steepest near the axis, giving a narrow funnel. Forced vortex (a spinning bucket): the speed *increases* outward, the slope $\propto r$ is zero on the axis and steepest at the wall — a paraboloid.`}</Md>
         </Callout>
       </Step>
 
-      <Step kind="visual" src={lec12('19')}>
+      <Step kind="visual">
         <Figure
-          caption={md`Vertical section through the slide-19 vortex, computed to true scale from the result below ($\Gamma = 0.12\ \mathrm{m^2/s}$, water): the surface is depressed below the far-field level (point 1) and plunges near the axis into an air core that runs down the drain; point 2 is a surface point at radius $r$.`}
-          src={lec12('19')}
+          caption={md`Vertical section through a draining-tank vortex, computed to true scale from the platform solution below ($\Gamma = 0.12\ \mathrm{m^2/s}$, water) — compare it with the photograph on Lec 12, slide 19. Far out (point 1) the surface is practically at the undisturbed level; closer in it is depressed and plunges near the axis into an air core that runs down the drain; point 2 is a surface point at radius $r$.`}
         >
           <TankFigure />
         </Figure>

@@ -272,7 +272,7 @@ export const formulas: FormulaDef[] = [
       md`identical to the Cartesian definition after substituting $x = r\cos\theta$, $y = r\sin\theta$`,
       'satisfies the polar continuity equation identically (the mixed derivatives cancel)',
     ],
-    use: md`Use it for flows with a natural centre — sources, sinks, vortices, flow round a cylinder (Unit B). Exam trap: the $1/r$ goes with the $\theta$-derivative (on $v_r$) and the minus sign with the $r$-derivative (on $v_\theta$).`,
+    use: md`Use it for flows with a natural centre — sources, sinks, vortices and the half-body built from them (Unit B). Exam trap: the $1/r$ goes with the $\theta$-derivative (on $v_r$) and the minus sign with the $r$-derivative (on $v_\theta$).`,
     src: L10,
   },
   {
@@ -618,7 +618,7 @@ export const examples: ExampleDef[] = [
       },
       {
         title: 'A note on rotation',
-        md: md`$\omega_z = \tfrac12\left(\pd{v}{x} - \pd{u}{y}\right) = \tfrac12(4 - 2) = 1\ \mathrm{s^{-1}} \ne 0$: the flow is **rotational**, yet $\psi$ exists — a stream function needs only continuity. (Such a field has no velocity potential; see the next topic.)`,
+        md: md`$\omega_z = \tfrac12\left(\pd{v}{x} - \pd{u}{y}\right) = \tfrac12(4 - 2) = 1\ \mathrm{s^{-1}} \ne 0$: the flow is **rotational**, yet $\psi$ exists — a stream function needs only continuity. (Being rotational, this field has **no velocity potential**: $\phi$ requires irrotational flow — see the velocity-potential topic.)`,
       },
     ],
     answer: md`$\psi = y^2 - 2x^2 + C$ (take $C = 0$). Streamlines are the hyperbolas $y^2 - 2x^2 = \text{const}$; $\psi = 0$ along $y = \pm\sqrt2\,x$.`,
@@ -800,6 +800,7 @@ export const practice: PracticeDef[] = [
     concept: 'flow-rate',
     difficulty: 1,
     q: md`Uniform flow $u = U = 3$ m/s, $v = 0$. (a) Find $\psi$ with $\psi = 0$ on $y = 0$. (b) What volume flow rate per metre of depth passes between the streamlines through $y = 1$ m and $y = 2.5$ m? (c) What is the total flow rate between them in a channel $2$ m deep?`,
+    hint: md`Integrate $\pd{\psi}{y} = U$; the streamlines are the horizontal lines $y = \text{const}$. Then $q = \psi_2 - \psi_1$ and $Q = qb$.`,
     answer: md`$\psi = 3y$; $q = 4.5\ \mathrm{m^2/s}$; $Q = 9.0\ \mathrm{m^3/s}$.`,
     solution: md`
       **(a)** $\psi = Uy = 3y$ ($\pd{\psi}{y} = 3 = u$ ✓, $-\pd{\psi}{x} = 0 = v$ ✓).
@@ -854,7 +855,8 @@ export const practice: PracticeDef[] = [
     concept: 'flow-rate',
     difficulty: 3,
     q: md`In a plane converging duct, the streamlines $\psi_1 = 0.6\ \mathrm{m^2/s}$ (lower) and $\psi_2 = 0.9\ \mathrm{m^2/s}$ (upper) are 15 cm apart at section 1 and 5 cm apart at section 2. (a) What flow rate per metre of depth passes between them, and in which direction? (b) Estimate the mean speed between the two streamlines at each section. (c) Why is this only an estimate?`,
-    answer: md`$q = 0.30\ \mathrm{m^2/s}$, left to right; $\bar V_1 \approx 2.0$ m/s, $\bar V_2 \approx 6.0$ m/s.`,
+    hint: md`The space between two streamlines is a "lane" that no fluid leaves, so the same $q$ passes every section; divide it by the local gap $\Delta n$.`,
+    answer: md`$q = 0.30\ \mathrm{m^2/s}$, left to right; $\bar V_1 \approx 2.0$ m/s, $\bar V_2 \approx 6.0$ m/s — gap-averaged speeds, not local ones.`,
     solution: md`
       **(a)** $q = \psi_2 - \psi_1 = 0.30\ \mathrm{m^2/s}$; $\psi_2$ is the upper line and $\psi_2 > \psi_1$, so the flow is left to right (slide 14).
 
@@ -1028,14 +1030,14 @@ export const quiz: QuizQ[] = [
     difficulty: 2,
     q: 'Can two streamlines with different values of ψ cross each other?',
     options: [
-      'No — ψ is single-valued, so no point can lie on two different ψ contours; lines meet only at stagnation points, and those lines share one ψ value',
-      'Yes, wherever the flow is rotational',
-      'Yes, at every point where u = 0',
-      'Yes, whenever the flow is unsteady',
+      'No — a point has only one value of ψ, so it cannot lie on two different contours',
+      'Yes — wherever the flow is rotational',
+      'Yes — at every point where u = 0',
+      'Yes — whenever the flow is unsteady',
     ],
     answer: 0,
     explain:
-      'A point has one value of ψ, so it cannot sit on two contours with different values. Where V = 0 (a stagnation point) several branches of the same contour can meet. Rotation, u = 0 alone, or unsteadiness do not allow crossings.',
+      'A point has one value of ψ, so it cannot sit on two contours with different values. Streamlines can meet only where V = 0 (a stagnation point), and then they are branches of the same contour, sharing one ψ value. Rotation, u = 0 alone (the flow is then simply vertical) or unsteadiness (ψ = ψ(x, y, t) is still single-valued at each instant) do not allow crossings.',
   },
   {
     id: 'q-sl-wall',
@@ -1120,7 +1122,7 @@ export const quiz: QuizQ[] = [
     q: 'For which plane velocity field can a stream function ψ(x, y) be found?',
     options: [md`$u = 2y,\ v = 4x$`, md`$u = x,\ v = y$`, md`$u = 2xy,\ v = y^2$`, md`$u = x^2,\ v = -y^2$`],
     answer: 0,
-    explain: md`Only $u = 2y$, $v = 4x$ satisfies $\pd{u}{x} + \pd{v}{y} = 0$. The others give $2$, $4y$ and $2x - 2y$ respectively — they violate continuity, so no $\psi$ exists for them.`,
+    explain: md`Only $u = 2y$, $v = 4x$ satisfies $\pd{u}{x} + \pd{v}{y} = 0$ ($0 + 0$). The others violate continuity: $u = x,\ v = y$ gives $2$; $u = 2xy,\ v = y^2$ gives $2y + 2y = 4y$; $u = x^2,\ v = -y^2$ gives $2x - 2y$. No $\psi$ exists for them.`,
   },
   {
     id: 'q-pol-3d',
@@ -1158,7 +1160,7 @@ export const quiz: QuizQ[] = [
     id: 'q-pol-rotational',
     concept: 'polar-scope',
     difficulty: 3,
-    src: L10,
+    src: { doc: 'lec10', pages: '2', note: 'problem statement; analysis written here' },
     q: 'The in-class field u = 2y, v = 4x has ω_z = 1 s⁻¹ (it is rotational). Does it have a stream function?',
     options: [
       'Yes — ψ needs only continuity, so ψ = y² − 2x² exists even though the flow is rotational',
@@ -1234,8 +1236,8 @@ export const flashcards: Flashcard[] = [
   {
     id: 'fc-inclass',
     front: 'Lecture 10 in-class problem: u = 2y, v = 4x. Stream function?',
-    back: md`$\psi = y^2 - 2x^2 + C$ (hyperbolic streamlines; $\psi = 0$ on $y = \pm\sqrt2\,x$).`,
-    src: L10,
+    back: md`$\psi = y^2 - 2x^2 + C$ (hyperbolic streamlines; $\psi = 0$ on $y = \pm\sqrt2\,x$). Only the question is on the slide; this answer is worked out on this platform.`,
+    src: { doc: 'lec10', pages: '2', note: 'problem statement only' },
   },
 ]
 
@@ -1281,7 +1283,7 @@ export default function Content() {
             <Md>{md`A scalar field whose derivatives give the velocity of a plane, incompressible flow: $u = \pd{\psi}{y}$, $v = -\pd{\psi}{x}$. Units $\mathrm{m^2/s}$. It is fixed only up to an additive constant — adding $C$ changes no velocity — so only **differences** of $\psi$ carry physical meaning.`}</Md>
           </Callout>
           <Callout kind="note" title="Why it matters">
-            <Md>{md`Everything in this topic grows from the definition: contours of $\psi$ are the **streamlines** (slide 13), differences of $\psi$ are **flow rates** (slide 14), and in Unit B every classic plane flow — uniform stream, source, vortex, flow round a cylinder — is described by writing down its $\psi$.`}</Md>
+            <Md>{md`Everything in this topic grows from the definition: contours of $\psi$ are the **streamlines** (slide 13), differences of $\psi$ are **flow rates** (slide 14), and in Unit B every classic plane flow — uniform stream, source and sink, vortex, and the half-body made by superposing them — is described by writing down its $\psi$.`}</Md>
           </Callout>
           <Supplement title="Steady or unsteady?">
             <Md>{md`The slide frames the definition for steady flow, but the construction only uses $\pd{u}{x} + \pd{v}{y} = 0$, which also holds at every instant of an *unsteady* incompressible plane flow. Then $\psi = \psi(x, y, t)$, and its contours are the *instantaneous* streamlines (which need not coincide with particle paths).`}</Md>
@@ -1401,7 +1403,7 @@ export default function Content() {
           >
             <TangencyFigure />
           </Figure>
-          <Figure caption={md`✦ Velocity arrows computed from $u = \pd{\psi}{y}$, $v = -\pd{\psi}{x}$ for $\psi = xy$ lie along the $\psi$ contours everywhere. The wall $y = 0$ is the contour $\psi = 0$.`}>
+          <Figure caption={md`✦ Velocity arrows computed from $u = \pd{\psi}{y}$, $v = -\pd{\psi}{x}$ for $\psi = xy$ (axes in m) lie along the $\psi$ contours everywhere. The wall $y = 0$ is the contour $\psi = 0$.`}>
             <FlowField x={[-2, 2]} y={[0, 2]} psi={cornerPsi} quiver={13} maxHeight={260} />
           </Figure>
         </Step>
@@ -1478,7 +1480,7 @@ export default function Content() {
             - Where a lane narrows, the same $q$ squeezes through a smaller gap, so the fluid speeds up ($|\vb V| \approx \Delta\psi/\Delta n$). A plot of equal-$\Delta\psi$ streamlines is therefore also a speed map.
             - The flow across a curve depends only on which two lanes' edges it starts and ends on — not on how it wiggles in between. Any extra crossing one way is undone by a crossing back.
           `}</Md>
-          <Figure caption={md`✦ Equal steps $\Delta\psi = 0.25\ \mathrm{m^2/s}$ in corner flow $\psi = xy$; colour shows the speed. Lanes narrow exactly where the colour warms.`}>
+          <Figure caption={md`✦ Equal steps $\Delta\psi = 0.25\ \mathrm{m^2/s}$ in corner flow $\psi = xy$ (axes in m); colour shows the speed. Lanes narrow exactly where the colour warms.`}>
             <FlowField x={[0, 2.4]} y={[0, 1.6]} psi={cornerPsi} psiLevels={CORNER_LEVELS} heatmap maxHeight={260} />
           </Figure>
         </Step>
@@ -1569,11 +1571,11 @@ export default function Content() {
           <Md>{md`
             **Why the $1/r$?** In polar coordinates a small change $d\theta$ moves you along an arc of length $r\,d\theta$, not $d\theta$. Apply slide 14's "$d\psi$ = flow crossing the step" to the two sides of a small polar element (figure below): walking along the arc (increasing $\theta$), the flow crossing it is $v_r\,(r\,d\theta) = d\psi$, so $v_r = \frac{1}{r}\pd{\psi}{\theta}$; walking outward along a radius, the flow crossing from your left to your right is $-v_\theta\,dr = d\psi$, so $v_\theta = -\pd{\psi}{r}$. The polar box is just "Δψ = flow rate" in round geometry.
 
-            **Why only "single" stream functions fail in 3-D.** Count degrees of freedom. In plane flow, continuity is one equation linking two components ($u$, $v$): one free scalar remains — $\psi$. Axisymmetric flow ($v_r$, $v_z$) and steady compressible plane flow ($\rho u$, $\rho v$) again have one equation linking two quantities, so a single $\psi$ still works. A general 3-D flow has three components and still only one continuity equation: **two** free scalars remain, so it needs two stream functions.
+            **Why a single stream function fails in 3-D.** Count degrees of freedom. In plane flow, continuity is one equation linking two components ($u$, $v$): one free scalar remains — $\psi$. Axisymmetric flow ($v_r$, $v_z$) and steady compressible plane flow ($\rho u$, $\rho v$) again have one equation linking two quantities, so a single $\psi$ still works. A general 3-D flow has three components and still only one continuity equation: **two** free scalars remain, so it needs two stream functions.
           `}</Md>
         </Step>
 
-        <Step kind="visual" src={L10}>
+        <Step kind="visual" src={[L10, { doc: 'lec10', pages: '7', note: 'ψ vs φ' }]}>
           <Figure caption="✦ Left: polar components at P — v_r along the radius, v_θ perpendicular to it. Right: a polar element; the arc has length r dθ, which is where the 1/r in v_r comes from.">
             <PolarFigure />
           </Figure>
@@ -1595,13 +1597,28 @@ export default function Content() {
             ]}
             arrowLabels={['yes — then how many coordinates does the flow depend on?']}
           />
+          <Md>{md`Lecture 10, slide 7 restates the scope as a contrast with the velocity potential $\phi$ (met later in Unit A):`}</Md>
+          <Compare
+            items={[
+              {
+                title: 'Stream function ψ',
+                md: md`A consequence of **conservation of mass**. A **single** stream function is restricted to **two-dimensional** flows (slide 2 adds the axisymmetric and 2-D compressible extensions). Rotational flows have one too.`,
+                tone: 'emerald',
+              },
+              {
+                title: 'Velocity potential φ',
+                md: md`A consequence of **irrotationality**. It can be defined for a **general three-dimensional** flow, but only if the flow is irrotational — so the slide 2 field ($\omega_z = 1\ \mathrm{s^{-1}}$, see the solved example below) has a $\psi$ but no $\phi$.`,
+                tone: 'violet',
+              },
+            ]}
+          />
         </Step>
 
         <Step kind="equations" src={L10}>
           <FormulaCard id="continuity-polar" />
           <FormulaCard id="psi-polar" />
           <Derivation
-            title="✦ Why the polar box satisfies polar continuity"
+            title="✦ Why the polar box works: it satisfies polar continuity, and it is the same ψ as the Cartesian one"
             steps={[
               { md: md`$\dfrac{1}{r}\pd{}{r}\left(r \cdot \dfrac{1}{r}\pd{\psi}{\theta}\right) + \dfrac{1}{r}\pd{}{\theta}\left(-\pd{\psi}{r}\right)$`, why: 'substitute the box into polar continuity' },
               { md: md`$= \dfrac{1}{r}\left(\dfrac{\partial^2\psi}{\partial r\,\partial\theta} - \dfrac{\partial^2\psi}{\partial\theta\,\partial r}\right) = 0$`, why: 'the r inside cancels the 1/r; mixed partials commute' },
@@ -1660,6 +1677,3 @@ export default function Content() {
     </>
   )
 }
-
-/* Compare is kept for the ψ-vs-φ summary below the polar concept (imported for future use in this module). */
-void Compare

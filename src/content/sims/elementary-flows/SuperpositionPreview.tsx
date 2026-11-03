@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { FlowField, SimPanel, Slider, md, type Vec } from '@/kit'
 import { TeXReadout } from './ui'
+import { AxisTags } from './svg'
 
 const TWO_PI = 2 * Math.PI
 
@@ -72,6 +73,7 @@ export function SuperpositionPreview() {
           { x: 0, y: 0, kind: 'source' },
           { x: -b, y: 0, kind: 'stagnation', label: 'stagnation point' },
         ]}
+        overlay={({ sx, sy }) => <AxisTags sx={sx} sy={sy} xMax={5} yMax={2.5} />}
       />
     </SimPanel>
   )

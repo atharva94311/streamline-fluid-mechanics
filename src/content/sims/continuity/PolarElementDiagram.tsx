@@ -4,13 +4,14 @@ import { AX, ArrowMarkers } from './shared'
 
 /*
  * Plane sector element r…r+δr, θ…θ+δθ (unit depth) with purely radial flow.
- * Shaded bands = fluid that crosses the inner / outer face in a time τ (area ∝ volume flow rate).
+ * Shaded bands = fluid that crosses the inner / outer face in a time τ: each band is an annular sector whose
+ * area is exactly q·τ (q = v_r r δθ per unit depth), so equal flow rates give equal band areas.
  */
 type Mode = 'const' | 'source' | 'linear'
 const DR = 0.5 // m
 const DTH = (22 * Math.PI) / 180
 const TH1 = (26 * Math.PI) / 180
-const TAU = 0.25 // s
+const TAU = 0.15 // s
 const K = 66 // px per m
 const O: [number, number] = [36, 272]
 
@@ -47,6 +48,11 @@ export function PolarElementDiagram() {
   const TH2 = TH1 + DTH
   const mid = (TH1 + TH2) / 2
   const arrows = [TH1 + 0.2 * DTH, mid, TH2 - 0.2 * DTH]
+  // band radii: ½(R1² − rIn²)δθ = qIn·τ and ½(rOut² − R2²)δθ = qOut·τ
+  const rIn = Math.sqrt(Math.max(0.05 ** 2, R1 * R1 - 2 * v1 * R1 * TAU))
+  const rOut = Math.sqrt(R2 * R2 + 2 * v2 * R2 * TAU)
+  const inStart = Math.min(R1 - 0.12, rIn + 0.1 * (R1 - rIn))
+  const outEnd = Math.max(R2 + 0.12, rOut - 0.1 * (rOut - R2))
 
   return (
     <div className="space-y-3">
@@ -80,18 +86,18 @@ export function PolarElementDiagram() {
         <text x={pol(0.72, TH1 / 2)[0]} y={pol(0.72, TH1 / 2)[1] + 4} fontSize={12} fontStyle="italic" className="fill-ink-3">θ</text>
 
         {/* fluid crossing the faces during τ */}
-        <path d={sector(Math.max(0.05, R1 - v1 * TAU), R1, TH1, TH2)} fill={AX.x} fillOpacity={0.28} stroke={AX.x} strokeWidth={1} />
-        <path d={sector(R2, R2 + v2 * TAU, TH1, TH2)} fill={AX.pos} fillOpacity={0.28} stroke={AX.pos} strokeWidth={1} />
+        <path d={sector(rIn, R1, TH1, TH2)} fill={AX.x} fillOpacity={0.28} stroke={AX.x} strokeWidth={1} />
+        <path d={sector(R2, rOut, TH1, TH2)} fill={AX.pos} fillOpacity={0.28} stroke={AX.pos} strokeWidth={1} />
 
         {/* the element */}
         <path d={sector(R1, R2, TH1, TH2)} fill="var(--plot-2)" fillOpacity={0.12} stroke="var(--ink)" strokeWidth={2} />
 
         {/* direction arrows */}
         {arrows.map((t, i) => {
-          const a = pol(R1 - v1 * TAU * 0.9, t)
+          const a = pol(inStart, t)
           const b = pol(R1 - 0.03, t)
           const c = pol(R2 + 0.03, t)
-          const d = pol(R2 + v2 * TAU * 0.9, t)
+          const d = pol(outEnd, t)
           return (
             <g key={i}>
               <line x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} stroke={AX.x} strokeWidth={1.8} markerEnd={`url(#${uid}-in)`} />
@@ -103,7 +109,7 @@ export function PolarElementDiagram() {
         {/* labels */}
         {(() => {
           const pIn = pol(R1, mid)
-          const pOut = pol(R2 + v2 * TAU + 0.12, mid)
+          const pOut = pol(rOut + 0.12, mid)
           const side = pol(rc, TH2)
           return (
             <g fontSize={12} fontWeight={600}>
@@ -132,7 +138,7 @@ export function PolarElementDiagram() {
         ]}
       />
       <Md className="md-tight text-sm text-ink-2">
-        {md`Shaded bands: the fluid that crosses the inner (blue) and outer (rose) faces in $\tau = 0.25$ s — their areas are proportional to the volume flow rates. Profile: $${VR[mode].tex}$. The outer face is longer than the inner one by the factor $(r + \delta r)/r$, so a **uniform** $v_r$ carries more fluid out than in: the element would have to gain volume. Only $v_r \propto 1/r$ keeps $r v_r$ — and hence the flow through every circle — constant.`}
+        {md`Shaded bands: the fluid that crosses the inner (indigo) and outer (rose) faces in $\tau = ${TAU}$ s — each band's area is exactly (volume flow rate per unit depth) $\times\,\tau$, so equal bands mean equal flow in and out. Profile: $${VR[mode].tex}$. The outer face is longer than the inner one by the factor $(r + \delta r)/r$, so a **uniform** $v_r$ carries more fluid out than in: the element would have to gain volume. Only $v_r \propto 1/r$ keeps $r v_r$ — and hence the flow through every circle — constant.`}
       </Md>
     </div>
   )

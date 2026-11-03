@@ -136,7 +136,7 @@ const PRESETS: CylPreset[] = [
     termTeX: (p) => [tn(2 * p.c), '0', tn(-2 * p.c)],
     passes: () => true,
     zFlow: true,
-    note: md`Fluid spreading radially in the plane while arriving along the axis (a jet hitting a wall, $c > 0$). In the plane alone $\frac{1}{r}\frac{\partial(r v_r)}{\partial r} = 2c \neq 0$ and $Q(r)$ grows — the $\partial v_z/\partial z = -2c$ term balances it. Switch it off to see continuity fail.`,
+    note: md`Fluid spreading radially in the plane while arriving along the axis (a jet hitting a wall, $c > 0$). In the plane alone $\frac{1}{r}\frac{\partial(r v_r)}{\partial r} = 2c \neq 0$ and $Q(r)$ grows — the $\partial v_z/\partial z = -2c$ term balances it: each square widens in the plane but thins along $z$, so its volume (and green colour) is kept. Switch $v_z$ off to see continuity fail and the squares swell.`,
   },
 ]
 
@@ -179,6 +179,11 @@ export function CylindricalChecker() {
     [pr, p, zOn],
   )
   const mask = useMemo(() => (rMin > 0 ? (x: number, y: number) => Math.hypot(x, y) < rMin : undefined), [rMin])
+  // ∂v_z/∂z for the squares' depth (only the axisymmetric preset has axial flow)
+  const dwdz = useMemo(
+    () => (pr.zFlow ? (x: number, y: number) => (zOn ? pr.terms(p, Math.hypot(x, y), Math.atan2(y, x))[2] : 0) : undefined),
+    [pr, p, zOn],
+  )
 
   const th = (thp * Math.PI) / 180
   const rProbe = Math.max(rp, rMin + 0.05)
@@ -231,6 +236,7 @@ export function CylindricalChecker() {
           y={[-2, 2]}
           vel={vel}
           div={div}
+          dwdz={dwdz}
           mask={mask}
           disc={rMin}
           probe={[rProbe * Math.cos(th), rProbe * Math.sin(th)]}

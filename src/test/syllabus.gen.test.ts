@@ -69,6 +69,6 @@ describe.skipIf(!process.env.GEN_SYLLABUS)('syllabus generator', () => {
       }
       L.push('')
     }
-    writeFileSync(new URL('../../SYLLABUS.md', import.meta.url), L.join('\n'))
+    writeFileSync(`${process.cwd()}/SYLLABUS.md`, L.join('\n'))
   })
 })

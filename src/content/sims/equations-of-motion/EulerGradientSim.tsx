@@ -105,7 +105,7 @@ function DuctSchematic({ mode, U, L, rho, playing }: { mode: 'nozzle' | 'diffuse
 
   return (
     <div ref={wrap}>
-      <svg viewBox="0 0 600 222" className="block h-auto w-full" role="img" aria-label={`${mode} with pressure gauges`}>
+      <svg viewBox="0 0 600 240" className="block h-auto w-full" role="img" aria-label={`${mode} with pressure gauges`}>
         <defs>
           <linearGradient id={gid} x1="0" x2="1" y1="0" y2="0">
             {xs.filter((_, i) => i % 5 === 0).map((x) => (
@@ -143,8 +143,8 @@ function DuctSchematic({ mode, U, L, rho, playing }: { mode: 'nozzle' | 'diffuse
         ))}
         <text x={X0} y={YC + hpx(0) + 18} fontSize={12} fill="var(--ink-2)" textAnchor="middle">inlet x = 0</text>
         <text x={X1} y={YC + hpx(L) + 18} fontSize={12} fill="var(--ink-2)" textAnchor="middle">exit x = L</text>
-        <text x={300} y={214} fontSize={11} fill="var(--ink-3)" textAnchor="middle">
-          gauges: column height ∝ local pressure · shading: darker rose = higher pressure
+        <text x={300} y={236} fontSize={11} fill="var(--ink-3)" textAnchor="middle">
+          gauges: taller liquid column = higher local pressure · shading: darker rose = higher pressure
         </text>
       </svg>
     </div>
@@ -210,7 +210,7 @@ function RotationSchematic({ Omega, R, playing }: { Omega: number; R: number; pl
 
   return (
     <div ref={wrap}>
-      <svg viewBox="0 0 600 222" className="block h-auto w-full" role="img" aria-label="Rotating container with paraboloid free surface">
+      <svg viewBox="0 0 600 240" className="block h-auto w-full" role="img" aria-label="Rotating container with paraboloid free surface">
         <polygon points={liquid} fill="var(--plot-2)" opacity={0.22} />
         {isobars.map((pts, i) => (
           <polyline key={i} points={pts} fill="none" stroke={COL.net} strokeWidth={1.3} strokeDasharray="5 4" opacity={0.85} />
@@ -248,7 +248,7 @@ function RotationSchematic({ Omega, R, playing }: { Omega: number; R: number; pl
         <text x={CX + W + 20} y={(yOf(zs(0)) + yOf(zs(R))) / 2 + 4} fontSize={12} fill="var(--ink)">
           Δz = {num.fmt(rise * 100, 3)} cm
         </text>
-        <text x={300} y={219} fontSize={11} fill="var(--ink-3)" textAnchor="middle">
+        <text x={300} y={232} fontSize={11} fill="var(--ink-3)" textAnchor="middle">
           solid blue: free surface (an isobar, p = pₐ) · dashed rose: isobars · dotted: level at rest
         </text>
       </svg>

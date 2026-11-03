@@ -71,7 +71,7 @@ export function LinearFieldBuilder() {
   return (
     <SimPanel
       title="Stream-function builder for u = ax + by, v = cx + dy"
-      subtitle={md`does a $\psi$ exist, and what is it?`}
+      subtitle={md`does a $\psi$ exist, and what is it? · axes $x$, $y$ in m`}
       wide
       controls={
         <>

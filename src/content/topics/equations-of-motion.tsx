@@ -66,7 +66,7 @@ export const formulas: FormulaDef[] = [
       { sym: md`\delta x,\ \delta y,\ \delta z`, desc: 'edge lengths of the element', units: md`\mathrm{m}` },
     ],
     conditions: [
-      'gravity is the only body force considered in this course',
+      'gravity is the only body force on slide 3 (electromagnetic and other body forces are not considered)',
       'it acts on every particle inside the element, so it is proportional to the element **volume**',
     ],
     use: md`Resolve $\vb{g}$ along your axes first (with $y$ vertical and upward: $g_x = 0$, $g_y = -g$, $g_z = 0$), then multiply by $\delta m$. Per unit volume the body force is $\rho g_x$, $\rho g_y$, $\rho g_z$ — the first term of each Cauchy equation.`,
@@ -185,7 +185,7 @@ export const formulas: FormulaDef[] = [
     ],
     conditions: [
       '**any continuum — solid or fluid — in motion or at rest** (slide 4)',
-      'no relation between stress and deformation (constitutive law) has been assumed — the source of that generality',
+      'why (explanation added here, not printed on the slide): no relation between stress and deformation — no constitutive law — has been assumed',
       'inertial reference frame; gravity is the only body force',
     ],
     use: md`Every term is a force per unit volume ($\mathrm{N/m^3}$). Use the equations to find the net stress gradient that a **known motion** requires, or — once a constitutive law is chosen — to find the motion. They cannot be solved alone: the stresses are extra unknowns.`,
@@ -240,7 +240,7 @@ export const formulas: FormulaDef[] = [
     conditions: [
       md`**inviscid**: all shear stresses zero and $\sigma_{xx} = \sigma_{yy} = \sigma_{zz} = -p$ (slide 5)`,
       'steady or unsteady, compressible or incompressible, rotational or irrotational — none of these is assumed',
-      'exact also for a viscous fluid in rigid-body motion (no deformation ⇒ no shear)',
+      'also exact for a viscous fluid in rigid-body motion: no deformation, so no shear (a consequence noted here, not on the slide)',
     ],
     use: md`Typical task: given $\vb{V}(x, y, z, t)$, evaluate the right-hand sides, then $\pd{p}{x} = \rho(g_x - a_x)$ etc., and integrate to get $p$. Conversely, a known pressure field gives the acceleration.`,
     src: S5,
@@ -286,7 +286,11 @@ export const formulas: FormulaDef[] = [
 \end{aligned}`,
     vars: [
       { sym: md`\theta`, desc: md`angle from the $x$-axis to the plane's unit normal`, units: md`\mathrm{rad}` },
-      { sym: md`\sigma_n,\ \tau_n`, desc: 'normal and shear stress acting on that plane', units: md`\mathrm{Pa}` },
+      {
+        sym: md`\sigma_n,\ \tau_n`,
+        desc: md`normal stress (positive in tension) and shear stress on that plane; $\tau_n$ is positive along $(-\sin\theta,\ \cos\theta)$, i.e. 90° anticlockwise from the normal`,
+        units: md`\mathrm{Pa}`,
+      },
       { sym: md`\sigma_{xx},\ \sigma_{yy}`, desc: 'normal stresses on the x- and y-faces', units: md`\mathrm{Pa}` },
       { sym: md`\tau_{xy} = \tau_{yx}`, desc: 'shear stress (symmetric)', units: md`\mathrm{Pa}` },
     ],
@@ -343,7 +347,7 @@ Shortcut check: $\big(\pd{\sigma_{xx}}{x}+\pd{\tau_{yx}}{y}+\pd{\tau_{zx}}{z}\bi
     concept: 'forces',
     title: 'Why a fluid at rest does not move',
     difficulty: 1,
-    given: md`Water ($\rho = 1000$ kg/m³) at rest, with $y$ vertical and upward ($g_x = g_z = 0$, $g_y = -9.81$ m/s²). A fluid at rest carries no shear stress, and its normal stress is $\sigma_{yy} = -p$ (the sign is explained in Concept 3) with the hydrostatic pressure $p = p_a + \rho g\,(h - y)$. Consider a cube with 10 mm edges.`,
+    given: md`Water ($\rho = 1000$ kg/m³) at rest, with $y$ vertical and upward ($g_x = g_z = 0$, $g_y = -9.81$ m/s²). A fluid at rest carries no shear stress, and its normal stress is $\sigma_{yy} = -p$ (the sign is explained in Concept 3) with the hydrostatic pressure $p = p_a + \rho g\,(h - y)$, where the free surface (pressure $p_a$) is at height $y = h$. Consider a cube with 10 mm edges.`,
     find: md`The $y$-direction body force and net surface force on the cube. Does it accelerate?`,
     steps: [
       {
@@ -683,6 +687,25 @@ Check: $\tfrac12\rho\,(u_0^2 - u_L^2) = \tfrac12(1000)(9 - 2.25) = 3375$ Pa ✓.
     ],
   },
   {
+    id: 'euler-p6',
+    concept: 'euler',
+    difficulty: 2,
+    q: md`A horizontal pipe of constant diameter and length $L = 12$ m is full of water ($\rho = 1000$ kg/m³). A valve is opened and the water accelerates uniformly: at every point $u = U(t)$ with $dU/dt = 1.5$ m/s², and $v = w = 0$. Treat the flow as inviscid. (a) Find $\pd{p}{x}$. (b) Find the pressure difference $p_{\text{in}} - p_{\text{out}}$ between the two ends. (c) What would the steady Bernoulli equation predict, and why is it wrong here?`,
+    hint: md`The velocity is the same all along the pipe, so every convective term vanishes; only the local term $\pd{u}{t}$ is left on the right of Euler's $x$-equation.`,
+    answer: md`(a) $\pd{p}{x} = -\rho\,dU/dt = -1500$ Pa/m; (b) $p_{\text{in}} - p_{\text{out}} = \rho L\,dU/dt = 18.0$ kPa; (c) steady Bernoulli predicts zero (equal speeds at both ends) because it has no local-acceleration term.`,
+    solution: md`**Acceleration:** $u = U(t)$ does not vary with position, so $\pd{u}{x} = \pd{u}{y} = \pd{u}{z} = 0$ and there is no convective acceleration. The local part is $\pd{u}{t} = dU/dt = 1.5$ m/s².
+
+**(a) Euler, x** (horizontal, $g_x = 0$): $-\pd{p}{x} = \rho\Big(\pd{u}{t} + u\pd{u}{x} + v\pd{u}{y} + w\pd{u}{z}\Big) = \rho\,\frac{dU}{dt}$, so $\pd{p}{x} = -1000 \times 1.5 = -1500$ Pa/m, the same at every point of the pipe.
+
+**(b)** Integrate along the pipe: $p_{\text{in}} - p_{\text{out}} = -\int_0^L \pd{p}{x}\,dx = \rho L\,\frac{dU}{dt} = 1000 \times 12 \times 1.5 = 18\,000$ Pa $= 18.0$ kPa. Per unit cross-sectional area this is the force that accelerates the $\rho L = 12\,000$ kg/m² of water in the pipe at 1.5 m/s².
+
+**(c)** Steady Bernoulli between the inlet and the outlet (same speed, same height) gives $p_{\text{in}} = p_{\text{out}}$, a pressure difference of zero. That form was obtained for **steady** flow ($\pd{\vb{V}}{t} = 0$); here the flow is unsteady and the whole 18 kPa comes from the local term that Euler's equation keeps. Euler holds; steady Bernoulli does not.`,
+    check: [
+      { label: md`$\pd{p}{x}$`, value: -1500, units: md`\mathrm{Pa/m}` },
+      { label: md`$p_{\text{in}} - p_{\text{out}}$`, value: 18000, units: md`\mathrm{Pa}` },
+    ],
+  },
+  {
     id: 'euler-p4',
     concept: 'euler',
     difficulty: 2,
@@ -828,7 +851,7 @@ export const quiz: QuizQ[] = [
     q: md`Which stress derivative appears in the **$y$**-component Cauchy equation?`,
     options: [md`$\partial\tau_{zy}/\partial z$`, md`$\partial\tau_{yz}/\partial z$`, md`$\partial\tau_{yx}/\partial y$`, md`$\partial\sigma_{yy}/\partial x$`],
     answer: 0,
-    explain: md`The $y$-equation uses the stresses that act **in** $y$ (second subscript $y$): $\tau_{xy}$, $\sigma_{yy}$, $\tau_{zy}$, each differentiated with respect to its first subscript. $\tau_{yz}$ acts in $z$ (it belongs to the $z$-equation) and $\partial\tau_{yx}/\partial y$ belongs to the $x$-equation.`,
+    explain: md`The $y$-equation uses the stresses that act **in** $y$ (second subscript $y$): $\tau_{xy}$, $\sigma_{yy}$, $\tau_{zy}$, each differentiated with respect to its first subscript — so $\partial\tau_{zy}/\partial z$. $\tau_{yz}$ acts in $z$: it belongs to the $z$-equation, and there it is differentiated with respect to $y$, never $z$. $\partial\tau_{yx}/\partial y$ belongs to the $x$-equation, and $\sigma_{yy}$ is always differentiated with respect to $y$, not $x$.`,
   },
   {
     id: 'q-euler-sign',
@@ -888,6 +911,20 @@ export const quiz: QuizQ[] = [
     answer: 0,
     explain: md`Euler needs **zero shear stress**, not zero viscosity: in rigid-body motion nothing deforms, so viscous stresses vanish. Irrotationality is not required by Euler (it matters only for applying Bernoulli between any two points), and a rotating container is accelerating — the centripetal acceleration is exactly what produces $\partial p/\partial r = \rho\Omega^2 r$.`,
   },
+  {
+    id: 'q-euler-hydrostatic',
+    concept: 'euler',
+    difficulty: 2,
+    q: md`Put $\vb{V} = 0$ everywhere (a fluid at rest) in Euler's equation $\rho\vb{g} - \nabla p = \rho\big[\partial\vb{V}/\partial t + (\vb{V}\cdot\nabla)\vb{V}\big]$. With $z$ vertical and upward, what is left?`,
+    options: [
+      md`$\nabla p = \rho\vb{g}$, i.e. $\partial p/\partial z = -\rho g$: the pressure increases with depth`,
+      md`$\nabla p = 0$: the pressure is the same everywhere in a fluid at rest`,
+      md`$\partial p/\partial z = +\rho g$: the pressure increases with height`,
+      "nothing useful — Euler's equation applies only to moving fluids",
+    ],
+    answer: 0,
+    explain: md`With $\vb{V} = 0$ the right-hand side vanishes, leaving $\rho\vb{g} - \nabla p = 0$. With $\vb{g} = -g\hat{\mathbf{k}}$ this is $\partial p/\partial z = -\rho g$, the hydrostatic equation: a fluid at rest has no shear, so Euler applies exactly with zero acceleration. "$\nabla p = 0$" drops the weight; "$+\rho g$" gets the sign of $\vb{g}$ wrong and would make the pressure grow upward.`,
+  },
 ]
 
 /* ----------------------------------------------------------------------------------------------- flashcards */
@@ -924,7 +961,7 @@ export const flashcards: Flashcard[] = [
   {
     id: 'fc-cauchy-valid',
     front: 'Where do the Cauchy equations apply?',
-    back: 'Any continuum — solid or fluid — in motion or at rest (slide 4). No stress–strain law has been assumed, which is also why they are not yet solvable on their own.',
+    back: 'Any continuum — solid or fluid — in motion or at rest (slide 4). Why (not stated on the slide): no stress–strain law has been assumed, which is also why they cannot yet be solved on their own.',
     src: S4,
   },
   {
@@ -959,6 +996,11 @@ export const flashcards: Flashcard[] = [
     id: 'fc-rigid',
     front: 'Pressure gradient in a fluid moving as a rigid body?',
     back: md`$\nabla p = \rho(\vb{g} - \vb{a})$ — exact even for a viscous fluid. Rotation: $\pd{p}{r} = \rho\Omega^2 r$; upward acceleration: $\pd{p}{z} = -\rho(g + a_z)$.`,
+  },
+  {
+    id: 'fc-unsteady',
+    front: md`Water in a horizontal pipe speeds up uniformly, $u = U(t)$. What pressure gradient does Euler require?`,
+    back: md`Only the local term survives: $\pd{p}{x} = -\rho\,dU/dt$, so $p_{\text{in}} - p_{\text{out}} = \rho L\,dU/dt$ over a length $L$. Steady Bernoulli would wrongly give zero, because the speeds at the two ends are equal.`,
   },
 ]
 
@@ -1166,29 +1208,31 @@ export default function Content() {
         </Step>
 
         <Step kind="equations" src={S4}>
-          <Derivation
-            title="From Newton's second law to Cauchy"
-            steps={[
-              { md: md`$\delta F_x = \delta m\,a_x$`, why: "Newton's second law for the element (a fixed mass moving with the flow)" },
-              {
-                md: md`$\delta F_x = \delta m\,g_x + \Big(\pd{\sigma_{xx}}{x} + \pd{\tau_{yx}}{y} + \pd{\tau_{zx}}{z}\Big)\delta x\,\delta y\,\delta z$`,
-                why: 'body force + net surface force (Concept 1)',
-              },
-              {
-                md: md`$\delta m = \rho\,\delta x\,\delta y\,\delta z, \qquad a_x = \pd{u}{t} + u\pd{u}{x} + v\pd{u}{y} + w\pd{u}{z}$`,
-                why: 'mass; particle acceleration (Lecture 9, slide 4)',
-              },
-              {
-                md: md`$\rho g_x + \pd{\sigma_{xx}}{x} + \pd{\tau_{yx}}{y} + \pd{\tau_{zx}}{z} = \rho\Big(\pd{u}{t} + u\pd{u}{x} + v\pd{u}{y} + w\pd{u}{z}\Big)$`,
-                why: 'divide by δx δy δz; as the element shrinks the equation holds at a point',
-              },
-              {
-                md: md`Repeat with the stresses that act in $y$ ($\tau_{xy}, \sigma_{yy}, \tau_{zy}$) and in $z$ ($\tau_{xz}, \tau_{yz}, \sigma_{zz}$).`,
-                why: 'gives the other two equations on slide 4',
-              },
-            ]}
-          />
-          <FormulaCard id="newton-element" />
+          <Supplement title="The step between slides 3 and 4, written out (the slides go straight to the result)">
+            <Derivation
+              title="From Newton's second law to Cauchy"
+              steps={[
+                { md: md`$\delta F_x = \delta m\,a_x$`, why: "Newton's second law for the element (a fixed mass moving with the flow)" },
+                {
+                  md: md`$\delta F_x = \delta m\,g_x + \Big(\pd{\sigma_{xx}}{x} + \pd{\tau_{yx}}{y} + \pd{\tau_{zx}}{z}\Big)\delta x\,\delta y\,\delta z$`,
+                  why: 'body force + net surface force (Concept 1)',
+                },
+                {
+                  md: md`$\delta m = \rho\,\delta x\,\delta y\,\delta z, \qquad a_x = \pd{u}{t} + u\pd{u}{x} + v\pd{u}{y} + w\pd{u}{z}$`,
+                  why: 'mass; particle acceleration (Lecture 9, slide 4)',
+                },
+                {
+                  md: md`$\rho g_x + \pd{\sigma_{xx}}{x} + \pd{\tau_{yx}}{y} + \pd{\tau_{zx}}{z} = \rho\Big(\pd{u}{t} + u\pd{u}{x} + v\pd{u}{y} + w\pd{u}{z}\Big)$`,
+                  why: 'divide by δx δy δz; as the element shrinks the equation holds at a point',
+                },
+                {
+                  md: md`Repeat with the stresses that act in $y$ ($\tau_{xy}, \sigma_{yy}, \tau_{zy}$) and in $z$ ($\tau_{xz}, \tau_{yz}, \sigma_{zz}$).`,
+                  why: 'gives the other two equations on slide 4',
+                },
+              ]}
+            />
+            <FormulaCard id="newton-element" />
+          </Supplement>
           <FormulaCard id="particle-acceleration" />
           <FormulaCard id="cauchy" />
           <FormulaCard id="cauchy-index" />
@@ -1277,24 +1321,26 @@ export default function Content() {
 
         <Step kind="equations" src={S5}>
           <FormulaCard id="pressure-def" />
-          <Derivation
-            title="From Cauchy to Euler"
-            steps={[
-              { md: md`$\tau_{xy} = \tau_{yx} = \tau_{xz} = \tau_{zx} = \tau_{yz} = \tau_{zy} = 0$`, why: 'inviscid: no shearing stresses' },
-              {
-                md: md`$\sigma_{xx} = \sigma_{yy} = \sigma_{zz} = -p \;\Rightarrow\; \pd{\sigma_{xx}}{x} = -\pd{p}{x},\ \ \pd{\sigma_{yy}}{y} = -\pd{p}{y},\ \ \pd{\sigma_{zz}}{z} = -\pd{p}{z}$`,
-                why: "Pascal's law (slide 5)",
-              },
-              {
-                md: md`$\rho g_x - \pd{p}{x} = \rho\Big(\pd{u}{t} + u\pd{u}{x} + v\pd{u}{y} + w\pd{u}{z}\Big)$, and likewise for $y$ and $z$`,
-                why: 'substitute into each Cauchy equation',
-              },
-              {
-                md: md`With $\nabla p = \pd{p}{x}\hat{\mathbf{i}} + \pd{p}{y}\hat{\mathbf{j}} + \pd{p}{z}\hat{\mathbf{k}}$ and $\vb{V}\cdot\nabla = u\pd{}{x} + v\pd{}{y} + w\pd{}{z}$: $\ \rho\vb{g} - \nabla p = \rho\Big[\pd{\vb{V}}{t} + (\vb{V}\cdot\nabla)\vb{V}\Big]$`,
-                why: 'collect the three components',
-              },
-            ]}
-          />
+          <Supplement title="The substitution slide 5 leaves implicit: Cauchy → Euler">
+            <Derivation
+              title="From Cauchy to Euler"
+              steps={[
+                { md: md`$\tau_{xy} = \tau_{yx} = \tau_{xz} = \tau_{zx} = \tau_{yz} = \tau_{zy} = 0$`, why: 'inviscid: no shearing stresses' },
+                {
+                  md: md`$\sigma_{xx} = \sigma_{yy} = \sigma_{zz} = -p \;\Rightarrow\; \pd{\sigma_{xx}}{x} = -\pd{p}{x},\ \ \pd{\sigma_{yy}}{y} = -\pd{p}{y},\ \ \pd{\sigma_{zz}}{z} = -\pd{p}{z}$`,
+                  why: "Pascal's law (slide 5)",
+                },
+                {
+                  md: md`$\rho g_x - \pd{p}{x} = \rho\Big(\pd{u}{t} + u\pd{u}{x} + v\pd{u}{y} + w\pd{u}{z}\Big)$, and likewise for $y$ and $z$`,
+                  why: 'substitute into each Cauchy equation',
+                },
+                {
+                  md: md`With $\nabla p = \pd{p}{x}\hat{\mathbf{i}} + \pd{p}{y}\hat{\mathbf{j}} + \pd{p}{z}\hat{\mathbf{k}}$ and $\vb{V}\cdot\nabla = u\pd{}{x} + v\pd{}{y} + w\pd{}{z}$: $\ \rho\vb{g} - \nabla p = \rho\Big[\pd{\vb{V}}{t} + (\vb{V}\cdot\nabla)\vb{V}\Big]$`,
+                  why: 'collect the three components',
+                },
+              ]}
+            />
+          </Supplement>
           <FormulaCard id="euler-components" />
           <FormulaCard id="euler-vector" />
           <Supplement title="A special case worth knowing: rigid-body motion">
@@ -1324,18 +1370,18 @@ export default function Content() {
 
         <Step kind="practice">
           <PracticeList concept="euler" />
-          <QuickCheck ids={['q-euler-rigid']} />
+          <QuickCheck ids={['q-euler-rigid', 'q-euler-hydrostatic']} />
         </Step>
 
         <Step kind="takeaways">
           <Takeaways
             items={[
-              md`Inviscid ⇔ no shear stress. Then (Pascal's law) the normal stress is the same in every direction and $-p = \sigma_{xx} = \sigma_{yy} = \sigma_{zz}$.`,
+              md`Inviscid flow has no shear stress (Fox & McDonald p. 221). Then (Pascal's law) the normal stress is the same in every direction and $-p = \sigma_{xx} = \sigma_{yy} = \sigma_{zz}$.`,
               md`The minus sign makes the usual **compressive** state of a fluid a **positive** pressure.`,
               md`Euler: $\rho\vb{g} - \nabla p = \rho\big[\pd{\vb{V}}{t} + (\vb{V}\cdot\nabla)\vb{V}\big]$ — steady or unsteady, compressible or not, rotational or not, as long as shear is absent.`,
               md`$-\nabla p$ is the pressure force per unit volume: fluid accelerates towards low pressure; slowing down needs an adverse gradient ($\pd{p}{x} > 0$ in the flow direction).`,
               md`Rigid-body motion has no shear even in a viscous fluid: $\nabla p = \rho(\vb{g} - \vb{a})$ holds exactly (spinning cup, accelerating tank).`,
-              md`**Trap:** Euler is not Bernoulli — Bernoulli needs extra assumptions (steady, incompressible, along a streamline).`,
+              md`**Trap:** Euler is not Bernoulli — Bernoulli needs extra assumptions (steady, incompressible, along a streamline). In a pipe whose flow is speeding up, steady Bernoulli misses the whole $\rho L\,dU/dt$.`,
             ]}
           />
         </Step>

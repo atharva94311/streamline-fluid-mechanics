@@ -118,6 +118,24 @@ export function advect(vel: VelFn, pts: V2[], h: number): V2[] {
   return pts.map((p) => rk4Point(vel, p, h))
 }
 
+/**
+ * Keep a closed material loop well resolved: insert a midpoint wherever two neighbours are more than
+ * `maxLen` apart (at most `cap` points in all). Without this, a loop stretched by a non-uniform flow is
+ * represented by too few vertices and its shoelace area drifts even though the true area is conserved.
+ */
+export function refineLoop(pts: V2[], maxLen: number, cap: number): V2[] {
+  if (pts.length >= cap) return pts
+  const out: V2[] = []
+  const n = pts.length
+  for (let i = 0; i < n; i++) {
+    const a = pts[i]
+    const b = pts[(i + 1) % n]
+    out.push(a)
+    if (out.length + (n - i) < cap && Math.hypot(b[0] - a[0], b[1] - a[1]) > maxLen) out.push([(a[0] + b[0]) / 2, (a[1] + b[1]) / 2])
+  }
+  return out
+}
+
 export function centroid(pts: V2[]): V2 {
   let x = 0
   let y = 0

@@ -254,12 +254,25 @@ export function CirculationLab() {
         ))}
         <line x1={C0 - SC * LIM} x2={C0 + SC * LIM} y1={C0} y2={C0} stroke="var(--grid)" strokeDasharray="3 4" />
         <line y1={C0 - SC * LIM} y2={C0 + SC * LIM} x1={C0} x2={C0} stroke="var(--grid)" strokeDasharray="3 4" />
+        {/* axis ticks in metres (the loop sliders use the same units) */}
+        <g className="text-[10px]" fill="var(--ink-3)" pointerEvents="none">
+          {[-2, -1, 1, 2].map((t) => (
+            <g key={t}>
+              <line x1={X(t)} x2={X(t)} y1={C0 - 3} y2={C0 + 3} stroke="var(--axis)" strokeWidth={1} />
+              <line x1={C0 - 3} x2={C0 + 3} y1={Y(t)} y2={Y(t)} stroke="var(--axis)" strokeWidth={1} />
+              <text x={X(t)} y={C0 + 14} textAnchor="middle">{String(t).replace('-', '−')}</text>
+              <text x={C0 + 6} y={Y(t) + 3.5}>{String(t).replace('-', '−')}</text>
+            </g>
+          ))}
+          <text x={X(2) + 2} y={C0 - 7} textAnchor="end" className="italic">x (m)</text>
+          <text x={C0 - 6} y={Y(1.9)} textAnchor="end" className="italic">y (m)</text>
+        </g>
         {quiver.map((a, i) => (
           <line key={i} x1={f2(a.x1)} y1={f2(a.y1)} x2={f2(a.x2)} y2={f2(a.y2)} stroke="var(--quiver)" strokeOpacity={0.7} strokeWidth={1.2} markerEnd={`url(#${uid}-q)`} />
         ))}
         {/* vortex centre */}
-        <circle cx={C0} cy={C0} r={6} fill="var(--surface)" stroke="#7c3aed" strokeWidth={2} />
-        <circle cx={C0} cy={C0} r={2} fill="#7c3aed" />
+        <circle cx={C0} cy={C0} r={6} fill="var(--surface)" stroke="var(--plot-6)" strokeWidth={2} />
+        <circle cx={C0} cy={C0} r={2} fill="var(--plot-6)" />
         {/* the closed curve */}
         <path d={posD} stroke="var(--plot-5)" strokeWidth={4.2} strokeLinecap="round" fill="none" />
         <path d={negD} stroke="var(--plot-4)" strokeWidth={4.2} strokeLinecap="round" fill="none" />
@@ -288,7 +301,7 @@ export function CirculationLab() {
           ))
         )}
         {singular ? (
-          <text x={C0} y={22} textAnchor="middle" className="text-[12px] font-semibold" fill="var(--plot-4)" paintOrder="stroke" stroke="var(--surface)" strokeWidth={3}>
+          <text x={C0} y={38} textAnchor="middle" className="text-[12px] font-semibold" fill="var(--plot-4)" paintOrder="stroke" stroke="var(--surface)" strokeWidth={3}>
             the curve passes through the singular point — Γ is undefined there
           </text>
         ) : null}

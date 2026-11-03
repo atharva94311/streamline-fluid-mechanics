@@ -72,6 +72,30 @@ export function Label({
 }
 
 /**
+ * Axis titles with units for a FlowField overlay — the kit's FlowField prints tick numbers only. "x (m)" sits at the
+ * right end of the dashed x-axis (y = 0) and "y (m)" at the top of the dashed y-axis (x = 0).
+ */
+export function AxisTags({
+  sx, sy, xMax, yMax,
+}: {
+  sx: (v: number) => number
+  sy: (v: number) => number
+  xMax: number
+  yMax: number
+}) {
+  return (
+    <g pointerEvents="none">
+      <Label x={sx(xMax) - 6} y={sy(0) - 6} anchor="end" size={11} color="var(--ink-3)">
+        <tspan fontStyle="italic">x</tspan> (m)
+      </Label>
+      <Label x={sx(0) + 6} y={sy(yMax) + 13} size={11} color="var(--ink-3)">
+        <tspan fontStyle="italic">y</tspan> (m)
+      </Label>
+    </g>
+  )
+}
+
+/**
  * SVG arc path (screen coordinates, y down) for a WORLD angle range a0 → a1 (radians, counter-clockwise positive),
  * centred at (cx, cy) with radius r.
  */

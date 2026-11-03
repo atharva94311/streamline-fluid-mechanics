@@ -25,6 +25,8 @@ interface Preset {
   divTeX: (p: P) => string
   passes: (p: P) => boolean
   unsteady?: boolean
+  /** has an out-of-plane ∂w/∂z: the material squares then also track their depth (volume = area × depth) */
+  threeD?: boolean
   note: string
 }
 
@@ -55,7 +57,7 @@ const PRESETS: Preset[] = [
     params: [
       { key: 'A', label: md`$A$ (in $u$)`, min: -1.5, max: 1.5, step: 0.1, def: 0.5, unit: '1/(m·s)' },
       { key: 'B', label: md`$B$ (in $u$)`, min: -1.5, max: 1.5, step: 0.1, def: 0.4, unit: '1/(m·s)' },
-      { key: 'C', label: md`$C$ (in $v$)`, min: -3, max: 3, step: 0.1, def: -1, unit: '1/(m·s)' },
+      { key: 'C', label: md`$C$ (in $v$)`, min: -3, max: 3, step: 0.1, def: 1, unit: '1/(m·s)' },
     ],
     vel: (p, x, y) => [p.A * x * x + p.B * y * y, p.C * x * y],
     terms: (p, x) => [2 * p.A * x, p.C * x, 0],
@@ -79,7 +81,8 @@ const PRESETS: Preset[] = [
     termTeX: (p) => [tn(p.a), tn(p.b), tn(p.c)],
     divTeX: (p) => tn(p.a + p.b + p.c),
     passes: (p) => zero(p.a + p.b + p.c),
-    note: md`The map shows the $x$–$y$ plane only. With the defaults the arrows spread out ($\partial u/\partial x + \partial v/\partial y = 2$ s$^{-1}$) as if fluid were being created — yet the flow is incompressible, because fluid arrives along $z$ ($\partial w/\partial z = -2$ s$^{-1}$). Always include all three terms; the colour uses the full 3-D divergence.`,
+    note: md`The map shows the $x$–$y$ plane only. With the defaults the arrows spread out ($\partial u/\partial x + \partial v/\partial y = 2$ s$^{-1}$) as if fluid were being created — yet the flow is incompressible, because fluid arrives along $z$ ($\partial w/\partial z = -2$ s$^{-1}$). The squares widen in $x$–$y$ while they thin in $z$ at the same rate, so their **volume** — and their green colour — is unchanged. Always include all three terms; the map colour uses the full 3-D divergence. Make $a + b + c \neq 0$ and the squares change volume.`,
+    threeD: true,
   },
   {
     id: 'unsteady',
@@ -132,6 +135,7 @@ export function DivergenceChecker() {
     },
     [pr, p],
   )
+  const dwdzFn = useMemo(() => (pr.threeD ? (x: number, y: number, tt: number) => pr.terms(p, x, y, tt)[2] : undefined), [pr, p])
   const tNow = pr.unsteady ? t : 0
   const [dudx, dvdy, dwdz] = pr.terms(p, probe[0], probe[1], tNow)
   const total = dudx + dvdy + dwdz
@@ -174,12 +178,12 @@ export function DivergenceChecker() {
       }
       footer={
         <Md inline>
-          {md`**Try this:** in *Linear 2-D* drag $d$ away from $-a$ — the map turns rose (expansion) or indigo (compression) and the green squares start to grow or shrink. Then change $b$ and $c$: the squares shear and turn, but stay green. In *Quadratic*, set $C = -2A$ to make the whole map blank.`}
+          {md`**Try this:** in *Linear 2-D* drag $d$ away from $-a$ — the map turns rose (expansion) or indigo (compression) and the green squares start to grow or shrink. Then change $b$ and $c$: the squares shear and turn, but stay green. In *Quadratic* the colour fades out only along the line $x = 0$ — zero on one line is not enough; set $C = -2A$ to make the whole map blank.`}
         </Md>
       }
     >
       <div className="space-y-3">
-        <DivergenceMap x={[-2, 2]} y={[-1.5, 1.5]} vel={vel} div={div} unsteady={pr.unsteady} probe={probe} onProbe={setProbe} onTime={pr.unsteady ? setT : undefined} />
+        <DivergenceMap x={[-2, 2]} y={[-1.5, 1.5]} vel={vel} div={div} dwdz={dwdzFn} unsteady={pr.unsteady} probe={probe} onProbe={setProbe} onTime={pr.unsteady ? setT : undefined} />
         <Md className="md-tight text-sm">
           {md`$$
 \begin{aligned}

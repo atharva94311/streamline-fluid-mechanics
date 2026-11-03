@@ -29,15 +29,15 @@ export function FreeVortexExplorer() {
   const phiLevels = useMemo(() => Array.from({ length: 12 }, (_, k) => K * (-165 + 30 * k) * DEG), [K])
   const highlight = useMemo(() => [{ level: -K * Math.log(rp), color: 'var(--plot-3)', width: 2.6, label: `probe circle r = ${rp.toFixed(2)} m` }], [K, rp])
 
-  const vth = Kmag / rp
+  const vth = K / rp // signed: negative for a clockwise vortex
   const lap = (2 * Math.PI * rp * rp) / Kmag
   const probeAngle = 45 * DEG
-  const arrowPx = Math.min(64, 16 + 9 * vth)
+  const arrowPx = Math.min(64, 16 + 9 * Math.abs(vth))
 
   return (
     <SimPanel
       title="Free-vortex explorer"
-      subtitle={md`$\phi = K\theta$, $\ \psi = -K\ln r$, $\ v_\theta = K/r$`}
+      subtitle={md`$\phi = K\theta$, $\ \psi = -K\ln r$, $\ v_\theta = K/r$ (axes $x$, $y$ in m)`}
       controls={
         <>
           <Segmented<1 | -1>
@@ -60,12 +60,12 @@ export function FreeVortexExplorer() {
           items={[
             { label: md`$v_\theta$ at $r_p$`, value: vth, unit: 'm/s' },
             { label: md`lap time $2\pi r_p^2/\vert K\vert$`, value: lap, unit: 's' },
-            { label: md`$r\,v_\theta$ (any circle)`, value: Kmag, unit: 'm²/s', tone: 'accent' },
+            { label: md`$r\,v_\theta = K$ (any circle)`, value: K, unit: 'm²/s', tone: 'accent' },
             { label: md`rotation $\omega_z$ ($r \neq 0$)`, value: '0', unit: 'rad/s', tone: 'good' },
           ]}
         />
       }
-      footer="Try this: slide the probe from r = 0.4 m out to r = 1.6 m. The speed drops 4× and the lap time grows 16× — inner fluid overtakes outer fluid — yet r·vθ stays equal to |K| on every circle and the equipotential rays always cross the circles at right angles. Flip the swirl direction: only the sign of K changes."
+      footer="Try this: slide the probe from r = 0.4 m out to r = 1.6 m. The speed drops 4× and the lap time grows 16× — inner fluid overtakes outer fluid — yet r·vθ stays equal to K on every circle and the equipotential rays always cross the circles at right angles. Flip the swirl direction: only the signs of K and vθ change (vθ < 0 means clockwise); the pattern of circles and rays is the same."
     >
       <FlowField
         x={[-2, 2]}

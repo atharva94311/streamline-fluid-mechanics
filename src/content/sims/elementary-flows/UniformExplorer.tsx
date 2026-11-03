@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { FlowField, SimPanel, Slider, Toggle, md, type Vec } from '@/kit'
 import { TeXReadout } from './ui'
-import { Arrow, arcPath, rad } from './svg'
+import { Arrow, AxisTags, arcPath, rad } from './svg'
 
 /** Gate length (m): the segment AB runs from −(L/2)(cos β, sin β) to +(L/2)(cos β, sin β). */
 const L = 2
@@ -32,15 +32,21 @@ export function UniformExplorer() {
   const b = rad(beta)
   const A: Vec = [(-L / 2) * Math.cos(b), (-L / 2) * Math.sin(b)]
   const B: Vec = [(L / 2) * Math.cos(b), (L / 2) * Math.sin(b)]
-  const psiA = field.psi(A[0], A[1])
-  const psiB = field.psi(B[0], B[1])
-  const q = psiB - psiA
+  // round-off (e.g. β = α ± 180°) would otherwise show as "5.55×10⁻¹⁷" in the readouts
+  const snap = (v: number) => (Math.abs(v) < 1e-9 * U * L ? 0 : v)
+  const psiA = snap(field.psi(A[0], A[1]))
+  const psiB = snap(field.psi(B[0], B[1]))
+  const q = snap(psiB - psiA)
   const ratio = q / (U * L)
 
   return (
     <SimPanel
       title="Uniform-flow explorer"
       subtitle={md`$\phi = U(x\cos\alpha + y\sin\alpha)$, $\psi = U(y\cos\alpha - x\sin\alpha)$`}
+      src={[
+        { doc: 'lec12', pages: '9' },
+        { doc: 'lec12', pages: '6', note: 'q = ψ₂ − ψ₁' },
+      ]}
       controls={
         <>
           <Slider label="speed $U$" value={U} min={0.5} max={5} step={0.1} onChange={setU} unit="m/s" digits={2} />
@@ -63,9 +69,11 @@ export function UniformExplorer() {
       }
       footer={
         <>
-          <b>Try this:</b> set the gate angle β equal to α — the gate then lies along a streamline, ψ<sub>A</sub> = ψ<sub>B</sub> and
-          nothing crosses it. Now make β = α + 90°: the gate faces the stream and q reaches its maximum U·L. Grid squares are
-          0.5 m: Δψ = Δφ = 0.5U between neighbouring lines. Hover anywhere to read u, v, ψ and φ.
+          <b>Try this:</b> set the gate angle β equal to α (or α + 180°) — the gate then lies along a streamline, ψ<sub>A</sub> =
+          ψ<sub>B</sub> and nothing crosses it. Now make β = α + 90°: the gate faces the stream and q reaches its maximum U·L.
+          Push α past 90°: u = U cos α turns negative while v stays positive — recovering α from (u, v) then needs atan2(v, u),
+          because arctan(v/u) would point the stream the opposite way. Grid squares are 0.5 m: Δψ = Δφ = 0.5U between
+          neighbouring lines. Hover anywhere to read u, v, ψ and φ.
         </>
       }
     >
@@ -92,6 +100,7 @@ export function UniformExplorer() {
           const Tend: Vec = [T[0] + 0.62 * ca, T[1] + 0.62 * sa]
           return (
             <g>
+              <AxisTags sx={sx} sy={sy} xMax={3} yMax={2} />
               <line x1={sx(A[0])} y1={sy(A[1])} x2={sx(B[0])} y2={sy(B[1])} stroke="var(--plot-6)" strokeWidth={3.2} strokeLinecap="round" />
               {len > 0.04 ? (
                 <Arrow x1={sx(0)} y1={sy(0)} x2={sx(tip[0])} y2={sy(tip[1])} color="var(--plot-6)" width={2.6} head={10} />

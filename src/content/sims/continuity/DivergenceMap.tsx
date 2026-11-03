@@ -18,6 +18,12 @@ export interface DivergenceMapProps {
   vel: (x: number, y: number, t: number) => V2
   /** Full divergence ∂u/∂x + ∂v/∂y + ∂w/∂z at (x, y) — may include an out-of-plane ∂w/∂z. */
   div: (x: number, y: number, t: number) => number
+  /**
+   * Out-of-plane stretching rate ∂w/∂z (1/s) at (x, y, t). Each material square tracks its depth with it
+   * (d ln h/dt = ∂w/∂z), so the square's colour shows the change of its VOLUME (area × depth) — not just of its
+   * x–y cross-section. Omit for plane flows (depth constant).
+   */
+  dwdz?: (x: number, y: number, t: number) => number
   /** Recompute arrows and colours every frame (time-dependent fields). */
   unsteady?: boolean
   /** |∇·V| (1/s) that gives full colour. */
@@ -56,11 +62,11 @@ function squarePoly(cx: number, cy: number, h: number): V2[] {
 
 /**
  * Divergence colour map (rose = expansion, indigo = compression, blank = ∇·V = 0) with velocity arrows,
- * optional advected material squares whose area change visualises ∇·V, and a click-to-probe marker.
+ * optional advected material squares whose volume change (x–y area × depth) visualises ∇·V, and a click-to-probe marker.
  */
 export function DivergenceMap(props: DivergenceMapProps) {
   const {
-    x: [x0, x1], y: [y0, y1], vel, div, unsteady = false, divScale = 3, mask, disc, arrows = 15, tracers = true, seeds,
+    x: [x0, x1], y: [y0, y1], vel, div, dwdz, unsteady = false, divScale = 3, mask, disc, arrows = 15, tracers = true, seeds,
     tracerHalf = 0.13, life = 1.6, timeScale = 0.55, probe, onProbe, onTime, overlay, maxHeight = 420, paused = false,
   } = props
   const [ref, size] = useElementSize<HTMLDivElement>()
@@ -152,21 +158,22 @@ export function DivergenceMap(props: DivergenceMapProps) {
     return out
   }, [seeds, mask, x0, x1, y0, y1, aspect])
 
-  const polys = useRef<{ pts: V2[]; a0: number; dead: boolean }[]>([])
+  /** lnH = ln(depth / initial depth), integrated from ∂w/∂z along the square's path (0 for plane flows). */
+  const polys = useRef<{ pts: V2[]; a0: number; lnH: number; dead: boolean }[]>([])
   const age = useRef(0)
   const reset = () => {
     polys.current = seedList
       .filter(([X, Y]) => !mask?.(X, Y))
       .map(([X, Y]) => {
         const pts = squarePoly(X, Y, tracerHalf)
-        return { pts, a0: polygonArea(pts), dead: false }
+        return { pts, a0: polygonArea(pts), lnH: 0, dead: false }
       })
     age.current = 0
   }
   useEffect(() => {
     reset()
     setClock((c) => c + 1e-9) // re-render with fresh squares
-  }, [seedList, tracerHalf, vel]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [seedList, tracerHalf, vel, dwdz]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const lastTimeCb = useRef(0)
   useAnimationFrame((dtReal) => {
@@ -179,6 +186,16 @@ export function DivergenceMap(props: DivergenceMapProps) {
         if (p.dead) continue
         for (let s = 0; s < steps; s++) {
           const tt = t + s * h
+          if (dwdz) {
+            let cx = 0
+            let cy = 0
+            for (const [X, Y] of p.pts) {
+              cx += X
+              cy += Y
+            }
+            const rate = dwdz(cx / p.pts.length, cy / p.pts.length, tt + 0.5 * h)
+            if (Number.isFinite(rate)) p.lnH += h * rate
+          }
           for (let q = 0; q < p.pts.length; q++) {
             const [X, Y] = p.pts[q]
             const [u1, v1] = vel(X, Y, tt)
@@ -280,8 +297,8 @@ export function DivergenceMap(props: DivergenceMapProps) {
             {tracers
               ? polys.current.map((p, i) => {
                   if (p.dead) return null
-                  const ratio = polygonArea(p.pts) / p.a0
-                  const lr = Math.log(ratio)
+                  // volume ratio = (x–y area ratio) × (depth ratio e^lnH)
+                  const lr = Math.log(polygonArea(p.pts) / p.a0) + p.lnH
                   const keep = Math.abs(lr) < 0.03
                   const col = keep ? AX.ok : lr > 0 ? AX.pos : AX.neg
                   return (
@@ -338,7 +355,7 @@ export function DivergenceMap(props: DivergenceMapProps) {
         </span>
         {tracers ? (
           <span className="inline-flex items-center gap-1.5">
-            <span className="inline-block h-3 w-3 rounded-sm" style={{ background: AX.ok, opacity: 0.6 }} /> material square keeping its area
+            <span className="inline-block h-3 w-3 rounded-sm" style={{ background: AX.ok, opacity: 0.6 }} /> material element keeping its volume{dwdz ? ' (x–y area × depth)' : ''}
           </span>
         ) : null}
         {onProbe ? <span>click / tap to move the probe ⊕</span> : null}

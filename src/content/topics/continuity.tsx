@@ -84,7 +84,7 @@ export const formulas: FormulaDef[] = [
     vars: [
       { sym: md`\mathbf V = u\hat{\mathbf i} + v\hat{\mathbf j} + w\hat{\mathbf k}`, desc: 'velocity vector', units: md`\mathrm{m/s}` },
       { sym: md`\rho\mathbf V`, desc: 'mass-flux vector', units: md`\mathrm{kg/(m^2\,s)}` },
-      { sym: md`\nabla\cdot(\;)`, desc: 'divergence: in Cartesian coordinates $\partial(\;)_x/\partial x + \partial(\;)_y/\partial y + \partial(\;)_z/\partial z$', units: md`\mathrm{m^{-1}}` },
+      { sym: md`\nabla\cdot(\;)`, desc: md`divergence of a vector field $\mathbf A$ (here $\mathbf A = \rho\mathbf V$); in Cartesian coordinates $\nabla\cdot\mathbf A = \partial A_x/\partial x + \partial A_y/\partial y + \partial A_z/\partial z$`, units: md`\mathrm{m^{-1}}` },
       { sym: md`\rho,\ t`, desc: 'density and time', units: md`\mathrm{kg/m^3},\ \mathrm{s}` },
     ],
     conditions: ['any flow, steady or unsteady, compressible or incompressible', 'coordinate-free: expand $\\nabla\\cdot$ in whichever coordinates suit the geometry (cylindrical in concept 3)'],
@@ -100,7 +100,7 @@ export const formulas: FormulaDef[] = [
       { sym: md`u,\ v,\ w`, desc: 'velocity components', units: md`\mathrm{m/s}` },
       { sym: md`x,\ y,\ z`, desc: 'Cartesian coordinates', units: md`\mathrm{m}` },
     ],
-    conditions: ['**steady**: $\\partial\\rho/\\partial t = 0$ at every fixed point', 'compressible allowed — $\\nabla\\rho \\neq 0$, so in general $\\nabla\\cdot\\mathbf V \\neq 0$'],
+    conditions: ['**steady**: $\\partial\\rho/\\partial t = 0$ at every fixed point', 'compressible allowed: $\\rho$ may vary in space ($\\nabla\\rho \\neq 0$), so in general $\\nabla\\cdot\\mathbf V \\neq 0$'],
     use: md`The **mass flux** is divergence-free: whatever mass enters a small fixed region leaves it at the same rate. Typical use: steady gas flows (nozzles, ducts, radial diffusers), where you solve for $\rho$ or one mass-flux component.`,
     src: L9_10,
   },
@@ -111,7 +111,7 @@ export const formulas: FormulaDef[] = [
     vars: [
       { sym: md`\rho u`, desc: 'mass flux in $x$ at the centre $(x, y, z)$ of the element', units: md`\mathrm{kg/(m^2\,s)}` },
       { sym: md`\pd{(\rho u)}{x}`, desc: 'its gradient at the centre', units: md`\mathrm{kg/(m^3\,s)}` },
-      { sym: md`\delta x`, desc: 'edge length of the element in $x$ (the faces sit at $x \pm \delta x/2$)', units: md`\mathrm{m}` },
+      { sym: md`\delta x`, desc: md`edge length of the element in $x$ (the faces sit at $x \pm \delta x/2$)`, units: md`\mathrm{m}` },
     ],
     conditions: ['element small: the neglected terms are of order $\\delta x^2$ and vanish in the limit', 'same form on the $y$-faces ($\\rho v$, $\\delta y$) and $z$-faces ($\\rho w$, $\\delta z$)'],
     use: md`Multiply by the face area ($\delta y\,\delta z$ for an $x$-face) to get the mass flow rate in kg/s through that face. Out − in for a pair of faces leaves only the gradient term.`,
@@ -178,7 +178,7 @@ export const formulas: FormulaDef[] = [
       { sym: md`\theta`, desc: 'angle measured from the $x$-direction in the plane normal to $z$', units: md`\mathrm{rad}` },
       { sym: md`z`, desc: 'axial coordinate', units: md`\mathrm{m}` },
       { sym: md`v_r,\ v_\theta,\ v_z`, desc: 'radial, tangential (circumferential) and axial velocity components', units: md`\mathrm{m/s}` },
-      { sym: md`\hat{\mathbf e}_r,\ \hat{\mathbf e}_\theta,\ \hat{\mathbf e}_z`, desc: 'unit vectors in the $r$, $\theta$, $z$ directions', units: md`-` },
+      { sym: md`\hat{\mathbf e}_r,\ \hat{\mathbf e}_\theta,\ \hat{\mathbf e}_z`, desc: md`unit vectors in the $r$, $\theta$, $z$ directions`, units: md`-` },
     ],
     conditions: ['$\\hat{\\mathbf e}_r$ and $\\hat{\\mathbf e}_\\theta$ change direction with $\\theta$; $\\hat{\\mathbf e}_z$ does not'],
     use: md`Use when the geometry has an axis: pipes, swirling flows, vortices, sources and sinks, flow around cylinders, radial flow between discs.`,
@@ -190,7 +190,7 @@ export const formulas: FormulaDef[] = [
     key: true,
     tex: md`\pd{\rho}{t} + \frac{1}{r}\pd{(r\rho v_r)}{r} + \frac{1}{r}\pd{(\rho v_\theta)}{\theta} + \pd{(\rho v_z)}{z} = 0`,
     vars: [
-      { sym: md`\rho`, desc: 'density, a function of $(r, \theta, z, t)$', units: md`\mathrm{kg/m^3}` },
+      { sym: md`\rho`, desc: md`density, a function of $(r, \theta, z, t)$`, units: md`\mathrm{kg/m^3}` },
       { sym: md`r,\ \theta,\ z`, desc: 'cylindrical coordinates', units: md`\mathrm{m},\ \mathrm{rad},\ \mathrm{m}` },
       { sym: md`v_r,\ v_\theta,\ v_z`, desc: 'velocity components', units: md`\mathrm{m/s}` },
       { sym: md`t`, desc: 'time', units: md`\mathrm{s}` },
@@ -222,7 +222,7 @@ export const formulas: FormulaDef[] = [
       { sym: md`v_r,\ v_\theta,\ v_z`, desc: 'velocity components', units: md`\mathrm{m/s}` },
     ],
     conditions: ['incompressible, steady or unsteady', 'printed **unlabelled** on slide 11 (the form with $\\rho$ removed)', 'valid where the fluid is ($r > 0$; singular lines such as a source at $r = 0$ are excluded)'],
-    use: md`Product rule for the radial term: $\dfrac{1}{r}\pd{(r v_r)}{r} = \pd{v_r}{r} + \dfrac{v_r}{r}$ — the extra $v_r/r$ is the "spreading" of a radial flow over larger circles. Use it to test polar fields or to find $v_r$ (integrate in $r$, add $f(\theta, z)$) or $v_\theta$ (integrate in $\theta$, add $f(r, z)$).`,
+    use: md`Product rule for the radial term: $\dfrac{1}{r}\pd{(r v_r)}{r} = \pd{v_r}{r} + \dfrac{v_r}{r}$ — the extra $v_r/r$ is the "spreading" of a radial flow over larger circles. Use it to test polar fields, or to find a missing component: integrate $\partial(r v_r)/\partial r$ in $r$ and add $f(\theta, z)$ to $r v_r$ (so $v_r$ gains $f(\theta, z)/r$), or integrate $\partial v_\theta/\partial\theta$ in $\theta$ and add $f(r, z)$ to $v_\theta$.`,
     src: L9_11,
   },
   {
@@ -828,7 +828,7 @@ export const quiz: QuizQ[] = [
     q: md`The radial term of the incompressible continuity equation in cylindrical coordinates is …`,
     options: [md`$\dfrac{1}{r}\dfrac{\partial(r v_r)}{\partial r}$`, md`$\dfrac{\partial v_r}{\partial r}$`, md`$\dfrac{1}{r}\dfrac{\partial v_r}{\partial r}$`, md`$r\dfrac{\partial v_r}{\partial r}$`],
     answer: 0,
-    explain: md`Slide 11: $\frac{1}{r}\partial(r v_r)/\partial r = \partial v_r/\partial r + v_r/r$. The extra $v_r/r$ accounts for the outer face of a ring element being larger than the inner one; dropping the $r$ gives the Cartesian-looking but wrong $\partial v_r/\partial r$.`,
+    explain: md`Slide 11 writes the radial term as $\frac{1}{r}\partial(r v_r)/\partial r$. By the product rule it equals $\partial v_r/\partial r + v_r/r$; the extra $v_r/r$ accounts for the outer face of a ring element being larger than the inner one. Dropping the $r$ gives the Cartesian-looking but wrong $\partial v_r/\partial r$, and $\frac{1}{r}\partial v_r/\partial r$ or $r\,\partial v_r/\partial r$ do not even have units of s⁻¹.`,
   },
   {
     id: 'q-cy-uniform',
@@ -940,7 +940,7 @@ export const flashcards: Flashcard[] = [
   {
     id: 'fc-cy-4',
     front: md`Name three plane flows that satisfy cylindrical continuity for $r > 0$, and one that does not.`,
-    back: md`Line source $v_r = m/2\pi r$, free vortex $v_\theta = K/r$, rigid rotation $v_\theta = \Omega r$ pass. A uniform radial flow $v_r = V_0$ fails: $V_0/r \neq 0$.`,
+    back: md`Line source $v_r = m/(2\pi r)$, free vortex $v_\theta = K/r$, rigid rotation $v_\theta = \Omega r$ pass. A uniform radial flow $v_r = V_0$ fails: $\frac{1}{r}\partial(r V_0)/\partial r = V_0/r \neq 0$.`,
   },
 ]
 
@@ -950,7 +950,7 @@ export const flashcards: Flashcard[] = [
 
 export const takeaways: string[] = [
   md`**Mass conservation at a point:** $\pd{\rho}{t} + \nabla\cdot\rho\mathbf V = 0$ — accumulation plus net outflow is zero. Valid for steady or unsteady, compressible or incompressible flow (Lec 9 slide 10).`,
-  md`It comes from a mass balance on a **fixed** box: each face flux is the centre value $\pm$ gradient $\times$ half the edge, and out − in leaves $\partial(\rho u)/\partial x\;\delta x\,\delta y\,\delta z$ for each pair of faces.`,
+  md`It comes from a mass balance on a **fixed** box: each face flux is the centre value $\pm$ gradient $\times$ half the edge, so out − in through the two $x$-faces leaves $\partial(\rho u)/\partial x\;\delta x\,\delta y\,\delta z$ (likewise $\partial(\rho v)/\partial y$ and $\partial(\rho w)/\partial z$ for the other pairs).`,
   md`**Steady compressible:** $\nabla\cdot\rho\mathbf V = 0$. The density may still vary in space, so keep $\rho$ inside the derivatives; $\nabla\cdot\mathbf V$ is generally **not** zero.`,
   md`**Incompressible:** $\nabla\cdot\mathbf V = \pd{u}{x} + \pd{v}{y} + \pd{w}{z} = 0$ for **steady and unsteady** flow (Lec 9 slide 11) — zero volumetric dilatation rate.`,
   md`To test a field, differentiate each component in its own direction and add. The sum must vanish **identically** — at every point and every instant — and in 3-D it must include $\partial w/\partial z$.`,
@@ -998,7 +998,7 @@ The slide stresses that it is *valid for steady or unsteady flow, and compressib
             ]}
           />
           <Callout kind="note" title="Fixed box vs moving element">
-            <Md>{md`The kinematics topic followed a **material element** that moves with the fluid (its volume changes at the rate $\nabla\cdot\mathbf V$, Lec 9 slide 5). Here the box is **fixed in space** and fluid flows through it. Both views describe the same physics — they are linked by $D\rho/Dt + \rho\nabla\cdot\mathbf V = 0$ (equations step).`}</Md>
+            <Md>{md`The kinematics topic followed a **material element** that moves with the fluid (its volume changes at the fractional rate $\frac{1}{\delta\forall}\frac{d(\delta\forall)}{dt} = \nabla\cdot\mathbf V$, Lec 9 slide 5). Here the box is **fixed in space** and fluid flows through it. Both views describe the same physics — they are linked by $D\rho/Dt + \rho\nabla\cdot\mathbf V = 0$ (equations step).`}</Md>
           </Callout>
         </Step>
 
@@ -1152,7 +1152,7 @@ The blue label on the slide is the key point: this holds for **steady and unstea
             ]}
           />
           <Callout kind="note" title="Same equation in the other course books">
-            <Md>{md`Fox writes the plane steady form as Eq. 7.1 and nondimensionalises it later in the dimensional-analysis chapter; Wilkes uses the constant-density form (Eq. 9.6, with velocity components $v_x, v_y, v_z$) as the starting point for time-averaging in turbulent flow.`}</Md>
+            <Md>{md`Fox quotes the plane, steady, incompressible form as Eq. 7.1 at the start of the dimensional-analysis chapter (Section 7.1) and nondimensionalises it on the same page; Wilkes uses the constant-density form (Eq. 9.6, with velocity components $v_x, v_y, v_z$) as the starting point for time-averaging in turbulent flow.`}</Md>
             <div className="mt-2">
               <SourceChips src={[{ doc: 'fox', pages: '246', note: 'Eq. (7.1)' }, { doc: 'wilkes', pages: '484', note: 'Eq. (9.6)' }]} size="xs" />
             </div>
@@ -1271,7 +1271,7 @@ $$`,
 
         <Step kind="practice">
           <PracticeList concept="cylindrical-continuity" />
-          <QuickCheck ids={['q-cy-uniform']} />
+          <QuickCheck ids={['q-cy-uniform', 'q-cy-term']} />
         </Step>
 
         <Step kind="takeaways">

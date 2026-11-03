@@ -260,8 +260,9 @@ export function PolarExplorer() {
         }}
       />
       <p className="mt-2 text-xs text-ink-3">
-        Blue arrow: v_r (along the radius) · red arrow: v_θ (perpendicular, towards increasing θ) · black: V. For the source and the
-        spiral, ψ uses θ ∈ (−π, π], so its branch cut lies along the negative x-axis (hidden).
+        Axes in m. Indigo arrow: v_r ê_r (along the radius; outward when v_r &gt; 0) · red arrow: v_θ ê_θ (perpendicular to the
+        radius; towards increasing θ when v_θ &gt; 0) · thick dark arrow: V, drawn at a fixed length. For the source and the spiral,
+        ψ uses θ ∈ (−π, π], so its branch cut lies along the negative x-axis (hidden).
       </p>
     </SimPanel>
   )

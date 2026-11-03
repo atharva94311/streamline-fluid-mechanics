@@ -22,6 +22,7 @@ export function presetAcceleration(flow: CauchyFlow, k: number, x: number, y: nu
     case 'rot':
       return { local: [0, 0], conv: [-k * k * x, -k * k * y], vel: [-k * y, k * x] }
     case 'accel':
+      // vel is only a snapshot direction for the tracer animation: the speed U(t) itself changes in time
       return { local: [k, 0], conv: [0, 0], vel: [1, 0] }
     default:
       return { local: [0, 0], conv: [0, 0], vel: [0, 0] }
@@ -69,7 +70,7 @@ export function CauchyBalanceSim() {
 
   const footer: Record<CauchyFlow, string> = {
     stag:
-      'Try this: drag the point to the origin (the stagnation point) — the acceleration vanishes and, with gravity on, the stresses only have to hold up the weight (indigo = −amber, the hydrostatic balance). Then move along the x-axis and watch ρa grow linearly with distance.',
+      'Try this: use the sliders to move the point to the origin (the stagnation point) — the acceleration vanishes and, with gravity on, the stresses only have to hold up the weight (indigo = −amber, the hydrostatic balance). Then move along the x-axis and watch ρa grow linearly with distance.',
     rot:
       'Try this: move the point outward — the centripetal acceleration ρa always points at the axis and grows with radius, so the surface force must push the fluid inward harder and harder: pressure must rise with radius.',
     accel:
@@ -111,7 +112,7 @@ export function CauchyBalanceSim() {
           <Slider label="point $y$" value={py} min={-1.8} max={1.8} step={0.05} onChange={setPy} unit="m" />
           <Toggle label="vertical plane: gravity along $-y$" checked={vertical} onChange={setVertical} />
           <div className="rounded-xl bg-surface-2 px-3 py-2 text-xs text-ink-2">
-            Velocity here: {pair(acc.vel)} m/s
+            {flow === 'accel' ? 'Velocity here: (U(t), 0) — the same at every point, changing in time' : `Velocity here: ${pair(acc.vel)} m/s`}
             <br />
             local part ∂V/∂t: {pair(acc.local)} m/s²
             <br />

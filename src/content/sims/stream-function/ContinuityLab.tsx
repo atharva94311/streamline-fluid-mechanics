@@ -8,7 +8,7 @@ import {
   FlowField, PlayPause, Readout, Segmented, SimPanel, Slider, Toggle, md, type FlowMarker,
   useAnimationFrame, useInView, usePrefersReducedMotion,
 } from '@/kit'
-import { advect, centroid, divergence, polygonArea, squareLoop, type V2, type VelFn } from './fields'
+import { advect, centroid, divergence, polygonArea, refineLoop, squareLoop, type V2, type VelFn } from './fields'
 
 type Key = 'corner' | 'example' | 'rotation'
 type F = (x: number, y: number) => number
@@ -108,7 +108,8 @@ export function ContinuityLab() {
         ([px, py]) => !(Number.isFinite(px) && Number.isFinite(py)) || px < X[0] - 0.4 || px > X[1] + 0.4 || py < Y[0] - 0.4 || py > Y[1] + 0.4,
       )
       if (out || s.t + h > 6) return { pts: squareLoop(x0, y0, HALF), t: 0 }
-      return { pts, t: s.t + h }
+      // re-resolve the stretched boundary so the measured area stays honest (≈ 0.1 % even near the stagnation point)
+      return { pts: refineLoop(pts, 0.03, 1600), t: s.t + h }
     })
   }, playing && inView && !reduced)
 
@@ -128,7 +129,7 @@ export function ContinuityLab() {
   return (
     <SimPanel
       title="Continuity lab — what the minus sign buys you"
-      subtitle={md`$${P.tex}$ with $u = \psi_y$, $v = ${wrong ? '+' : '-'}\psi_x$`}
+      subtitle={md`$${P.tex}$ with $u = \psi_y$, $v = ${wrong ? '+' : '-'}\psi_x$ · axes $x$, $y$ in m`}
       wide
       controls={
         <>

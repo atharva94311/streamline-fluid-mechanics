@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { FlowField, Plot, Segmented, SimPanel, Slider, Toggle, md, type Vec } from '@/kit'
 import { TeXReadout } from './ui'
-import { Arrow, rad } from './svg'
+import { Arrow, AxisTags, rad } from './svg'
 
 const TWO_PI = 2 * Math.PI
 
@@ -100,7 +100,8 @@ export function SourceExplorer(props: StrengthProps) {
         <>
           <b>Try this:</b> set Δθ = 90° — exactly a quarter of m passes through the wedge at <i>every</i> radius, because no fluid
           crosses a ray. Switch to <i>Sink</i>: q turns negative (the flow crosses the arc inward) while the pattern of lines is
-          unchanged. Hover to probe v<sub>r</sub>: halve the distance and the speed doubles.
+          unchanged. Hover to read the speed |V| = |v<sub>r</sub>|: halve the distance and it doubles. ψ is multi-valued — the
+          plot restarts it at 0 on the +x axis (the branch cut), so if θ₂ passes 360° just keep counting: ψ₂ = mθ₂/2π.
         </>
       }
     >
@@ -140,6 +141,7 @@ export function SourceExplorer(props: StrengthProps) {
           const l2 = P(2.45, t2 + 0.12)
           return (
             <g>
+              <AxisTags sx={sx} sy={sy} xMax={3} yMax={3} />
               {dth > 0 ? (
                 full ? (
                   <circle cx={cx} cy={cy} r={Rw} fill="var(--plot-5)" fillOpacity={0.14} />
@@ -193,6 +195,10 @@ export function RadialProfile(props: StrengthProps) {
     <SimPanel
       title="Speed and pressure along a ray — Bernoulli between two radii"
       subtitle={md`$v_r = \dfrac{m}{2\pi r}$, $\;p_1 + \tfrac12\rho v_1^2 = p_2 + \tfrac12\rho v_2^2$`}
+      src={[
+        { doc: 'lec12', pages: '10' },
+        { doc: 'fox', pages: '222', note: 'Eq. (6.26), Bernoulli between any two points' },
+      ]}
       controls={
         <>
           <StrengthControls {...props} />

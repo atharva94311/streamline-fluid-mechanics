@@ -4,8 +4,9 @@ import { Arrow, fin, type P2 } from './shared'
 
 /**
  * "Paddle-wheel" vorticity probe. A tiny rigid paddle wheel carried by the flow spins at the local fluid
- * rotation rate ω_z = ½(∂v/∂x − ∂u/∂y). Two material lines (initially along x and y) are carried with it and
- * turn at ∂v/∂x (counter-clockwise +) and ∂u/∂y (clockwise +) — the paddle follows their average.
+ * rotation rate ω_z = ½(∂v/∂x − ∂u/∂y). Two material lines (initially along x and y) are carried with it; at release
+ * they turn at ∂v/∂x (counter-clockwise +) and ∂u/∂y (clockwise +), whose average is ω_z. Later they shear apart
+ * (they no longer stay perpendicular) while the paddle keeps turning at ω_z.
  */
 
 type Key = 'couette' | 'forced' | 'free' | 'stag'
@@ -258,10 +259,10 @@ export function PaddleWheel() {
       }
       footer={
         <span>
-          <b>Try this:</b> in the <i>free vortex</i> the probe circles the centre but its orange blade keeps pointing the same way —
+          <b>Try this:</b> in the <i>free vortex</i> the probe circles the centre but its amber blade keeps pointing the same way —
           the flow is irrotational. In the <i>forced vortex</i> the blade turns once per orbit. In <i>Couette shear</i> the
-          streamlines are straight, yet the paddle spins clockwise at k/2. Watch the two coloured material lines: the paddle always
-          turns at their average rate.
+          streamlines are straight, yet the paddle spins clockwise at k/2. Just after each release the paddle turns at the average
+          rate of the two coloured material lines; later the lines shear apart while the paddle keeps turning at ω<sub>z</sub>.
         </span>
       }
     >
@@ -318,6 +319,9 @@ export function PaddleWheel() {
             )
           })}
           <circle cx={px} cy={py} r={3.5} fill="var(--ink)" />
+          <text x={8} y={18} fontSize={11} className="fill-ink-3">
+            x: −2 … 2 m · y: −1.4 … 1.4 m
+          </text>
           {tint ? (
             <text x={8} y={VH - 12} fontSize={11.5} className="fill-ink-2">
               {tint.text}

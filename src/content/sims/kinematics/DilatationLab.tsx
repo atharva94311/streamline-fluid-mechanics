@@ -5,7 +5,8 @@ import { Chip, PresetRow } from './shared'
 /**
  * Volumetric-dilatation lab (Lecture 9 slide 5): a cubic element δx = δy = δz = 1 cm in a field with uniform
  * normal gradients ∂u/∂x, ∂v/∂y, ∂w/∂z. The drawing shows the exact deformed box; the coloured strips are the
- * slide's first-order volume changes, e.g. (∂u/∂x δx)(δy δz)δt; the uncoloured corner pieces are O(δt²).
+ * slide's first-order volume changes, e.g. (∂u/∂x δx)(δy δz)δt, drawn on the original faces with first-order widths;
+ * the exact box differs from them by slivers and corner pieces of order δt².
  */
 
 type Key = 'x' | 'incomp' | 'expand' | 'compress'
@@ -67,9 +68,11 @@ export function DilatationLab() {
   // first-order strips on the front face (x and y) and on the top face (z)
   const yLo = Math.max(-1, Math.min(0.9, Math.exp(div * 0.4) * 0.95, 1 + div * 0.4) - 0.05)
   const yHi = Math.max(1.1, Math.exp(div * 0.4) * 1.05)
-  const xs = [Math.min(1, X), Math.max(1, X)]
-  const ys = [Math.min(1, Y), Math.max(1, Y)]
-  const zs = [Math.min(1, Z), Math.max(1, Z)]
+  // strip widths are the slide-5 first-order values, e.g. AA′ = (∂u/∂x δx) δt with δx = 1 cm; the exact box
+  // (solid outline) differs from them only by slivers and corner pieces of order δt²
+  const xs = [Math.min(1, 1 + dVx), Math.max(1, 1 + dVx)]
+  const ys = [Math.min(1, 1 + dVy), Math.max(1, 1 + dVy)]
+  const zs = [Math.min(1, 1 + dVz), Math.max(1, 1 + dVz)]
 
   return (
     <SimPanel
@@ -106,7 +109,8 @@ export function DilatationLab() {
       footer={
         <span>
           <b>Try this:</b> set δt small (0.02 s) and compare the first-order and exact volume changes — they agree, which is why
-          the slide can take δt → 0. At δt = 0.4 s they differ: the uncoloured corner pieces are second-order. Then choose{' '}
+          the slide can take δt → 0. At δt = 0.4 s they differ: the coloured strips have the slide's first-order widths, and the
+          exact box (solid outline) differs from them by slivers and corner pieces of order δt². Then choose{' '}
           <i>Stretch x, squeeze y</i>: the shape changes but ∇·V = 0 keeps the volume.
         </span>
       }
@@ -115,14 +119,14 @@ export function DilatationLab() {
         <svg viewBox="0 0 360 290" className="mx-auto block h-auto w-full max-w-[520px]" role="img" aria-label="element before and after deformation">
           <Box X={X} Y={Y} Z={Z} fill="var(--plot-2)" />
           {/* first-order strips */}
-          {Math.abs(X - 1) > 1e-6 ? (
-            <polygon points={pts(P(xs[0], 0, 0), P(xs[1], 0, 0), P(xs[1], 1, 0), P(xs[0], 1, 0))} fill={X > 1 ? grow : shrink} fillOpacity={0.38} stroke={X > 1 ? grow : shrink} strokeWidth={1} />
+          {Math.abs(dVx) > 1e-6 ? (
+            <polygon points={pts(P(xs[0], 0, 0), P(xs[1], 0, 0), P(xs[1], 1, 0), P(xs[0], 1, 0))} fill={dVx > 0 ? grow : shrink} fillOpacity={0.38} stroke={dVx > 0 ? grow : shrink} strokeWidth={1} />
           ) : null}
-          {Math.abs(Y - 1) > 1e-6 ? (
-            <polygon points={pts(P(0, ys[0], 0), P(1, ys[0], 0), P(1, ys[1], 0), P(0, ys[1], 0))} fill={Y > 1 ? grow : shrink} fillOpacity={0.38} stroke={Y > 1 ? grow : shrink} strokeWidth={1} />
+          {Math.abs(dVy) > 1e-6 ? (
+            <polygon points={pts(P(0, ys[0], 0), P(1, ys[0], 0), P(1, ys[1], 0), P(0, ys[1], 0))} fill={dVy > 0 ? grow : shrink} fillOpacity={0.38} stroke={dVy > 0 ? grow : shrink} strokeWidth={1} />
           ) : null}
-          {Math.abs(Z - 1) > 1e-6 ? (
-            <polygon points={pts(P(0, Y, zs[0]), P(1, Y, zs[0]), P(1, Y, zs[1]), P(0, Y, zs[1]))} fill={Z > 1 ? grow : shrink} fillOpacity={0.38} stroke={Z > 1 ? grow : shrink} strokeWidth={1} />
+          {Math.abs(dVz) > 1e-6 ? (
+            <polygon points={pts(P(0, Y, zs[0]), P(1, Y, zs[0]), P(1, Y, zs[1]), P(0, Y, zs[1]))} fill={dVz > 0 ? grow : shrink} fillOpacity={0.38} stroke={dVz > 0 ? grow : shrink} strokeWidth={1} />
           ) : null}
           <Box X={1} Y={1} Z={1} dashed />
           <g fontSize={12} className="fill-ink-2">

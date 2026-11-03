@@ -43,7 +43,7 @@ export const meta: TopicMeta = {
       summary: 'Radial outflow (m > 0) or inflow (m < 0) from a line: (2πr)v_r = m, v_r = m/2πr, φ = (m/2π) ln r, ψ = (m/2π)θ.',
     },
   ],
-  sourceNote: md`**Primary source:** Lecture 12, slides 8–10 (uniform flow; source and sink). Lecture 12 prints **no equation numbers**, so formulas are cited by slide. Tools borrowed from neighbouring slides — velocity from $\phi$ and $\psi$ (slide 3), $q = \psi_2 - \psi_1$ (slide 6), Bernoulli (slide 18 and Fox Eq. (6.26)) — are cited where they are used. The convention "$m > 0$ source, $m < 0$ sink" is standard but not printed, so it is marked supplementary. This course uses $\vb{V} = +\nabla\phi$; Fox & McDonald use $\vb{V} = -\nabla\phi$, which flips the sign of every $\phi$ (but never of $\psi$).`,
+  sourceNote: md`**Primary source:** Lecture 12, slides 8–10 (uniform flow; source and sink). Lecture 12 prints **no equation numbers**, so formulas are cited by slide. Tools borrowed from neighbouring slides — velocity from $\phi$ and $\psi$ (slide 3), $q = \psi_2 - \psi_1$ (slide 6), Bernoulli (slide 18 and Fox Eq. (6.26)) — are cited where they are used. Slide 10 treats source and sink under one title; the convention "$m > 0$ source, $m < 0$ sink" is standard but not printed there, so wherever it appears it is labelled as the standard convention. This course uses $\vb{V} = +\nabla\phi$; Fox & McDonald use $\vb{V} = -\nabla\phi$, which flips the sign of every $\phi$ (but never of $\psi$).`,
 }
 
 /* ─────────────────────────────── formulas ─────────────────────────────── */
@@ -74,6 +74,7 @@ export const formulas: FormulaDef[] = [
     tex: md`\phi = Ux \qquad \psi = Uy \qquad (u = U,\ v = 0)`,
     vars: [
       { sym: md`U`, desc: 'constant speed of the stream, directed along $+x$', units: md`\mathrm{m/s}` },
+      { sym: md`u,\ v`, desc: 'velocity components in $x$ and $y$ — the same at every point', units: md`\mathrm{m/s}` },
       { sym: md`\phi`, desc: 'velocity potential (integration constant $C$ dropped)', units: md`\mathrm{m^2/s}` },
       { sym: md`\psi`, desc: 'stream function, chosen zero on the $x$-axis', units: md`\mathrm{m^2/s}` },
       { sym: md`x,\ y`, desc: 'coordinates', units: md`\mathrm{m}` },
@@ -112,6 +113,7 @@ export const formulas: FormulaDef[] = [
     vars: [
       { sym: md`u,\ v`, desc: 'velocity components (the same at every point)', units: md`\mathrm{m/s}` },
       { sym: md`U,\ \alpha`, desc: 'speed and direction of the stream', units: md`\mathrm{m/s},\ \mathrm{rad}` },
+      { sym: md`\phi`, desc: md`velocity potential $U(x\cos\alpha + y\sin\alpha)$ of slide 9`, units: md`\mathrm{m^2/s}` },
     ],
     conditions: ['same as for the inclined uniform flow (obtained by differentiating the slide-9 potential)'],
     use: md`Reverse use: a field with constant $(u, v)$ is a uniform stream with $U = \sqrt{u^2+v^2}$ and $\alpha = \operatorname{atan2}(v, u)$ — use the two-argument arctangent (or a sketch) so the quadrant is right.`,
@@ -124,9 +126,10 @@ export const formulas: FormulaDef[] = [
       { sym: md`r,\ \theta`, desc: md`polar coordinates: $x = r\cos\theta$, $y = r\sin\theta$ ($\theta$ counter-clockwise from $+x$)`, units: md`\mathrm{m},\ \mathrm{rad}` },
       { sym: md`v_r,\ v_\theta`, desc: 'radial (outward) and tangential (counter-clockwise) velocity components', units: md`\mathrm{m/s}` },
       { sym: md`U`, desc: 'speed of the stream along $+x$', units: md`\mathrm{m/s}` },
+      { sym: md`\phi,\ \psi`, desc: 'velocity potential and stream function of the stream', units: md`\mathrm{m^2/s}` },
     ],
     conditions: [md`the same uniform stream as $\phi = Ux$, $\psi = Uy$, just written in polar coordinates`],
-    use: md`Use this form whenever the stream is combined with a source, sink or vortex at the origin, whose formulas are simplest in polar coordinates — slide 16 writes $\psi_{\text{uniform flow}} = Ur\sin\theta$. Note $v_\theta = -U\sin\theta$: above the axis the stream moves clockwise relative to the origin.`,
+    use: md`Use this form whenever the stream is combined with a source, sink or vortex at the origin, whose formulas are simplest in polar coordinates — slide 16 writes $\psi = \psi_{\text{uniform flow}} + \psi_{\text{source}} = Ur\sin\theta + \frac{m}{2\pi}\theta$. Note $v_\theta = -U\sin\theta$: above the axis the stream moves clockwise relative to the origin.`,
     src: [
       { doc: 'lec12', pages: '16', note: 'uniform-flow terms of φ and ψ' },
       { doc: 'lec12', pages: '18', note: 'U cos θ and −U sin θ terms' },
@@ -148,12 +151,28 @@ export const formulas: FormulaDef[] = [
     src: { doc: 'lec12', pages: '6' },
   },
   {
+    id: 'slopes',
+    name: 'Slopes of streamlines and equipotentials (orthogonality)',
+    tex: md`\left.\frac{dy}{dx}\right|_{\psi=\text{const}} = \frac{v}{u} \qquad\qquad \left.\frac{dy}{dx}\right|_{\phi=\text{const}} = -\frac{u}{v}`,
+    vars: [
+      { sym: md`dy/dx`, desc: 'slope of the streamline or equipotential through the point (dimensionless)' },
+      { sym: md`u,\ v`, desc: 'local velocity components in $x$ and $y$', units: md`\mathrm{m/s}` },
+    ],
+    conditions: [
+      'plane flow in which both ψ and φ exist (plane, incompressible, irrotational)',
+      md`the product of the two slopes is $(v/u)(-u/v) = -1$: equipotentials cross streamlines at right angles wherever they intersect (undefined at a stagnation point, where $u = v = 0$)`,
+    ],
+    use: md`The streamline slope follows from the streamline being tangent to $\vb{V}$; the equipotential slope from $d\phi = u\,dx + v\,dy = 0$. For an inclined uniform stream $v/u = \tan\alpha$ and $-u/v = -\cot\alpha$ — two families of straight lines at right angles; drawn with $\Delta\phi = \Delta\psi$ they form a flow net of squares.`,
+    src: { doc: 'lec12', pages: '5' },
+  },
+  {
     id: 'laplace-2d',
     name: "Laplace's equation for φ and ψ (plane potential flow)",
     tex: md`\nabla^2\phi = \pd{^2\phi}{x^2} + \pd{^2\phi}{y^2} = 0 \qquad\qquad \nabla^2\psi = \pd{^2\psi}{x^2} + \pd{^2\psi}{y^2} = 0`,
     vars: [
       { sym: md`\nabla^2`, desc: 'Laplacian operator', units: md`\mathrm{m^{-2}}` },
       { sym: md`\phi,\ \psi`, desc: 'velocity potential and stream function', units: md`\mathrm{m^2/s}` },
+      { sym: md`x,\ y`, desc: 'Cartesian coordinates in the plane of the flow', units: md`\mathrm{m}` },
     ],
     conditions: [
       md`for $\phi$: incompressible (continuity) **and** irrotational (so that $\phi$ exists) — slide 2 prints the 3-D form with $\partial^2\phi/\partial z^2$`,
@@ -199,7 +218,7 @@ export const formulas: FormulaDef[] = [
       'plane flow from a line perpendicular to the x–y plane, equal in all directions',
       'steady, incompressible',
       md`valid for $r > 0$ only — $r = 0$ is a singular point`,
-      md`$m > 0$ source (outflow), $m < 0$ sink (inflow) — standard sign convention`,
+      md`$m > 0$ source (outflow), $m < 0$ sink (inflow) — the standard sign convention, not printed on slide 10`,
     ],
     use: md`The speed halves when $r$ doubles. At a point $(x, y)$: $r = \sqrt{x^2+y^2}$, then $u = v_r\cos\theta$ and $v = v_r\sin\theta$ (purely radial flow).`,
     src: { doc: 'lec12', pages: '10' },
@@ -240,6 +259,7 @@ export const formulas: FormulaDef[] = [
     tex: md`q_{12} = \psi_2 - \psi_1 = \frac{m}{2\pi}\,(\theta_2 - \theta_1)`,
     vars: [
       { sym: md`q_{12}`, desc: 'volume flow per unit depth crossing any curve joining the two rays', units: md`\mathrm{m^2/s}` },
+      { sym: md`\psi_1,\ \psi_2`, desc: md`stream-function values on the rays $\theta_1$ and $\theta_2$`, units: md`\mathrm{m^2/s}` },
       { sym: md`\theta_1,\ \theta_2`, desc: 'directions of the two rays (counter-clockwise, in **radians**)', units: md`\mathrm{rad}` },
       { sym: md`m`, desc: 'source strength', units: md`\mathrm{m^2/s}` },
     ],
@@ -289,8 +309,9 @@ export const formulas: FormulaDef[] = [
     name: 'Pressure field around a line source or sink',
     tex: md`p(r) = p_\infty - \frac{\rho\,m^2}{8\pi^2 r^2} \qquad\Longrightarrow\qquad p_2 - p_1 = \frac{\rho\,m^2}{8\pi^2}\left(\frac{1}{r_1^2} - \frac{1}{r_2^2}\right)`,
     vars: [
+      { sym: md`p(r)`, desc: md`static pressure at distance $r$ from the source or sink line`, units: md`\mathrm{Pa}` },
       { sym: md`p_\infty`, desc: md`pressure far from the source ($r \to \infty$, where $V \to 0$)`, units: md`\mathrm{Pa}` },
-      { sym: md`r_1,\ r_2`, desc: 'two radii', units: md`\mathrm{m}` },
+      { sym: md`r_1,\ r_2`, desc: md`two radii; $p_1$, $p_2$ are the pressures there`, units: md`\mathrm{m}` },
       { sym: md`\rho,\ m`, desc: 'density and source strength', units: md`\mathrm{kg/m^3},\ \mathrm{m^2/s}` },
     ],
     conditions: [
@@ -332,7 +353,7 @@ $$`,
       },
       {
         title: 'Slopes and pressure',
-        md: md`Streamlines: $dy/dx = v/u = \tan 30^\circ = 0.5774$. Equipotentials: $dy/dx = -u/v = -1.732$. Product $= -1$ → perpendicular. The speed is $5$ m/s at both points, so Bernoulli gives $p_B - p_A = \tfrac12\rho(V_A^2 - V_B^2) = 0$.`,
+        md: md`Slopes (slide 5): streamlines $dy/dx = v/u = \tan 30^\circ = 0.5774$; equipotentials $dy/dx = -u/v = -1.732$. Product $= -1$ → perpendicular. The speed is $5$ m/s at both points, so Bernoulli gives $p_B - p_A = \tfrac12\rho(V_A^2 - V_B^2) = 0$.`,
       },
     ],
     answer: md`(a) $\phi = 4.330x + 2.5y$, $\psi = 4.330y - 2.5x$ (m²/s); (b) $u = 4.33$ m/s, $v = 2.50$ m/s; (c) $q = 8.66$ m²/s per metre depth, crossing $AB$ toward $+x$; (d) slopes $0.577$ and $-1.732$ (product $-1$); $p_B - p_A = 0$.`,
@@ -345,6 +366,7 @@ $$`,
     difficulty: 2,
     given: md`$\psi = 3y - 4x$ (m²/s, with $x$ and $y$ in m).`,
     find: md`(a) Show the flow is uniform and find $U$ and $\alpha$; (b) find $\phi$ and check Laplace's equation; (c) the flow rate between the streamlines through $O(0,\ 0)$ and $P(1,\ 2)$ m, and their perpendicular spacing.`,
+    assumptions: md`plane, incompressible flow (so $\psi$ exists); flow rates per metre of depth.`,
     steps: [
       {
         title: 'Velocity field',
@@ -422,6 +444,7 @@ $$`,
     difficulty: 3,
     given: md`A plane flow has $\phi = -4\ln r$ (m²/s, $r$ in m).`,
     find: md`(a) the type and strength of the flow; (b) $v_r$, $v_\theta$ and $(u, v)$ at $r = 2$ m, $\theta = 120^\circ$; (c) $\psi$; (d) the time a fluid particle takes to move from $r = 2$ m to $r = 1$ m.`,
+    assumptions: md`steady, plane, incompressible, irrotational flow; valid for $r > 0$ (the origin is singular).`,
     steps: [
       {
         title: 'Compare with slide 10',
@@ -682,6 +705,15 @@ export const quiz: QuizQ[] = [
     explain: md`$q = \psi_2 - \psi_1 = 4(2.5) - 4(1) = 6$ m²/s. The $x$-coordinates do not matter because $\psi$ does not depend on $x$ (the streamlines are horizontal). $10$ m²/s is $\psi$ at the upper point only (forgetting to subtract $\psi_1$), $14$ m²/s adds the two values, and $4$ m²/s is the speed $U$, not a flow rate.`,
   },
   {
+    id: 'q-uniform-atan2',
+    concept: 'uniform-flow',
+    difficulty: 2,
+    q: md`A uniform stream has $u = -3$ m/s and $v = 3$ m/s everywhere. In which direction $\alpha$ (counter-clockwise from $+x$) does it flow?`,
+    options: [md`$135^\circ$`, md`$-45^\circ$`, md`$45^\circ$`, md`$225^\circ$`],
+    answer: 0,
+    explain: md`$u < 0$ and $v > 0$ put the velocity in the second quadrant: $\alpha = \operatorname{atan2}(3,\ -3) = 135^\circ$, with $U = \sqrt{3^2+3^2} = 4.24$ m/s (check: $4.24\cos 135^\circ = -3$, $4.24\sin 135^\circ = 3$). A calculator's $\arctan(v/u) = \arctan(-1)$ returns $-45^\circ$, which points down and to the right — exactly the opposite direction. $45^\circ$ ignores the sign of $u$, and $225^\circ$ would need both components negative.`,
+  },
+  {
     id: 'q-source-units',
     concept: 'source-sink',
     difficulty: 1,
@@ -767,6 +799,15 @@ export const quiz: QuizQ[] = [
     answer: 0,
     explain: md`$q = \psi_2 - \psi_1 = \frac{m}{2\pi}(\theta_2 - \theta_1)$, so the fraction is $90^\circ/360^\circ = 1/4$. Rays are streamlines — no fluid crosses them — so the answer is the same at every radius. $33$ % would be $120^\circ/360^\circ$, i.e. using only one of the two angles.`,
   },
+  {
+    id: 'q-source-psi-jump',
+    concept: 'source-sink',
+    difficulty: 2,
+    q: md`Starting on the ray $\theta = 0$, you walk once counter-clockwise around a line source of strength $m$ and return to your starting point. By how much has $\psi = \frac{m}{2\pi}\theta$ increased along the way?`,
+    options: [md`By $m$`, md`By zero, because you are back at the same point`, md`By $m/2\pi$`, md`By $2\pi m$`],
+    answer: 0,
+    explain: md`$\theta$ grows by $2\pi$, so $\psi$ grows by $\frac{m}{2\pi}\cdot 2\pi = m$ — and $q = \psi_{\text{end}} - \psi_{\text{start}} = m$ is exactly the source's whole output per unit length, which crosses your closed path. Around a source $\psi$ is **multi-valued**, because fluid is being injected inside the loop. "Zero" would hold only if the loop enclosed no source; $m/2\pi$ is the increase per radian; $2\pi m$ comes from writing $\psi = m\theta$ and dropping the $1/2\pi$.`,
+  },
 ]
 
 /* ─────────────────────────────── flashcards ─────────────────────────────── */
@@ -792,13 +833,16 @@ export const flashcards: Flashcard[] = [
   {
     id: 'f-uniform-polar',
     front: md`The uniform stream along $+x$ in polar coordinates?`,
-    back: md`$\phi = Ur\cos\theta$, $\psi = Ur\sin\theta$; $v_r = U\cos\theta$, $v_\theta = -U\sin\theta$ — the form used when it is superposed with a source at the origin (slide 16).`,
-    src: { doc: 'lec12', pages: '16' },
+    back: md`$\phi = Ur\cos\theta$, $\psi = Ur\sin\theta$; $v_r = U\cos\theta$, $v_\theta = -U\sin\theta$ — the form used when it is superposed with a source at the origin (slides 16 and 18).`,
+    src: [
+      { doc: 'lec12', pages: '16' },
+      { doc: 'lec12', pages: '18' },
+    ],
   },
   {
     id: 'f-source-m',
     front: md`The source strength $m$: meaning and units?`,
-    back: md`The volume rate of flow spreading out from the line **per unit length** of the line, in m²/s (slide 10). By the standard convention $m > 0$ is a source (outflow) and $m < 0$ a sink (inflow).`,
+    back: md`The volume rate of flow spreading out from the line **per unit length** of the line (slide 10) — so its units are (m³/s)/m = m²/s. By the standard convention (not printed on the slide) $m > 0$ is a source (outflow) and $m < 0$ a sink (inflow).`,
     src: { doc: 'lec12', pages: '10' },
   },
   {
@@ -885,9 +929,9 @@ export default function Content() {
               { title: 'Superposition', md: md`half-body, slides 16–18`, tone: 'amber' },
             ]}
           />
-          <Callout kind="note" title="Plane flow, per unit depth">
-            <Md>{md`"Plane" means two-dimensional: nothing depends on $z$, and there is no $w$. Every $\phi$, $\psi$ and flow rate $q$ on this page is per metre of depth normal to the paper, which is why they carry the units m²/s.`}</Md>
-          </Callout>
+          <Supplement title="Plane flow, per unit depth — and the units m²/s">
+            <Md>{md`"Plane" means two-dimensional: nothing depends on $z$, and there is no $w$. The stream function $\psi$ and every flow rate $q$ on this page are volume flows **per metre of depth** normal to the paper, (m³/s)/m = m²/s. The potential $\phi$ has the same units for a different reason: it is a speed times a length ($\phi = Ux$), not a flow per unit depth.`}</Md>
+          </Supplement>
         </Step>
 
         <Step kind="intuition">
@@ -941,7 +985,7 @@ export default function Content() {
           </Supplement>
         </Step>
 
-        <Step kind="equations" src={[{ doc: 'lec12', pages: '3' }, { doc: 'lec12', pages: '8–9' }]}>
+        <Step kind="equations" src={[{ doc: 'lec12', pages: '3' }, { doc: 'lec12', pages: '5–6' }, { doc: 'lec12', pages: '8–9' }]}>
           <Md>{md`Two relations from slide 3 do all the work; the results of slides 8 and 9 follow from them.`}</Md>
           <FormulaCard id="vel-cart" />
           <FormulaCard id="uniform-x" />
@@ -950,6 +994,7 @@ export default function Content() {
           <Callout kind="warning" title="Sign trap in ψ">
             <Md>{md`It is $\psi = U(y\cos\alpha \;\mathbf{-}\; x\sin\alpha)$. Always check by differentiating: $v = -\partial\psi/\partial x = +U\sin\alpha$. With a plus sign you would describe a stream tilted *downward*.`}</Md>
           </Callout>
+          <FormulaCard id="slopes" />
           <FormulaCard id="uniform-polar" />
           <FormulaCard id="q-psi" />
           <Callout kind="exam" title="Identifying a uniform flow">
@@ -987,9 +1032,11 @@ export default function Content() {
             </div>
           </Supplement>
           <FormulaCard id="laplace-2d" />
-          <Md>{md`
-            **Check:** every second derivative of $Ux$, $Uy$, $U(x\cos\alpha + y\sin\alpha)$ and $U(y\cos\alpha - x\sin\alpha)$ is zero, so $\nabla^2\phi = \nabla^2\psi = 0$ identically — the uniform stream is an *exact* potential flow, valid everywhere (it has no singular point).
-          `}</Md>
+          <Supplement title="Laplace check">
+            <Md>{md`
+              Every second derivative of $Ux$, $Uy$, $U(x\cos\alpha + y\sin\alpha)$ and $U(y\cos\alpha - x\sin\alpha)$ is zero, so $\nabla^2\phi = \nabla^2\psi = 0$ identically — the uniform stream is an *exact* potential flow, valid everywhere (it has no singular point). It is also irrotational and divergence-free by inspection: $\partial v/\partial x - \partial u/\partial y = 0$ and $\partial u/\partial x + \partial v/\partial y = 0$, because $u$ and $v$ are constants.
+            `}</Md>
+          </Supplement>
           <Supplement title="Why this matters: superposition">
             <Md>{md`Laplace's equation is **linear**: if $\phi_1$ and $\phi_2$ satisfy it, so does $\phi_1 + \phi_2$ (and likewise for $\psi$), and the velocities simply add as vectors. Two uniform streams add to another uniform stream (practice 4 below); a uniform stream plus a source gives the flow around a half-body — exactly the superposition $\psi = \psi_{\text{uniform flow}} + \psi_{\text{source}}$ written on slide 16.`}</Md>
           </Supplement>
@@ -1035,8 +1082,8 @@ export default function Content() {
 
             Because every plane $z =$ const looks the same, this is a *plane* flow: in the $x$–$y$ plane the line appears as a point — the **source** — and the flow is **purely radial** ($v_\theta = 0$). Mass conservation alone fixes the speed, $v_r = m/(2\pi r)$, and integrating the velocity relations gives $\phi = \frac{m}{2\pi}\ln r$ and $\psi = \frac{m}{2\pi}\theta$.
           `}</Md>
-          <Callout kind="def" title="Source and sink (slide 10)">
-            <Md>{md`**Source:** radial outflow from a line, strength $m$ = volume flow per unit length. **Sink:** the same flow reversed — fluid drawn *into* the line. By the standard convention a sink is simply a source with **negative** $m$.`}</Md>
+          <Callout kind="def" title="Source and sink">
+            <Md>{md`**Source (slide 10):** radial outflow from a line; strength $m$ = volume rate of flow per unit length of the line. **Sink:** the same flow reversed — fluid drawn *into* the line. Slide 10 treats both under one title; by the standard convention (not printed on the slide) a sink is simply a source with **negative** $m$.`}</Md>
           </Callout>
           <Supplement title="Where sources and sinks appear">
             <Md>{md`
@@ -1097,9 +1144,9 @@ export default function Content() {
               - A sink has $m < 0$: then $v_r < 0$ (inward) and $\psi$ decreases counter-clockwise.
             `}</Md>
           </Callout>
-          <Callout kind="note" title="Why ln r is allowed for a dimensional r">
-            <Md>{md`Strictly, $\phi = \frac{m}{2\pi}\ln(r/r_0)$ for some reference radius $r_0$. That only adds the constant $-\frac{m}{2\pi}\ln r_0$, which is dropped — exactly like the constant $C$ on slide 8.`}</Md>
-          </Callout>
+          <Supplement title="Why ln r is allowed for a dimensional r">
+            <Md>{md`Strictly, $\phi = \frac{m}{2\pi}\ln(r/r_0)$ for some reference radius $r_0$. That only adds the constant $-\frac{m}{2\pi}\ln r_0$, which is dropped — exactly like the constant $C$ on slide 8. So the sign of $\phi$ (for a source it is negative inside $r = 1$ m) means nothing; only differences of $\phi$ and its derivatives are physical.`}</Md>
+          </Supplement>
           <FormulaCard id="source-cart" />
           <FormulaCard id="rays-q" />
           <FormulaCard id="bernoulli-2pt" />
@@ -1127,7 +1174,7 @@ export default function Content() {
               \nabla^2\phi = \frac{1}{r}\frac{d}{dr}\!\left(r\,\frac{m}{2\pi r}\right) = \frac{1}{r}\frac{d}{dr}\!\left(\frac{m}{2\pi}\right) = 0 \qquad (r > 0),
               $$
 
-              and $\psi = \frac{m}{2\pi}\theta$ has $\partial\psi/\partial r = 0$ and $\partial^2\psi/\partial\theta^2 = 0$, so $\nabla^2\psi = 0$ too — for **either** sign of $m$, so the sink is just as good a solution. At $r = 0$, however, $v_r \to \infty$ and a finite discharge $m$ emerges from a point of zero area: continuity, and with it Laplace's equation, fail there. The source is a **singular point**. We only ever use it in regions that exclude it — in the half-body of slide 16 the source sits inside the body.
+              and $\psi = \frac{m}{2\pi}\theta$ has $\partial\psi/\partial r = 0$ and $\partial^2\psi/\partial\theta^2 = 0$, so $\nabla^2\psi = 0$ too — for **either** sign of $m$, so the sink is just as good a solution. At $r = 0$, however, $v_r \to \infty$ and a finite discharge $m$ emerges from a point of zero area: continuity, and with it Laplace's equation, fail there. The source is a **singular point**. We only ever use it in regions that exclude it — in the half-body of slides 16–17 the source sits inside the body.
             `}</Md>
           </Supplement>
           <Supplement title="The building blocks side by side">
@@ -1179,7 +1226,7 @@ export default function Content() {
               md`Continuity $(2\pi r)v_r = m$ gives $v_r = m/(2\pi r)$, $v_\theta = 0$: purely radial and decaying as $1/r$ (not $1/r^2$ — that is the 3-D point source).`,
               md`$\phi = \frac{m}{2\pi}\ln r$ (equipotential circles), $\psi = \frac{m}{2\pi}\theta$ (radial streamlines); between two rays $q = \frac{m}{2\pi}(\theta_2 - \theta_1)$ — radians, any radius.`,
               md`Pressure from Bernoulli between any two points: $p = p_\infty - \rho m^2/(8\pi^2 r^2)$ — lowest near the centre, identical for a source and a sink.`,
-              md`$r = 0$ is a **singularity** ($v_r \to \infty$, Laplace fails); elsewhere the source is an exact potential flow and a building block: + uniform stream = half-body (slide 16); $\phi \leftrightarrow \psi$ interchanged = vortex (slide 11).`,
+              md`$r = 0$ is a **singularity** ($v_r \to \infty$, Laplace fails); elsewhere the source is an exact potential flow and a building block: + uniform stream = half-body (slides 16–17); $\phi \leftrightarrow \psi$ interchanged = vortex (slide 11).`,
             ]}
           />
         </Step>

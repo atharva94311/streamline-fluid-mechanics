@@ -96,7 +96,13 @@ export function StressTensorMap() {
                 plane ⟂ ↓ · acts along →
               </th>
               {AX.map((a, k) => (
-                <th key={a} className={cx('rounded-lg px-3 py-1 font-semibold', k === j ? 'bg-teal-600 text-white' : 'text-ink-2')}>
+                <th
+                  key={a}
+                  className={cx(
+                    'rounded-lg px-3 py-1 font-semibold',
+                    k === j ? 'bg-teal-100 text-teal-900 dark:bg-teal-500/25 dark:text-teal-100' : 'text-ink-2',
+                  )}
+                >
                   <M tex={a} />
                 </th>
               ))}

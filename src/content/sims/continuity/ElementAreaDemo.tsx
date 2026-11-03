@@ -18,7 +18,8 @@ const PX = 100 / DOM // px per m (panel 200 px)
 const toX = (x: number) => 100 + x * PX
 const toY = (y: number) => 100 - y * PX
 
-function Panel({ kind, S, uid }: { kind: 'A' | 'B'; S: number; uid: string }) {
+/** sgn = sign of the current strain rate a(t): the arrows reverse when the unsteady field reverses. */
+function Panel({ kind, S, sgn, uid }: { kind: 'A' | 'B'; S: number; sgn: number; uid: string }) {
   const sx = Math.exp(S)
   const sy = kind === 'A' ? Math.exp(-S) : 1
   const w = HALF * sx
@@ -47,7 +48,7 @@ function Panel({ kind, S, uid }: { kind: 'A' | 'B'; S: number; uid: string }) {
   // a few velocity arrows
   const arrows: { x: number; y: number; u: number; v: number }[] = []
   for (const x of [-1.2, -0.6, 0.6, 1.2])
-    for (const y of [-1.2, 1.2]) arrows.push({ x, y, u: A0 * x, v: kind === 'A' ? -A0 * y : 0 })
+    for (const y of [-1.2, 1.2]) arrows.push({ x, y, u: sgn * A0 * x, v: kind === 'A' ? -sgn * A0 * y : 0 })
   const rho = 1 / (sx * sy)
   return (
     <svg viewBox="0 0 200 200" className="block h-auto w-full" role="img" aria-label={kind === 'A' ? 'Incompressible element' : 'Compressible element'}>
@@ -112,6 +113,7 @@ export function ElementAreaDemo() {
   const a = unsteady ? A0 * Math.cos(OMEGA * tt) : A0
   const S = unsteady ? ((A0 * 1.8) / OMEGA) * Math.sin(OMEGA * tt) : A0 * tt
   const aNow = unsteady ? 1.8 * a : a
+  const sgn = aNow < 0 ? -1 : 1
   const areaB = Math.exp(S)
 
   return (
@@ -121,7 +123,7 @@ export function ElementAreaDemo() {
           <Md className="md-tight px-1 pb-1 text-sm">
             {md`**A — incompressible** $\;u = a x,\; v = -a y$`}
           </Md>
-          <Panel kind="A" S={S} uid={uid} />
+          <Panel kind="A" S={S} sgn={sgn} uid={uid} />
           <div className="mt-2 grid grid-cols-2 gap-1 px-1 text-xs text-ink-2">
             <span>
               <Md inline>{md`$\nabla\cdot\mathbf V = a - a = 0$`}</Md>
@@ -133,7 +135,7 @@ export function ElementAreaDemo() {
           <Md className="md-tight px-1 pb-1 text-sm">
             {md`**B — compressible** $\;u = a x,\; v = 0$`}
           </Md>
-          <Panel kind="B" S={S} uid={uid} />
+          <Panel kind="B" S={S} sgn={sgn} uid={uid} />
           <div className="mt-2 grid grid-cols-2 gap-1 px-1 text-xs text-ink-2">
             <span>
               <Md inline>{md`$\nabla\cdot\mathbf V = a$`}</Md>
@@ -162,8 +164,9 @@ export function ElementAreaDemo() {
         <PlayPause playing={playing} onToggle={() => setPlaying((p) => !p)} onReset={() => setT(0)} />
       </div>
       <p className="text-xs text-ink-3">
-        Current strain rate a = {pn(aNow, 3)} s⁻¹. Dashed square: the element at t = 0. Dots: material points riding with the fluid. In B the shading
-        fades as the same mass spreads over a larger area (ρ ∝ 1/area).
+        Current strain rate a = {pn(aNow, 3)} s⁻¹ (arrows show the current flow direction). Dashed square: the element at t = 0. Dots: material
+        points riding with the fluid. In B the shading fades as the same mass spreads over a larger area (ρ ∝ 1/area). In the unsteady case A
+        stretches and recovers but its area never changes — ∇·V = 0 holds at every instant.
       </p>
     </div>
   )

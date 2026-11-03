@@ -20,7 +20,19 @@ export function taylorFaces(deltaMM: number) {
   const taylorL = S0 - G * h
   const exactDiff = exactR - exactL
   const taylorDiff = G * deltaMM
-  return { exactR, exactL, taylorR, taylorL, exactDiff, taylorDiff, errDiffPct: (100 * Math.abs(exactDiff - taylorDiff)) / Math.abs(exactDiff) }
+  return {
+    exactR,
+    exactL,
+    taylorR,
+    taylorL,
+    exactDiff,
+    taylorDiff,
+    /** absolute error of one face estimate (Pa): the curvature term, ∝ δx² */
+    errFace: Math.abs(exactR - taylorR),
+    /** absolute error of right − left (Pa): the δx² errors cancel, leaving ∝ δx³ */
+    errDiff: Math.abs(exactDiff - taylorDiff),
+    errDiffPct: (100 * Math.abs(exactDiff - taylorDiff)) / Math.abs(exactDiff),
+  }
 }
 
 export function TaylorFaceSim() {
@@ -41,15 +53,17 @@ export function TaylorFaceSim() {
             { label: 'left face, Taylor', value: t.taylorL, unit: 'Pa', tone: 'accent' },
             { label: 'right − left, exact', value: t.exactDiff, unit: 'Pa' },
             { label: 'right − left, Taylor', value: t.taylorDiff, unit: 'Pa', tone: 'accent' },
-            { label: 'error in difference', value: t.errDiffPct, unit: '%', tone: t.errDiffPct < 1 ? 'good' : 'default' },
+            { label: 'error of right-face estimate', value: t.errFace, unit: 'Pa' },
+            { label: 'error of right − left', value: t.errDiff, unit: 'Pa', tone: t.errDiffPct < 1 ? 'good' : 'default' },
           ]}
         />
       }
       footer={
         <span>
-          <b>Try this:</b> shrink δx from 24 mm to 2 mm. Each face estimate improves like δx², but the error in the
-          right-minus-left difference — the part that produces the net force — collapses like δx³, so in the limit δx → 0 the
-          first-order labels on the slide are exact.
+          <b>Try this:</b> halve δx from 24 mm to 12 mm, then to 6 mm, and watch the two error readouts. The right-face estimate
+          is off by a curvature (δx²) term that falls about four- to fivefold per halving, but the same term appears on the left
+          face, so it cancels in right − left: that error — the part that produces the net force — falls exactly eightfold
+          (∝ δx³). Per unit volume (÷ δx) it still vanishes as δx → 0, so the first-order labels on slide 3 give the net force exactly.
         </span>
       }
     >

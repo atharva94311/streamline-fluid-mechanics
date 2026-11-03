@@ -176,7 +176,7 @@ a_z &= \pd{w}{t} + u\pd{w}{x} + v\pd{w}{y} + w\pd{w}{z}
       { sym: md`(\partial u/\partial x\,\delta x)\,\delta t`, desc: md`extra length AA′ gained in $\delta t$`, units: md`\mathrm{m}` },
       { sym: md`\delta t`, desc: 'time interval', units: md`\mathrm{s}` },
     ],
-    conditions: [md`only the gradient $\partial u/\partial x$ acting`, md`small $\delta t$ (first order); the corner pieces of order $\delta t^2$ are neglected`],
+    conditions: [md`only the gradient $\partial u/\partial x$ acting`, md`small $\delta t$: the result is first order in $\delta t$ (terms of order $\delta t^2$ are neglected)`],
     use: md`Volume of the shaded strip AA′C′C: (extra length) × (face area $\delta y\,\delta z$).`,
     src: L9('5'),
   },
@@ -503,6 +503,36 @@ Net change: $+1\times10^{-12}\ \mathrm{m^3}$.`,
     insight: 'Only the normal gradients change the volume; the constant parts of the field (2 m/s and 1 m/s) merely carry the element along.',
   },
   {
+    id: 'ex-volume-preserving-3d',
+    concept: 'linear-deformation',
+    title: 'Changing shape at constant volume (3-D stretching)',
+    difficulty: 2,
+    given: md`$u = 3x$, $v = -y$, $w = -2z$ (m/s; $x, y, z$ in m, so each coefficient is in s⁻¹). A cubic fluid element has edges $\delta x = \delta y = \delta z = 10$ mm. Time interval $\delta t = 0.01$ s.`,
+    find: md`(a) the first-order change of each edge in $\delta t$ (the slide-5 strip widths); (b) the volumetric dilatation rate and the first-order volume change; (c) the volume obtained by multiplying the three new edge lengths, and why it is not exactly 1000 mm³.`,
+    steps: [
+      {
+        title: 'Normal gradients',
+        md: md`$\pd{u}{x} = 3\ \mathrm{s^{-1}}$, $\pd{v}{y} = -1\ \mathrm{s^{-1}}$, $\pd{w}{z} = -2\ \mathrm{s^{-1}}$. There are no cross-gradients, so the element neither rotates nor shears: it only translates and deforms linearly.`,
+      },
+      {
+        title: '(a) Edge changes',
+        md: md`Slide 5 applied to each direction, e.g. AA′ $= (\partial u/\partial x\,\delta x)\,\delta t$:
+
+$\Delta(\delta x) = (3)(10\ \mathrm{mm})(0.01\ \mathrm{s}) = +0.30$ mm, $\quad \Delta(\delta y) = (-1)(10)(0.01) = -0.10$ mm, $\quad \Delta(\delta z) = (-2)(10)(0.01) = -0.20$ mm.`,
+      },
+      {
+        title: '(b) Dilatation',
+        md: md`$\nabla\cdot\mathbf V = 3 - 1 - 2 = 0$. Adding the three strips: $(0.30)(10)(10) + (-0.10)(10)(10) + (-0.20)(10)(10) = 30 - 10 - 20 = 0\ \mathrm{mm^3}$, so there is no first-order volume change.`,
+      },
+      {
+        title: '(c) Multiply the new edges',
+        md: md`$10.30 \times 9.90 \times 9.80 = 999.31\ \mathrm{mm^3}$, i.e. $-0.69\ \mathrm{mm^3}$ ($-0.07\,\%$). This is a second-order ($\delta t^2$) artefact of letting each edge grow along a straight line: halving $\delta t$ gives $10.15 \times 9.95 \times 9.90 = 999.83\ \mathrm{mm^3}$, a quarter of the error. In the exact motion each edge grows as $e^{(\partial u/\partial x)t}$, and $e^{0.03}\,e^{-0.01}\,e^{-0.02} = 1$: the volume stays 1000 mm³.`,
+      },
+    ],
+    answer: md`(a) $+0.30$ mm, $-0.10$ mm, $-0.20$ mm; (b) $\nabla\cdot\mathbf V = 0$, first-order volume change 0; (c) $999.31\ \mathrm{mm^3}$, an $O(\delta t^2)$ artefact; the true volume stays $1000\ \mathrm{mm^3}$.`,
+    insight: md`Linear deformation can change every edge of an element while its volume stays fixed: only the **sum** of the normal gradients decides the volume.`,
+  },
+  {
     id: 'ex-rotation-2d',
     concept: 'rotation-vorticity',
     title: 'Line rotations, element rotation and vorticity',
@@ -611,9 +641,9 @@ $\omega_z = \tfrac12\left(\pd{v}{x} - \pd{u}{y}\right) = \tfrac12(2z - z) = \tfr
   {
     id: 'ex-corner-shear',
     concept: 'angular-deformation',
-    title: 'Irrotational but shearing: flow around a corner',
+    title: 'Irrotational but shearing: flow in a 60° corner',
     difficulty: 2,
-    given: md`Plane flow $u = A(x^2 - y^2)$, $v = -2Axy$ with $A = 0.5\ \mathrm{m^{-1}\,s^{-1}}$.`,
+    given: md`Plane flow $u = A(x^2 - y^2)$, $v = -2Axy$ with $A = 0.5\ \mathrm{m^{-1}\,s^{-1}}$ (the flow turning in a 60° corner whose walls, the lines $\theta = 0$ and $\theta = 60^\circ$, are streamlines).`,
     find: md`At $P(2, 1)$ m: $\omega_z$, $\dot\gamma$, $\nabla\cdot\mathbf V$, and the angle between two short fluid lines (initially along $x$ and $y$) after $\delta t = 0.01$ s.`,
     steps: [
       { title: 'Velocity at P', md: md`$u = 0.5(4 - 1) = 1.5$ m/s, $\quad v = -2(0.5)(2)(1) = -2$ m/s.` },
@@ -801,7 +831,7 @@ $\omega_y = \tfrac12\left(\pd{u}{z} - \pd{w}{x}\right) = \tfrac12(2y - y) = \tfr
 
 $\omega_z = \tfrac12\left(\pd{v}{x} - \pd{u}{y}\right) = \tfrac12(z - 2z) = -\tfrac{z}{2} = -1.5$ rad/s
 
-$|\boldsymbol\omega| = \sqrt{0 + 1 + 2.25} = 1.80$ rad/s, so $|\boldsymbol\zeta| = 2|\boldsymbol\omega| = 3.61\ \mathrm{s^{-1}}$. (Without the factor 2, $yz\,\hat{\mathbf i} + xz\,\hat{\mathbf j} + xy\,\hat{\mathbf k}$ is irrotational: every bracket cancels.)`,
+$|\boldsymbol\omega| = \sqrt{0 + 1 + 2.25} = 1.803$ rad/s, so $|\boldsymbol\zeta| = 2|\boldsymbol\omega| = 3.606\ \mathrm{s^{-1}}$. (Without the factor 2, $yz\,\hat{\mathbf i} + xz\,\hat{\mathbf j} + xy\,\hat{\mathbf k}$ is irrotational: every bracket cancels.)`,
     check: [
       { label: md`$\omega_y$`, value: 1, units: rads },
       { label: md`$\omega_z$`, value: -1.5, units: rads },
@@ -931,10 +961,10 @@ export const quiz: QuizQ[] = [
       'Translation, rotation, linear deformation, angular deformation',
       'Translation, rotation, compression, diffusion',
       'Translation, vorticity, dilatation, turbulence',
-      'Rotation, shear, expansion, convection',
+      'Translation, rotation, linear deformation, acceleration',
     ],
     answer: 0,
-    explain: 'Slide 2 lists translation, rotation, linear deformation and angular deformation, and slide 3 draws each one separately. Vorticity and dilatation are measures of rotation and linear deformation, not separate motions.',
+    explain: 'Slide 2 lists translation, rotation, linear deformation and angular deformation, and slide 3 draws each one separately. Acceleration is not a fourth kind of motion: it describes how the particle velocity changes (slide 4), and a list without angular deformation misses the change of angles. Vorticity and dilatation are measures of rotation and linear deformation, not separate motions.',
   },
   {
     id: 'q-convective-x',
@@ -1132,7 +1162,7 @@ export const flashcards: Flashcard[] = [
   },
   {
     id: 'fc-normal-gradients',
-    src: L9('5'),
+    src: [L9('5'), L9('6–9')],
     front: 'Which velocity gradients change the volume of a fluid element?',
     back: md`Only the normal gradients $\partial u/\partial x$, $\partial v/\partial y$, $\partial w/\partial z$. Cross-gradients ($\partial u/\partial y$, $\partial v/\partial x$, …) rotate and shear it.`,
   },
@@ -1169,6 +1199,7 @@ export const flashcards: Flashcard[] = [
   },
   {
     id: 'fc-sum-difference',
+    src: L9('7–9'),
     front: 'Rotation vs. angular deformation: which uses the sum and which the difference of the cross-gradients?',
     back: md`Rotation: half the **difference**, $\tfrac12(\partial v/\partial x - \partial u/\partial y)$. Shear rate: the **sum**, $\partial v/\partial x + \partial u/\partial y$. Vorticity: the difference without the ½.`,
   },
@@ -1184,7 +1215,7 @@ export const takeaways: string[] = [
   md`**Vorticity** $\boldsymbol\zeta = 2\boldsymbol\omega = \nabla\times\mathbf V$; a flow is **irrotational** where $\nabla\times\mathbf V = 0$.`,
   md`**Rate of angular deformation** $\dot\gamma = \partial v/\partial x + \partial u/\partial y$ — the *sum* of the cross-gradients with no ½ — is the rate at which a right angle closes ($\delta\gamma = \delta\alpha + \delta\beta$).`,
   md`Slide-8 special cases: $\partial u/\partial y = -\partial v/\partial x$ → **undeformed block** (rigid rotation, $\dot\gamma = 0$); $\partial u/\partial y = \partial v/\partial x$ → **no rotation** but shear.`,
-  md`Path shape is not rotation: a **free vortex** has circular streamlines yet is irrotational; **Couette flow** has straight streamlines yet is rotational ($\omega_z = -U/2h$).`,
+  md`Path shape is not rotation: a **free vortex** has circular streamlines yet is irrotational; **Couette flow** has straight streamlines yet is rotational ($\omega_z = -U/(2h)$).`,
   md`Four plane-flow gradients ↔ four kinematic numbers: dilatation $\partial u/\partial x + \partial v/\partial y$, stretching difference $\partial u/\partial x - \partial v/\partial y$, shear rate $\partial v/\partial x + \partial u/\partial y$, vorticity $\partial v/\partial x - \partial u/\partial y$ — plus the translation $\mathbf V$ itself.`,
   md`**Exam traps:** the ½ belongs to $\omega_z$ only (not to $\zeta$ or $\dot\gamma$); OB's clockwise $\delta\beta$ creates the minus sign; $(\mathbf V\cdot\nabla)u \ne u\,\nabla\cdot\mathbf V$; the small-angle results $\delta\alpha \approx (\partial v/\partial x)\,\delta t$ hold only as $\delta t \to 0$.`,
 ]
@@ -1217,7 +1248,7 @@ function MotionTypes() {
 
       <Step kind="intuition">
         <Md>{md`
-          Drop a tiny square of dye into a river and watch it for a moment. It drifts downstream (**translation**); it may spin like a leaf in an eddy (**rotation**); it gets longer and thinner where the river speeds up (**linear deformation**); and near the bank, where the water at the top of the square moves faster than at the bottom, its corners stop being right angles (**angular deformation**). Every one of these motions comes from *differences* in velocity across the square — which is why the whole topic is about velocity gradients.
+          Drop a tiny square of dye into a river and watch it for a moment. It drifts downstream (**translation**); it may spin like a leaf in an eddy (**rotation**); it gets longer and thinner where the river speeds up (**linear deformation**); and near the bank, where the side of the square farther from the bank moves faster than the side next to it, its corners stop being right angles (**angular deformation**). Every one of these motions comes from *differences* in velocity across the square — which is why the whole topic is about velocity gradients.
 
           **Two thermometers.** Bolt one thermometer to a bridge pier and let another drift on a raft. The pier thermometer records how the water temperature changes *at a fixed place*, $\partial T/\partial t$. The raft thermometer records how the temperature of the water it travels with changes, $DT/Dt$: it notices the clock ticking **and** being carried into warmer or colder water. Acceleration works the same way: a particle's velocity changes because the field changes in time (local part) and because the particle moves to where the velocity is different (convective part).
         `}</Md>
@@ -1242,7 +1273,7 @@ function MotionTypes() {
 
       <Step kind="visual" src={L9('2–4')}>
         <Figure
-          caption={md`The four elementary motions, animated. Top: general motion of a particle between $t$ and $t + \delta t$ (slide 2). Bottom: each motion on its own (slide 3). The panels are schematic, as on the slides; the angular-deformation panel is drawn as a symmetric (pure) shear.`}
+          caption={md`The four elementary motions, animated. Top: general motion of a particle between $t$ and $t + \delta t$ (slide 2). Bottom: each motion on its own (slide 3). The panels are schematic, as on the slides. Slide 3 draws angular deformation as a parallelogram whose top edge has slid to the right; here it is drawn as a symmetric (pure) shear so that no rotation is mixed in (a simple shear also rotates the element, see concept 4).`}
           src={L9('2–3')}
         >
           <FourMotionsFigure />
@@ -1401,6 +1432,7 @@ function LinearDeformation() {
 
       <Step kind="example">
         <ExampleCard id="ex-element-stretch" />
+        <ExampleCard id="ex-volume-preserving-3d" />
       </Step>
 
       <Step kind="interactive">
@@ -1446,7 +1478,7 @@ function RotationVorticity() {
         <Md>{md`
           **The paddle wheel.** Imagine a tiny, weightless paddle wheel dropped into the flow. Wherever it spins, the flow is rotational, and its spin rate is $\omega_z$. It spins at the *average* rate of the fluid lines around it — exactly why slide 7 averages OA and OB: when the two lines turn at different rates (the element is also being sheared), the part they have in common is the rotation, which is also the turning rate of the element's diagonal.
 
-          **Merry-go-round or Ferris wheel?** On a merry-go-round each wooden horse keeps facing the centre, so it turns once per revolution — that is a *forced vortex*, rotational everywhere. On a Ferris wheel each cabin hangs upright and never turns, although it travels on a circle — that is how the elements of a *free vortex* (e.g. water swirling down a drain, $v_\theta = K/r$) behave: circular paths, zero rotation.
+          **Merry-go-round or Ferris wheel?** On a merry-go-round each wooden horse is bolted to the platform and always faces along its circle, so it turns once per revolution — that is a *forced vortex*, rotational everywhere. On a Ferris wheel each cabin hangs upright and never turns, although it travels on a circle — that is how the elements of a *free vortex* (e.g. water swirling down a drain, $v_\theta = K/r$) behave: circular paths, zero rotation.
         `}</Md>
         <Callout kind="warning" title="Common mistake">
           <Md>{md`"Curved streamlines ⇒ rotational" and "straight streamlines ⇒ irrotational" are both false. A free vortex is irrotational; Couette flow ($u = Uy/h$, straight streamlines) is rotational with $\omega_z = -U/(2h)$. Only the velocity gradients decide.`}</Md>
@@ -1538,7 +1570,7 @@ function AngularDeformation() {
 
       <Step kind="intuition">
         <Md>{md`
-          **A deck of cards.** Push the top of a deck sideways: every card slides a little more than the one below, and the rectangular side of the deck becomes a parallelogram. That is angular deformation — the corners are no longer 90°. Honey squeezed between two sliding glass plates deforms the same way.
+          **A deck of cards.** Push the top of a deck sideways: every card slides a little more than the one below, and the rectangular side of the deck becomes a parallelogram. That is angular deformation — the corners are no longer 90°. Honey between two glass plates, one sliding over the other, deforms the same way.
 
           **Sum versus difference.** Both rotation and angular deformation use the cross-gradients $\partial v/\partial x$ and $\partial u/\partial y$, but in opposite ways. Rotation asks *how much the two lines turn together* — half the **difference** of their slide-convention rates. Angular deformation asks *how much they turn toward each other* — the **sum**. A simple shear such as Couette flow does both at once: half of its velocity gradient is rotation and half is pure angular deformation.
         `}</Md>
@@ -1553,7 +1585,7 @@ function AngularDeformation() {
 
       <Step kind="visual" src={L9('9')}>
         <Figure
-          caption={md`Slide 9's deformed element: the shaded wedges are $\delta\alpha$ (OA, counter-clockwise) and $\delta\beta$ (OB, clockwise); together they close the right angle by $\delta\gamma$. Try the "undeformed block" case: the wedges have opposite senses and $\delta\gamma = 0$.`}
+          caption={md`Slide 9's deformed element: the shaded wedges are $\delta\alpha$ (OA, counter-clockwise) and $\delta\beta$ (OB, clockwise); together they close the right angle by $\delta\gamma$. Try the "undeformed block" case: OB now swings counter-clockwise just like OA, so $\delta\beta = -\delta\alpha$ and $\delta\gamma = 0$.`}
           src={L9('9')}
         >
           <AngularElementFigure mode="shear" />

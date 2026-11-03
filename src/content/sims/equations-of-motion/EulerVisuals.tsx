@@ -47,7 +47,7 @@ export function PressureCubeFigure() {
       <SubText x={238} y={40} text="p = −σ_zz" size={15} italic weight={600} />
       <SubText x={318} y={180} text="p = −σ_yy" size={15} italic weight={600} />
       <SubText x={14} y={218} text="p = −σ_xx" size={15} italic weight={600} />
-      <SubText x={300} y={28} text="−p = σ_xx = σ_yy = σ_zz" size={15} italic weight={700} fill={COL.net} />
+      <SubText x={312} y={26} text="−p = σ_xx = σ_yy = σ_zz" size={14} italic weight={700} fill={COL.net} />
       {/* axis triad */}
       <g>
         <line x1={420} y1={262} x2={420} y2={214} stroke="var(--ink-3)" strokeWidth={1.4} />

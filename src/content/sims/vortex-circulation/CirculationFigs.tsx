@@ -25,7 +25,9 @@ const blobTan = (t: number): Pt => {
 export function ArbitraryCurveFig() {
   const uid = useUid('arbc')
   const pts = Array.from({ length: 241 }, (_, i) => blob((2 * Math.PI * i) / 240))
-  const tP = 0.42
+  // point on the lower-right flank, where the counter-clockwise tangent points up-right as on the slide
+  // (ds ≈ 37° above the horizontal, V ≈ 5°); this also keeps both arrows and their labels inside the viewBox
+  const tP = 5.6
   const [px, py] = blob(tP)
   const [tx, ty] = blobTan(tP) // counter-clockwise direction of travel (screen coordinates)
   const beta = 32 * DEG // V is turned clockwise from ds by α
@@ -41,7 +43,7 @@ export function ArbitraryCurveFig() {
     <svg viewBox="0 0 360 228" className="mx-auto block h-auto w-full max-w-[460px]" role="img" aria-label="Arbitrary closed curve C with line element ds and velocity V">
       <ArrowDefs id={uid} colors={{ v: 'var(--plot-1)', ink: 'var(--ink-2)' }} size={8} />
       <path d={polyPath(pts, true)} fill="var(--plot-1)" fillOpacity={0.05} stroke="var(--plot-1)" strokeWidth={1.8} />
-      {[1.7, 3.0, 4.55, 5.6].map((t) => {
+      {[0.6, 1.7, 3.0, 4.55].map((t) => {
         const [cx, cy] = blob(t)
         const [dx, dy] = blobTan(t)
         return <Chevron key={t} x={cx} y={cy} dx={dx} dy={dy} fill="var(--plot-1)" size={5.5} />

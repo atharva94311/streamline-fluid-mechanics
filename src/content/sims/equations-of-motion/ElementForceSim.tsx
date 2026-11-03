@@ -202,7 +202,7 @@ export function ElementForceSim() {
                 setOn({ n: true, y: true, z: true })
               }}
             >
-              Load Example 1 values
+              Load the 20 mm-cube example
             </button>
             <button
               type="button"
@@ -233,8 +233,9 @@ export function ElementForceSim() {
         <span>
           <b>Try this:</b> change <i>σ</i>
           <sub>xx</sub> at the centre — both normal-stress arrows change, but the “x-faces” bar does not move: only the gradient
-          ∂σ<sub>xx</sub>/∂x survives. Then shrink δ from 30 mm to 2 mm: every force shrinks like δ³, yet a<sub>x</sub> and the force per
-          unit volume stay fixed — that is why we divide by δx δy δz.
+          ∂σ<sub>xx</sub>/∂x survives. Then shrink δ from 30 mm to 2 mm: each face force (numbers on the cube) shrinks like δ² — it
+          is stress × area — while the net forces in the bars shrink like δ³, the same as the mass; so a<sub>x</sub> and the force
+          per unit volume stay fixed. That is why we divide by δx δy δz.
         </span>
       }
     >
