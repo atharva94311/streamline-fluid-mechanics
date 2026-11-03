@@ -45,6 +45,12 @@ npm test            # renders every topic fully expanded; fails on any TeX error
 
 ## What's inside
 
+**23 topics · 80 concepts · 508 formulas · 170 solved examples · 404 practice problems (incl. all Fox Ch. 7 and
+Wilkes Ch. 9 end-of-chapter problems with worked solutions) · 386 quiz questions · 269 flashcards.** Every content page
+of all seven PDFs is used — see [`SYLLABUS.md`](SYLLABUS.md) for the topic-wise syllabus and page-by-page coverage
+checklist. Each topic was written from audited page-by-page notes of the PDFs and then independently re-checked
+against the PDFs, with every worked number re-solved.
+
 * **Learning path** — 4 units, 23 topics; every concept follows the same 8-step flow: concept → physical intuition →
   visual → equations & assumptions → solved example → interactive demo → practice → key takeaways.
 * **Source transparency** — green chips cite the PDF and page (click to open it there); `✦ Supplementary` marks
