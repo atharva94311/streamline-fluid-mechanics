@@ -107,11 +107,11 @@ const tfMixingLength: QuizQ[] = [
     id: 'w9-27n',
     concept: 'prandtl-mixing-length',
     difficulty: 2,
-    src: [P('541', '9.27(n)'), W('492–493', 'Eqs. (9.29), (9.33)–(9.34)')],
+    src: [P('541', '9.27(n)'), W('491–493', 'Eqs. (9.29), (9.33)–(9.34), Fig. 9.7')],
     q: md`**True or false?** The Prandtl hypothesis, $\ell = ky$, somewhat underestimates the mixing length for general values of $y$.`,
     options: TF,
     answer: 1,
-    explain: md`**False.** It **overestimates** $\ell$. Nikuradse's measured mixing length (Eq. 9.29, Fig. 9.7, p. 492) follows $\ell=0.4y$ only near the wall and then levels off at $\ell/a=0.14$ on the centerline, below the straight line $ky$. The book notes (p. 493) that $\ell=ky$ and $\tau^t\doteq\tau_w$ are *both* overestimates, and their errors fortuitously cancel to give an excellent log profile.`,
+    explain: md`**False.** It **overestimates** $\ell$. Nikuradse's measured mixing length (Eq. 9.29, p. 491; plotted in Fig. 9.7, p. 492) follows $\ell=0.4y$ only near the wall and then levels off at $\ell/a=0.14$ on the centerline, below the straight line $ky$. The book notes (p. 493) that $\ell=ky$ and $\tau^t\doteq\tau_w$ are *both* overestimates, and their errors fortuitously cancel to give an excellent log profile.`,
   },
 ]
 
@@ -391,7 +391,7 @@ The error falls roughly in proportion to $\Delta\zeta$ (first-order method); $\D
 | 0 | 0 | 1.000 | 0 |
 | 0.5 | 0.455 | 0.783 | 0.164 |
 | 1.0 | 0.769 | 0.473 | 0.088 |
-| 1.5 | 0.936 | 0.208 | −0.157 |
+| 1.5 | 0.936 | 0.207 | −0.157 |
 | 2.0 | 0.994 | 0.044 | −0.410 |
 | 2.42 | 1.000 | 0 | −0.500 |
 
@@ -490,7 +490,7 @@ and $f(0)=0$ makes the constant zero: $f=\tanh\zeta$, $f'=1-\tanh^2\zeta=\operat
 | $\zeta$ | 0.5 | 1.0 | 1.5 | 2.0 |
 |---|---|---|---|---|
 | tanh: $\operatorname{sech}^2\zeta$ | 0.786 | 0.420 | 0.181 | 0.071 |
-| numerical $f'$ | 0.783 | 0.473 | 0.208 | 0.044 |
+| numerical $f'$ | 0.783 | 0.473 | 0.207 | 0.044 |
 
 Half-velocity point: $\operatorname{sech}^2\zeta=\tfrac12\Rightarrow\cosh\zeta=\sqrt2\Rightarrow\zeta=0.881$ (numerical: 0.955). The curves agree well near the axis; the tanh profile is a little narrower in the middle and crosses above the numerical curve at $\zeta\approx1.73$. It never reaches zero (no sharp edge), so it **over-predicts** the velocity in the outer fringe — consistent with the book's comment that it over-predicts for $\zeta>1.5$ (the book reads values from the graph).`,
         check: [
