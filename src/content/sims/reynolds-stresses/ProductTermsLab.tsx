@@ -175,7 +175,7 @@ export function ProductTermsLab() {
         <svg viewBox="0 0 440 122" className="h-auto w-full" role="img" aria-label="Recent samples of v_x and v_y with their mean values">
           <Trace data={a.hx} mean={mx} sd={sx} y0={4} label={md`v_x(t)`} color="var(--plot-1)" />
           <Trace data={a.hy} mean={my} sd={sy} y0={66} label={md`v_y(t)`} color="var(--plot-3)" />
-          <text x={432} y={120} textAnchor="end" className="fill-ink-3 text-[9.5px]">last {HIST} samples · dashed = mean</text>
+          <text x={432} y={120} textAnchor="end" className="fill-ink-3 text-[9.5px]">last {HIST} samples (m/s) · dashed = mean</text>
         </svg>
         <div className="space-y-1.5 rounded-xl border border-line p-3">
           <div className="mb-1 text-xs font-bold uppercase tracking-wider text-ink-3">running time averages (m²/s²)</div>

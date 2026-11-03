@@ -140,7 +140,7 @@ export function EddyCrossingSim() {
   return (
     <SimPanel
       title="Eddies crossing the plane X–X"
-      subtitle="tally of the x-momentum they carry (slow motion)"
+      subtitle="tally of the x-momentum they carry, averaged per crossing (slow motion)"
       wide
       controls={
         <>
@@ -202,7 +202,7 @@ export function EddyCrossingSim() {
           })}
         </svg>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-ink-2">
-          <span className="inline-flex items-center gap-1.5"><span className="inline-block h-3 w-3 rounded-full bg-[var(--plot-4)]" /> eddy faster than the local mean (v′ₓ &gt; 0)</span>
+          <span className="inline-flex items-center gap-1.5"><span className="inline-block h-3 w-3 rounded-full bg-[var(--plot-4)]" /> eddy faster than the mean flow at X–X (v′ₓ &gt; 0)</span>
           <span className="inline-flex items-center gap-1.5"><span className="inline-block h-3 w-3 rounded-full bg-[var(--plot-2)]" /> slower (v′ₓ &lt; 0)</span>
           <span className="inline-flex items-center gap-1.5"><span className="inline-block h-3 w-3 rounded-full border-2 border-[var(--plot-6)]" /> crossing recorded</span>
         </div>

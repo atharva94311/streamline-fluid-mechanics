@@ -20,7 +20,7 @@ export function FoxFig88() {
       series={[
         { label: md`$Re_U = 500\,000$`, points: SQUARES, kind: 'scatter', color: 'var(--plot-1)' },
         { label: md`$Re_U = 50\,000$`, points: CIRCLES, kind: 'scatter', color: 'var(--plot-3)' },
-        { label: md`total shear stress $\tau/\tau_w = 1 - y/R$`, fn: (x) => 1 - x, color: 'var(--plot-7)', dash: '6 4', width: 1.6 },
+        { label: md`total shear stress $\tau/\tau_w = 1 - y/R$ (Fox Eq. 8.15; line added for comparison)`, fn: (x) => 1 - x, color: 'var(--plot-7)', dash: '6 4', width: 1.6 },
       ]}
     />
   )

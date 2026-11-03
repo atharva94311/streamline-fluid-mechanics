@@ -18,7 +18,7 @@ const XS = Array.from({ length: NX }, (_, i) => -0.8 + 0.2 * i)
 const YS = Array.from({ length: NY }, (_, j) => 0.1 + 0.2 * j)
 const PX = 0.4 // probe P (a grid node)
 const PY = 0.5
-const H = 0.01 // finite-difference step, m
+const H = 1e-4 // finite-difference step, m (small enough that the FD error is invisible at 3 decimals)
 const DT = 0.05 // simulated seconds between snapshots
 const NMAX = 4000
 

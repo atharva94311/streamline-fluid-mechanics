@@ -61,7 +61,7 @@ export const meta: TopicMeta = {
     {
       id: 'physical-interpretation',
       title: 'Physical meaning of the Reynolds stresses',
-      src: W('487–488', '§9.2, Fig. 9.4, Eqs. (9.14)–(9.16)'),
+      src: W('487–488', '§9.2, Fig. 9.4, Eqs. (9.14)–(9.16); opening of §9.3 (no universal law)'),
       summary: 'Eddies jumping across a plane carry x-momentum; the averaged upward flux plus the shear-stress sign convention gives the turbulent shear stress τᵗyx = −ρ·mean(v′y v′x).',
     },
   ],
@@ -1032,7 +1032,7 @@ export default function Content() {
     <>
       {/* ═════════════════════════ Concept 1 ═════════════════════════ */}
       <Concept id="averaged-continuity">
-        <Step kind="intro" src={W('484')}>
+        <Step kind="intro" src={[W('483', 'Eq. (9.1); millisecond fluctuations'), W('484', 'Eqs. (9.6)–(9.8)')]}>
           <Md>{md`
             Inside a turbulent flow every velocity component and the pressure fluctuate randomly within milliseconds, yet an engineer
             needs only their **time averages** — the mean velocity profile, the mean pressure drop. Wilkes's plan is direct: take each
@@ -1359,7 +1359,7 @@ $$`,
 
         <Step kind="practice">
           <PracticeList concept="reynolds-stress-example" />
-          <QuickCheck ids={['q-ex-2']} />
+          <QuickCheck ids={['q-ex-2', 'q-ex-3']} />
         </Step>
 
         <Step kind="takeaways">
@@ -1377,7 +1377,7 @@ $$`,
 
       {/* ═════════════════════════ Concept 4 ═════════════════════════ */}
       <Concept id="physical-interpretation">
-        <Step kind="intro" src={W('487–488', '§9.2')}>
+        <Step kind="intro" src={W('487', '§9.2, Fig. 9.4')}>
           <Md>{md`
             Section 9.2 gives the Reynolds stresses a physical meaning. Picture fragments of fluid — **eddies** — that suddenly jump
             across a unit area of a plane X–X because of the turbulent motion (Fig. 9.4). Wilkes considers a **two-dimensional** flow
@@ -1456,7 +1456,7 @@ $$`,
 
         <Step kind="practice">
           <PracticeList concept="physical-interpretation" />
-          <QuickCheck ids={['q-phys-3']} />
+          <QuickCheck ids={['q-phys-3', 'q-phys-4']} />
         </Step>
 
         <Step kind="takeaways">

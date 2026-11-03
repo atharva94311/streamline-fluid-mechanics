@@ -121,7 +121,7 @@ export function QuantumTableBuilder() {
         />
       }
       footer={
-        <Md>{md`**Try this:** load "independent", then flip a single $v_y'$ cell — the table now breaks $\avg{v_y'}=0$ (Eq. 9.2), so flip a second one to repair it. With 4 instants and zero-mean fluctuations you can only ever reach $-1$, $0$ or $+1$ — exactly the three cases of Table E9.1. Switch to 8 instants and build a *partly* correlated pattern ($\pm0.5$). Since each $v'$ is $\pm q$, the RMS values are $q$ and $r_{xy}$ equals the averaged product in units of $q^2$.`}</Md>
+        <Md>{md`**Try this:** load "independent", then flip a single $v_y'$ cell — the table now breaks $\avg{v_y'}=0$ (Eq. 9.2), so repair it by flipping another cell of that column that now shows the *same* sign as the one you just flipped. With 4 instants and zero-mean fluctuations you can only ever reach $-1$, $0$ or $+1$ — exactly the three cases of Table E9.1. Switch to 8 instants and build a *partly* correlated pattern ($\pm0.5$). Since each $v'$ is $\pm q$, the RMS values are $q$ and $r_{xy}$ equals the averaged product in units of $q^2$.`}</Md>
       }
     >
       <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start">
@@ -172,7 +172,7 @@ export function QuantumTableBuilder() {
       {!valid ? (
         <div className="mt-3 flex items-start gap-2 rounded-xl border border-red-300 bg-red-50 px-3 py-2 text-sm text-ink dark:border-red-500/30 dark:bg-red-500/10">
           <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-red-500" />
-          <Md inline>{md`These are not valid fluctuations: by Eq. (9.2) each must average to zero over the record. Flip another cell of the same column.`}</Md>
+          <Md inline>{md`These are not valid fluctuations: by Eq. (9.2) each must average to zero over the record. Each column needs equal numbers of +1 and −1: flip a cell of the over-represented sign.`}</Md>
         </div>
       ) : null}
     </SimPanel>

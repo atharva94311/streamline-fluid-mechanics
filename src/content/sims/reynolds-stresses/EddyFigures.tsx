@@ -16,7 +16,7 @@ export function EddyPlaneFigure() {
       <text x={66} y={179} className="fill-ink text-[13px] italic">X</text>
       <text x={447} y={179} className="fill-ink text-[13px] italic">X</text>
       <ellipse cx={260} cy={175} rx={40} ry={9} fill="var(--surface)" stroke="var(--ink-2)" strokeWidth={1.3} />
-      <text x={305} y={196} className="fill-ink-3 text-[10px]">unit area</text>
+      <text x={305} y={196} className="fill-ink-3 text-[10px] italic">unit area</text>
 
       {/* eddy below the plane */}
       <line x1={260} y1={241} x2={260} y2={184} stroke="var(--ink-2)" strokeWidth={1.6} />
