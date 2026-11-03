@@ -96,7 +96,7 @@ $$
 \nu_m = 0.0316\times1.30\times10^{-6} = 4.11\times10^{-8}\ \mathrm{m^2/s}
 $$
 
-**Comment.** This is about 30 times less than water and still several times less than mercury ($\nu\approx1.1\times10^{-7}\ \mathrm{m^2/s}$). No practical test liquid exists, so ship models are run at Froude similarity in water and the friction drag is corrected separately — the incomplete-similarity procedure of Figs. 7.2–7.3.`,
+**Comment.** This is about 30 times less than water and still nearly three times less than mercury ($\nu\approx1.1\times10^{-7}\ \mathrm{m^2/s}$). No practical test liquid exists, so ship models are run at Froude similarity in water and the friction drag is corrected separately — the incomplete-similarity procedure of Figs. 7.2–7.3.`,
         check: [{ label: 'model-fluid kinematic viscosity', value: 4.11e-8, units: md`\mathrm{m^2/s}`, tol: 0.03 }],
       },
       // ───────────────────────────── 7.59 ─────────────────────────────
@@ -417,7 +417,7 @@ $$
 D_p(7.7\ \text{m/s}) \approx 0.78\ \text{kN},\qquad D_p(10.3\ \text{m/s}) \approx 1.34\ \text{kN}
 $$
 
-**Caveat.** The answer rests on extrapolating the friction data by a factor of 20–25 in Reynolds number, so it is an estimate only (Fox p. 261 instead computes full-scale friction from a flat-plate skin-friction correlation). The structure of the method — split the drag, scale each part with its own group, add — is the point of the problem.`,
+**Caveat.** The answer rests on extrapolating the friction data by a factor of 20–25 in Reynolds number, so it is an estimate only (Fox p. 261 instead computes the full-scale viscous resistance from boundary-layer theory). The structure of the method — split the drag, scale each part with its own group, add — is the point of the problem.`,
         check: [
           { label: 'total drag at 7.7 m/s', value: 0.78, units: md`\mathrm{kN}`, tol: 0.1 },
           { label: 'total drag at 10.3 m/s', value: 1.34, units: md`\mathrm{kN}`, tol: 0.1 },
