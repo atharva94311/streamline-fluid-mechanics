@@ -209,6 +209,9 @@ export function EddyJumpSim() {
           <SvgTex x={12} y={sy(-lamRms) + 4} s="B" size={12} weight={700} className="fill-ink" />
           <Arrow x1={fx0 + 10} y1={sy(0)} x2={fx0 + 10} y2={sy(-lamRms)} both head={5} width={1.2} color="var(--ink-3)" />
           <SvgTex x={fx0 + 15} y={(sy(0) + sy(-lamRms)) / 2 + 4} s={LT} size={12} className="fill-ink-3" />
+          {/* vertical scale of the flow window */}
+          <SvgTex x={fx1 - 4} y={top + 12} s="y = +35 mm" size={10} anchor="end" className="fill-ink-3" />
+          <SvgTex x={fx1 - 4} y={bot - 5} s="y = −35 mm" size={10} anchor="end" className="fill-ink-3" />
 
           {/* eddies */}
           {s.eddies.map((e) => {

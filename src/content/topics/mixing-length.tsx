@@ -206,7 +206,7 @@ export const formulas: FormulaDef[] = [
       { sym: md`\alpha`, desc: 'approximately constant proportionality factor — **not** the thermal diffusivity', units: md`-` },
       { sym: md`\lambda\,d\overline{v}_x/dy`, desc: 'velocity deficiency: how much slower the origin plane B–B is than X–X', units: md`\mathrm{m/s}` },
     ],
-    conditions: ['approximate; $\\alpha$ treated as a constant'.replace('\\\\', '\\'), 'mean gradient constant over $\\lambda$'.replace('\\\\', '\\')],
+    conditions: [md`approximate; $\alpha$ treated as a constant`, md`mean gradient constant over the jump $\lambda$`],
     use: md`Eddy from below ($\lambda>0$) into faster fluid ($d\overline{v}_x/dy>0$): negative kick. Eddy from above ($\lambda<0$): positive fluctuation. With
     $d\overline{v}_x/dy>0$, $v_x'$ always has the opposite sign to $v_y'$.`,
     src: W('489', 'Eq. (9.21)'),
@@ -336,7 +336,7 @@ export const formulas: FormulaDef[] = [
     ],
     conditions: [
       md`eddy diffusivity $\mathcal{D}_T$ set equal to $\nu_{\mathrm T}$ (first approximation)`,
-      'typically one chemical species in the presence of others; flux positive in $+y$'.replace('\\\\', '\\'),
+      md`typically one chemical species in the presence of others; flux positive in $+y$`,
     ],
     use: md`Concentration plays the role of $\rho\overline{v}_x$. With a mass concentration (kg/m³) instead, $N^t$ comes out in kg/(m²·s).`,
     src: W('490', 'Table 9.1'),
@@ -376,14 +376,18 @@ export const formulas: FormulaDef[] = [
     tex: md`\text{plates: } \tau^{\ell}_{yx}+\tau^{t}_{yx} \doteq \tau^{t}_{yx} = y\left(\frac{dp}{dx}\right),\qquad \text{pipe: } \tau^{\ell}_{rz}+\tau^{t}_{rz} \doteq \tau^{t}_{rz} = \frac{r}{2}\left(\frac{dp}{dz}\right)`,
     tag: '9.27',
     vars: [
-      { sym: md`\tau^{\ell}_{yx},\ \tau^{\ell}_{rz}`, desc: 'laminar (viscous) shear stress — neglected here', units: md`\mathrm{Pa}` },
+      {
+        sym: md`\tau^{\ell}_{yx},\ \tau^{\ell}_{rz}`,
+        desc: md`laminar (viscous) shear stress, $\mu\,d\overline{v}_x/dy$ and $\mu\,d\overline{v}_z/dr$ — neglected here (the book prints $\mu\,d\overline{v}_x/dx$ for the plates, evidently a misprint for $d/dy$)`,
+        units: md`\mathrm{Pa}`,
+      },
       { sym: md`\tau^{t}_{yx},\ \tau^{t}_{rz}`, desc: 'turbulent shear stress', units: md`\mathrm{Pa}` },
       { sym: md`y`, desc: 'plates: distance measured from the **centreline**', units: md`\mathrm{m}` },
       { sym: md`r`, desc: 'pipe: radial distance from the axis', units: md`\mathrm{m}` },
       { sym: md`dp/dx,\ dp/dz`, desc: 'axial pressure gradient (negative for flow in $+x$, $+z$)', units: md`\mathrm{Pa/m}` },
     ],
     conditions: [
-      'momentum (force) balance on the elements of Fig. 9.6 — steady, fully developed flow',
+      'momentum (force) balance on the elements of Fig. 9.6 (steady, fully developed flow is implied: no net momentum change)',
       md`the typically very small viscous stress is ignored ($\doteq$); keep it if high accuracy is needed, especially near the walls`,
     ],
     use: md`One pressure-drop measurement gives the stress **everywhere**: zero on the centreline, growing linearly to its largest value at the wall.`,
@@ -400,7 +404,7 @@ export const formulas: FormulaDef[] = [
       { sym: md`d\overline{p}/dz`, desc: 'mean axial pressure gradient', units: md`\mathrm{Pa/m}` },
       { sym: md`\Delta p,\ L`, desc: 'pressure drop over a pipe length $L$', units: md`\mathrm{Pa},\ \mathrm{m}` },
     ],
-    conditions: ['(9.27) evaluated at the wall, $r=a$'.replace('\\\\', '\\'), md`the total stress magnitude is then $\tau_w\,r/a=\tau_w(1-y/a)$`],
+    conditions: [md`(9.27) evaluated at the wall, $r=a$`, md`the total stress magnitude is then $\tau_w\,r/a=\tau_w(1-y/a)$`],
     use: md`Gives $\tau_w$ — and the friction velocity $\sqrt{\tau_w/\rho}$ that scales $\nu_{\mathrm T}$ in (9.30)–(9.31) — from one pressure-drop measurement.`,
     src: W('504', 'Eq. (9.82)'),
   },
@@ -435,7 +439,7 @@ export const formulas: FormulaDef[] = [
     ],
     conditions: [
       'experiments show it holds very accurately for **both smooth and rough** pipes (Schlichting, Eq. 20.18)',
-      'fully developed turbulent pipe flow; $y$ measured from the wall'.replace('\\\\', '\\'),
+      md`fully developed turbulent pipe flow (implied); $y$ measured from the wall`,
     ],
     use: md`$\ell/a$ rises from 0 at the wall with slope 0.4 to a maximum of 0.14 on the centreline (Fig. 9.7). Multiply by $a$ to get $\ell$ in metres.`,
     src: W('491', 'Eq. (9.29)'),
@@ -448,8 +452,8 @@ export const formulas: FormulaDef[] = [
       { sym: md`\ell`, desc: 'mixing length', units: md`\mathrm{m}` },
       { sym: md`y`, desc: 'distance from the wall', units: md`\mathrm{m}` },
     ],
-    conditions: ['as the wall is approached (tangent of (9.29) at $y=0$)'.replace('\\\\', '\\')],
-    use: md`The simplified result used in the **Prandtl hypothesis** $\ell=ky$ with $k\approx0.4$ (§9.5, next topic). Farther out the eddies have more freedom and $\ell$ falls below $0.4y$.`,
+    conditions: [md`as the wall is approached (tangent of (9.29) at $y=0$)`],
+    use: md`The simplified result used in the **Prandtl hypothesis** $\ell=ky$ with $k\approx0.4$ (§9.5, next topic). Farther from the wall the eddies have more freedom to travel, so $\ell$ keeps rising — though more slowly than $0.4y$ — to its maximum $0.14a$ on the centreline.`,
     src: W('492', 'text with Fig. 9.7'),
   },
   {
@@ -501,7 +505,7 @@ export const formulas: FormulaDef[] = [
     vars: [
       { sym: md`\overline{v}_z^{\,*}`, desc: 'friction velocity (Fox writes $u_*$)', units: md`\mathrm{m/s}` },
       { sym: md`y^{+}`, desc: 'dimensionless distance from the wall', units: md`-` },
-      { sym: md`a^{+}`, desc: 'pipe radius in wall units (used here for convenience)', units: md`-` },
+      { sym: md`a^{+}`, desc: md`pipe radius in wall units — Wilkes uses $a^+$ later (Eq. 9.86) without defining it; defined here by analogy with $y^+$ (supplementary)`, units: md`-` },
       { sym: md`\nu`, desc: 'molecular kinematic viscosity', units: md`\mathrm{m^2/s}` },
     ],
     conditions: ['definitions'],
@@ -1850,7 +1854,7 @@ export default function Content() {
 
         <Step kind="practice">
           <PracticeList concept="transport-analogies" />
-          <QuickCheck ids={['q-ta-1']} />
+          <QuickCheck ids={['q-ta-1', 'q-ta-4']} />
         </Step>
 
         <Step kind="takeaways">
@@ -1898,7 +1902,7 @@ export default function Content() {
 
         <Step kind="visual" src={W('491–493', 'Figs. 9.6–9.8')}>
           <Figure
-            caption="Shear stresses for (a) parallel plates and (b) a pipe. Here the shear arrows are drawn in the direction the surrounding fluid actually drags on the element (against the flow); the book marks the same faces with τᵗ."
+            caption="Shear stresses for (a) parallel plates and (b) a pipe. The book draws the τᵗ arrows on both faces pointing downstream; here they point upstream, the direction in which the slower outer fluid actually drags the element (dp/dx < 0, so τᵗ = y dp/dx is negative on the upper face)."
             src={W('491', 'Fig. 9.6')}
           >
             <StressBalanceDiagram />
@@ -1914,7 +1918,7 @@ export default function Content() {
           </Figure>
         </Step>
 
-        <Step kind="equations" src={W('491–498')}>
+        <Step kind="equations" src={[W('491–498'), W('504', 'Eq. (9.82)')]}>
           <FormulaCard id="stress-linear" />
           <FormulaCard id="wall-stress" />
           <FormulaCard id="ml-from-data" />
@@ -1944,8 +1948,9 @@ export default function Content() {
           </Supplement>
           <Callout kind="note" title="Cross-reference — Fox & McDonald (secondary)">
             <Md>{md`Fox §8.4 derives the same linear stress, $\tau_{rx}=\tfrac{r}{2}\,\partial p/\partial x$ (Fox Eq. 8.15), and $\tau_w=-\tfrac{R}{2}\,\partial p/\partial x$ (8.16), with
-            $x$ the pipe axis and $R$ the radius. His Fig. 8.8 (Laufer's measurements, p. 294) shows the Reynolds stress following the linear total-stress line across
-            almost the whole pipe and dropping to zero only very close to the wall — the experimental reason why (9.27) may neglect $\tau^\ell$ away from walls. Fox's
+            $x$ the pipe axis and $R$ the radius. His Fig. 8.8 (Laufer's measurements, p. 294) shows the Reynolds stress following the linear total-stress line from the centreline down to
+            $y/R\approx0.08$ (the closest data point); Fox adds in the text that it falls to zero right at the wall. That is the experimental reason why (9.27) may
+            neglect $\tau^\ell$ away from walls. Fox's
             friction velocity is $u_*=\sqrt{\tau_w/\rho}$.`}</Md>
           </Callout>
         </Step>

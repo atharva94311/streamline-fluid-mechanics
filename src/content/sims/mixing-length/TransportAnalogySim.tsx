@@ -40,7 +40,7 @@ export function TransportAnalogySim() {
   const cols: Col[] = [
     { title: 'Momentum', qty: `ρ${VB}_x`, grad: G, flux: Nmom, fluxLabel: '−τ^t_{yx}', unit: 'Pa', color: 'var(--plot-1)' },
     { title: 'Heat', qty: `ρc_p${TB}`, grad: dT, flux: q, fluxLabel: 'q^t', unit: 'W/m²', color: 'var(--plot-4)' },
-    { title: 'Mass', qty: CB, grad: dc, flux: N, fluxLabel: 'N^t', unit: 'kmol/m²s', color: 'var(--plot-5)' },
+    { title: 'Mass', qty: CB, grad: dc, flux: N, fluxLabel: 'N^t', unit: 'kmol/(m²·s)', color: 'var(--plot-5)' },
   ]
 
   return (
