@@ -134,7 +134,7 @@ export function ExponentTuner() {
       }
       footer={
         <span>
-          <b>Try this:</b> solve the F (or M) equation first — only ρ carries force/mass, so c = −1 is forced. Then fix T with b, and
+          <b>Try this:</b> solve the F (or M) equation first — of D, V, ρ only ρ carries force/mass, so c = −1 is forced. Then fix T with b, and
           finally L with a. Switch to M L T once solved: the same exponents still give zero (the check of slide 16).
         </span>
       }

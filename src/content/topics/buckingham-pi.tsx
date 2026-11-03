@@ -19,6 +19,7 @@ import { RankLab } from '../sims/buckingham-pi/RankLab'
 import { MatrixTable } from '../sims/buckingham-pi/MatrixTable'
 import { DIM_TEX, V, dimMatrix } from '../sims/buckingham-pi/dimlib'
 
+const L2: Src = { doc: 'lec13', pages: '2' }
 const L3: Src = { doc: 'lec13', pages: '3' }
 const L5: Src = { doc: 'lec13', pages: '5' }
 const L6: Src = { doc: 'lec13', pages: '6' }
@@ -202,7 +203,7 @@ export const formulas: FormulaDef[] = [
       'never the dependent variable; avoid variables whose effect is questionable; prefer dimensionally pure ones',
     ],
     use: md`Step 4. With $r$ repeating variables and $k - r$ non-repeating ones, each non-repeating variable produces exactly one pi term — which is why the count of Step 3 must come out again in Step 6.`,
-    src: [L8, { doc: 'lec13', pages: '17', note: 'Step 4 wording' }],
+    src: [L8, L9, L10, { doc: 'lec13', pages: '17', note: 'Step 4 wording' }],
   },
   {
     id: 'pi-term-form',
@@ -230,7 +231,7 @@ export const formulas: FormulaDef[] = [
     ],
     conditions: [md`Newton's second law $F = ma$; the right-hand form is the same relation solved for $\dimM$`],
     use: md`Convert any MLT dimension to FLT (or back) — needed for the double check of Step 7 (slide 16) and recommended by Fox (Step 6: if you used mass, check with force).`,
-    src: L3,
+    src: [L3, { doc: 'fox', pages: '250', note: 'Step 6' }],
   },
   {
     id: 'pipe-dims',
@@ -245,7 +246,7 @@ export const formulas: FormulaDef[] = [
     ],
     conditions: ['steady flow of an incompressible Newtonian fluid in a long, smooth-walled, horizontal, circular pipe'],
     use: md`The FLT forms are on slide 12 (and 3); the MLT forms of $\Delta p_\ell$, $\rho$ and $\mu$ are the ones used for the check on slide 16. $\Delta p_\ell \doteq (\dimF/\dimL^2)/\dimL = \dimF\dimL^{-3}$: a pressure per unit length.`,
-    src: [L12, { doc: 'lec13', pages: '16', note: 'MLT forms' }],
+    src: [L2, L12, { doc: 'lec13', pages: '16', note: 'MLT forms' }],
   },
   {
     id: 'pipe-pi1',
@@ -283,7 +284,7 @@ export const formulas: FormulaDef[] = [
     ],
     conditions: ['steady, incompressible, Newtonian, long, smooth, horizontal, circular pipe (no roughness, length or gravity variable)'],
     use: md`All data for any fluid and any pipe collapse onto one curve of $\Pi_1$ against $\rho VD/\mu$ (slide 3 writes the same relation with $\phi$). Match $\rho VD/\mu$ and you match $\Pi_1$.`,
-    src: [L16, { doc: 'lec13', pages: '3' }],
+    src: [L16, L3, L2],
   },
   {
     id: 'paint-dims',
@@ -325,7 +326,7 @@ export const formulas: FormulaDef[] = [
       { sym: md`\Pi_4`, desc: 'ratio of bottom stiffness to the paint-weight scale over the can size', units: md`1` },
     ],
     conditions: [md`MLT system written with only two reference dimensions, $\dimL$ and $\dimM\dimT^{-2}$`],
-    use: md`One exponent equation per **reference** dimension: here two equations, not three. In FLT the same result follows from $1 + b = 0$ ($\dimF$) and $-2 + a - 3b = 0$ ($\dimL$).`,
+    use: md`One exponent equation per **reference** dimension: here two equations, not three. Cross-check (not on the slide): in FLT the same result follows from $1 + b = 0$ ($\dimF$) and $-2 + a - 3b = 0$ ($\dimL$).`,
     src: L20,
   },
   {
@@ -401,7 +402,7 @@ export const formulas: FormulaDef[] = [
     ],
     conditions: [
       md`taking $m = r$ almost always works; trouble arises when the number of primary dimensions differs between MLt and FLt`,
-      'the rank is the same in every system of dimensions — it is the reliable count',
+      md`the rank establishes $m$ with certainty; in Example 7.3 both MLt ($r = 3$) and FLt ($r = 2$) give rank 2`,
     ],
     use: md`Build the matrix, look for a non-zero determinant of the largest possible order. If every $r \times r$ determinant vanishes, $m < r$ (Example 7.3 in MLt).`,
     src: [F252, { doc: 'fox', pages: '253', note: 'Example 7.3' }],
@@ -540,11 +541,11 @@ export const examples: ExampleDef[] = [
     id: 'ex-pipe',
     concept: 'pipe-example',
     title: 'Lecture 13 Example 1 — pressure drop per unit length in a pipe',
-    src: { doc: 'lec13', pages: '12–16' },
+    src: { doc: 'lec13', pages: '2, 12–16' },
     difficulty: 2,
-    given: md`Steady flow of an incompressible Newtonian fluid in a long, smooth-walled, horizontal, circular pipe. The friction pressure drop per unit length depends on $D$, $\rho$, $\mu$, $V$.`,
+    given: md`Steady flow of an incompressible Newtonian fluid in a long, smooth-walled, horizontal, circular pipe (slide 2). The friction pressure drop per unit length depends on $D$, $\rho$, $\mu$, $V$.`,
     find: md`A dimensionless relationship for $\Delta p_\ell$.`,
-    assumptions: md`Steady (no time), incompressible (no $E_v$), Newtonian (one $\mu$), long (fully developed, so per unit length), smooth (no roughness), horizontal (no gravity), circular (one length $D$).`,
+    assumptions: md`Steady, incompressible, Newtonian fluid; long, smooth-walled, horizontal, circular pipe. (What each assumption removes from the list is explained in the concept intro.)`,
     steps: [
       { title: 'Steps 1–2 (slide 12)', md: md`$\Delta p_\ell = f(D, \rho, \mu, V)$ with $\Delta p_\ell \doteq \dimF\dimL^{-3}$, $D \doteq \dimL$, $\rho \doteq \dimF\dimL^{-4}\dimT^{2}$, $\mu \doteq \dimF\dimL^{-2}\dimT$, $V \doteq \dimL\dimT^{-1}$.` },
       { title: 'Step 3 (slide 13)', md: md`All three of $\dimF$, $\dimL$, $\dimT$ are needed: $k = 5$, $r = 3$, so $5 - 3 = 2$ pi terms.` },
@@ -623,10 +624,10 @@ $$\Pi_1 \doteq \frac{(\dimM\dimL^{-2}\dimT^{-2})(\dimL)}{(\dimM\dimL^{-3})(\dimL
       { title: 'Step ④', md: md`Repeating $\rho$, $V$, $D$: $m = r = 3$, so $n - m = 2$ groups.` },
       { title: 'Step ⑤ — Π₁', md: md`$\Pi_1 = \rho^aV^bD^cF$: $\dimM$: $a + 1 = 0 \Rightarrow a = -1$; $\dimL$: $-3a + b + c + 1 = 0 \Rightarrow c = -2$; $\dimT$: $-b - 2 = 0 \Rightarrow b = -2$. $\Pi_1 = \dfrac{F}{\rho V^2D^2}$.` },
       { title: 'Step ⑤ — Π₂', md: md`$\Pi_2 = \rho^dV^eD^f\mu$: $\dimM$: $d + 1 = 0$; $\dimL$: $-3d + e + f - 1 = 0$; $\dimT$: $-e - 1 = 0$ ⇒ $d = e = f = -1$. $\Pi_2 = \dfrac{\mu}{\rho VD}$.` },
-      { title: 'Step ⑥ — check in FLt', md: md`$F\,\dfrac{\dimL^4}{\dimF\dimT^2}\left(\dfrac{\dimT}{\dimL}\right)^2\dfrac{1}{\dimL^2} = 1$ and $\dfrac{\dimF\dimT}{\dimL^2}\,\dfrac{\dimL^4}{\dimF\dimT^2}\,\dfrac{\dimT}{\dimL}\,\dfrac{1}{\dimL} = 1$ ✓` },
+      { title: 'Step ⑥ — check in FLt', md: md`$\dimF\,\dfrac{\dimL^4}{\dimF\dimT^2}\left(\dfrac{\dimT}{\dimL}\right)^2\dfrac{1}{\dimL^2} = 1$ and $\dfrac{\dimF\dimT}{\dimL^2}\,\dfrac{\dimL^4}{\dimF\dimT^2}\,\dfrac{\dimT}{\dimL}\,\dfrac{1}{\dimL} = 1$ ✓` },
     ],
     answer: md`$\dfrac{F}{\rho V^2D^2} = f\!\left(\dfrac{\mu}{\rho VD}\right)$; the form of $f$ is found experimentally (Fig. 7.1).`,
-    insight: 'Fox numbers six steps; they map onto the lecture’s nine (Fox merges listing dimensions, and leaves rearrangement/interpretation implicit).',
+    insight: 'Fox’s six steps cover the lecture’s Steps 1–7: Fox splits “choose primary dimensions” from “list the dimensions”, counts the groups (n − m) inside Step ⑤, and leaves rearranging/interpreting (lecture Steps 8–9) implicit.',
   },
   {
     id: 'ex-fox72',
@@ -642,7 +643,7 @@ $$\Pi_1 \doteq \frac{(\dimM\dimL^{-2}\dimT^{-2})(\dimL)}{(\dimM\dimL^{-3})(\dimL
       { title: 'Π₂', md: md`$\rho^d\overline V^eD^f\mu$: $d = -1$, $e = -1$, $f = -1$: $\Pi_2 = \dfrac{\mu}{\rho\overline VD}$. (The exponent letter $e$ is not the roughness.)` },
       { title: 'Π₃, Π₄', md: md`$\rho^g\overline V^hD^il$: $g = 0$, $h = 0$, $i = -1$ ⇒ $\Pi_3 = l/D$. $\rho^j\overline V^kD^le$: $j = k = 0$, $l = -1$ ⇒ $\Pi_4 = e/D$.` },
       { title: 'Step ⑥ — FLt check', md: md`$\dfrac{\dimF}{\dimL^2}\dfrac{\dimL^4}{\dimF\dimT^2}\dfrac{\dimT^2}{\dimL^2} = 1$; $\dfrac{\dimF\dimT}{\dimL^2}\dfrac{\dimL^4}{\dimF\dimT^2}\dfrac{\dimT}{\dimL}\dfrac{1}{\dimL} = 1$; $\dimL/\dimL = 1$ twice ✓` },
-      { title: 'Notes', md: md`Each Π is unique for its parameters (only one dimensionless grouping of $\mu$, $\rho$, $\overline V$, $D$), and $l/D$, $e/D$ can be written **by inspection**.` },
+      { title: 'Notes', md: md`Each Π is unique for its parameters (only one dimensionless grouping of $\mu$, $\rho$, $\overline V$, $D$), and $l/D$, $e/D$ can be written **by inspection**. Fox's Chapter 8 shows this relation correlates pipe data well. (The book's problem statement prints "$\Delta\rho$" for the pressure drop — a typo for $\Delta p$.)` },
     ],
     answer: md`$\dfrac{\Delta p}{\rho\overline V^2} = f\!\left(\dfrac{\mu}{\rho\overline VD}, \dfrac{l}{D}, \dfrac{e}{D}\right)$`,
     insight: 'Every extra length adds a length ratio for free — no algebra needed.',
@@ -705,6 +706,7 @@ export const practice: PracticeDef[] = [
     id: 'p-count-length',
     concept: 'pi-theorem',
     difficulty: 2,
+    hint: 'Does adding a length add a new dimension? Count k again, dependent variable included.',
     q: md`In the lecture pipe problem the pipe is "long", so only $\Delta p_\ell$ per unit length matters. Suppose instead you measure the total drop $\Delta p$ over a short pipe of length $\ell$: $\Delta p = f(D, \rho, \mu, V, \ell)$. How many pi terms now?`,
     answer: md`3 — e.g. $\Delta p/(\rho V^2)$, $\rho VD/\mu$, $\ell/D$.`,
     solution: md`$k = 6$, still $r = 3$ (no new dimension), so $6 - 3 = 3$ pi terms. With repeating $D$, $V$, $\rho$: $\Pi_1 = \Delta p/(\rho V^2)$, $\Pi_2 = \mu/(\rho VD)$ (or Re), $\Pi_3 = \ell/D$. Only for a long, fully developed pipe does $\Delta p$ become proportional to $\ell$, which lets the two groups $\Delta p/(\rho V^2)$ and $\ell/D$ merge into $\Delta p_\ell D/(\rho V^2)$.`,
@@ -733,6 +735,7 @@ export const practice: PracticeDef[] = [
     id: 'p-shedding',
     concept: 'repeating-variables',
     difficulty: 2,
+    hint: 'f ≐ T⁻¹. Only ρ carries M, so its exponent is fixed first; then V fixes T.',
     q: md`The vortex-shedding frequency $f$ behind a cylinder depends on $D$, $V$, $\rho$, $\mu$. With repeating $D$, $V$, $\rho$, find the two pi terms. What is the exponent of $V$ in the term containing $f$?`,
     answer: md`$fD/V = \phi(\rho VD/\mu)$; exponent of $V$ is $-1$.`,
     solution: md`$k = 5$, $r = 3$ ⇒ 2 terms. $\Pi_1 = fD^aV^b\rho^c$ ($f \doteq \dimT^{-1}$): $\dimM$: $c = 0$; $\dimT$: $-1 - b = 0 \Rightarrow b = -1$; $\dimL$: $a + b - 3c = 0 \Rightarrow a = 1$. $\Pi_1 = fD/V$ (a Strouhal-type number). $\Pi_2 = \mu/(\rho VD)$, inverted in Step 8 to Re. Final: $fD/V = \phi(\rho VD/\mu)$.`,
@@ -742,6 +745,7 @@ export const practice: PracticeDef[] = [
     id: 'p-bad-sets',
     concept: 'repeating-variables',
     difficulty: 1,
+    hint: 'Three tests: exactly r of them, no dependent variable, and no dimensionless product among them (check the 2 × 2 exponent determinant).',
     q: md`For the paint can, $\delta = f(D, h, d, \gamma, E)$ with $r = 2$, judge each repeating set: (a) $D$, $h$; (b) $\delta$, $\gamma$; (c) $D$, $E$; (d) $\gamma$, $E$.`,
     answer: md`(a) ✗ not independent ($h/D$ is dimensionless); (b) ✗ contains the dependent variable; (c) ✓; (d) ✓ — valid, though less convenient.`,
     solution: md`(a) Both are lengths: $h/D$ is dimensionless, so the set is not dimensionally independent (slide 9). (b) $\delta$ is the dependent variable — it must appear in only one Π (slide 10). (c) $D \doteq \dimL$, $E \doteq \dimF\dimL^{-2}$: sub-matrix columns $(0, 1)$ and $(1, -2)$ in rows $(\dimF, \dimL)$ have determinant $0\cdot(-2) - 1\cdot 1 = -1 \neq 0$ — valid; it gives $\gamma D/E$, the inverse of the lecture's $\Pi_4$. (d) $\gamma \doteq \dimF\dimL^{-3}$, $E \doteq \dimF\dimL^{-2}$: determinant $1\cdot(-2) - 1\cdot(-3) = 1 \neq 0$, so no product $\gamma^xE^y$ is dimensionless ($x + y = 0$ and $-3x - 2y = 0$ force $x = y = 0$) — valid, though neither variable is dimensionally pure. Lesson: judge independence with the exponent determinant, not by eye.`,
@@ -750,6 +754,7 @@ export const practice: PracticeDef[] = [
     id: 'p-pipe-alt',
     concept: 'pipe-example',
     difficulty: 2,
+    hint: 'μ ≐ F L⁻² T is now the only repeating variable carrying F, so solve the F equation first.',
     q: md`Redo the lecture pipe problem with repeating variables $D$, $V$, $\mu$. Find $\Pi_1'$ (containing $\Delta p_\ell$). What is the exponent of $D$?`,
     answer: md`$\Pi_1' = \Delta p_\ell D^2/(\mu V)$; exponent $2$.`,
     solution: md`$\Pi_1' = \Delta p_\ell D^aV^b\mu^c$, $(\dimF\dimL^{-3})(\dimL)^a(\dimL\dimT^{-1})^b(\dimF\dimL^{-2}\dimT)^c$. $\dimF$: $1 + c = 0 \Rightarrow c = -1$. $\dimT$: $-b + c = 0 \Rightarrow b = -1$. $\dimL$: $-3 + a + b - 2c = 0 \Rightarrow a = 3 + 1 - 2 = 2$. So $\Pi_1' = \Delta p_\ell D^2/(\mu V) = \Pi_1/\Pi_2$ of the lecture set. For laminar flow this group turns out to be a constant (32), which is why it is the natural choice there.`,
@@ -759,6 +764,7 @@ export const practice: PracticeDef[] = [
     id: 'p-pipe-mlt',
     concept: 'pipe-example',
     difficulty: 2,
+    hint: 'Use Δpℓ ≐ M L⁻² T⁻² and ρ ≐ M L⁻³ (slide 16); solve M, then T, then L.',
     q: md`Form $\Pi_1 = \Delta p_\ell D^aV^b\rho^c$ working in **MLT** instead of FLT. Write the three exponent equations and find $a$.`,
     answer: md`$\dimM$: $1 + c = 0$; $\dimL$: $-2 + a + b - 3c = 0$; $\dimT$: $-2 - b = 0$ ⇒ $a = 1$, $b = -2$, $c = -1$.`,
     solution: md`With $\Delta p_\ell \doteq \dimM\dimL^{-2}\dimT^{-2}$, $\rho \doteq \dimM\dimL^{-3}$: $\dimM$: $1 + c = 0 \Rightarrow c = -1$; $\dimT$: $-2 - b = 0 \Rightarrow b = -2$; $\dimL$: $-2 + a + b - 3c = 0 \Rightarrow a = 2 + 2 - 3 = 1$. Same $\Pi_1 = \Delta p_\ell D/(\rho V^2)$ as slide 14 — the system of dimensions changes the equations, never the result.`,
@@ -785,6 +791,7 @@ Same Re ⇒ same $\Pi_1$ (one curve $\tilde\phi$): $\Delta p_\ell = \Pi_1\dfrac{
     id: 'p-paint-flt',
     concept: 'paint-can-example',
     difficulty: 2,
+    hint: 'γ ≐ F L⁻³ and E ≐ F L⁻²; only two equations (F and L) because T never appears.',
     q: md`Slide 20 forms $\Pi_4 = ED^a\gamma^b$ in MLT with $\dimM\dimT^{-2}$ as one reference dimension. Redo it in **FLT**. Give the exponent equations and $a$.`,
     answer: md`$\dimF$: $1 + b = 0$; $\dimL$: $-2 + a - 3b = 0$ ⇒ $a = -1$, $b = -1$.`,
     solution: md`$(\dimF\dimL^{-2})(\dimL)^a(\dimF\dimL^{-3})^b \doteq \dimF^0\dimL^0$. $\dimF$: $1 + b = 0 \Rightarrow b = -1$. $\dimL$: $-2 + a - 3b = 0 \Rightarrow a = 2 - 3 = -1$. So $\Pi_4 = E/(D\gamma)$, identical to the MLT result — FLT needs no trick because $\dimT$ simply never appears.`,
@@ -809,6 +816,7 @@ Same Re ⇒ same $\Pi_1$ (one curve $\tilde\phi$): $\Delta p_\ell = \Pi_1\dfrac{
     id: 'p-paint-rho-g',
     concept: 'paint-can-example',
     difficulty: 3,
+    hint: 'Do M and T still appear only as M T⁻²? Check whether g breaks the pairing.',
     q: md`Instead of $\gamma$, a student lists $\rho$ and $g$ separately: $\delta = f(D, h, d, \rho, g, E)$. How many pi terms now, and what are they?`,
     answer: md`4: $\delta/D$, $h/D$, $d/D$, $E/(\rho gD)$.`,
     solution: md`$k = 7$. MLT: $\rho \doteq \dimM\dimL^{-3}$, $g \doteq \dimL\dimT^{-2}$, $E \doteq \dimM\dimL^{-1}\dimT^{-2}$ — now $\dimM$ and $\dimT$ no longer travel together, so $r = 3$ (rank 3). $k - r = 7 - 3 = 4$. With repeating $D$, $\rho$, $g$: $\delta/D$, $h/D$, $d/D$ and $E\,D^a\rho^bg^c$ → $\dimM$: $1 + b = 0$; $\dimT$: $-2 - 2c = 0$; $\dimL$: $-1 + a - 3b + c = 0$ ⇒ $b = -1$, $c = -1$, $a = -1$: $E/(\rho gD)$. Same physics: $\rho$ and $g$ enter only through $\gamma = \rho g$. Listing both is legal (two of the three), and the count still comes out 4.`,
@@ -830,6 +838,7 @@ Same Re ⇒ same $\Pi_1$ (one curve $\tilde\phi$): $\Delta p_\ell = \Pi_1\dfrac{
     id: 'p-drop',
     concept: 'dimensional-matrix',
     difficulty: 3,
+    hint: 'σ ≐ M T⁻² is the only variable with T besides f, so solve the T equation first.',
     q: md`The natural oscillation frequency $f$ of a small liquid drop depends on its diameter $D$, density $\rho$ and surface tension $\sigma$. Show that only one group exists and use it to scale: a 1 mm water drop oscillates at 100 Hz (in a thought experiment) — what is $f$ for a 2 mm drop?`,
     answer: md`$f\sqrt{\rho D^3/\sigma} = C$ ⇒ $f \propto D^{-3/2}$; $f \approx 35.4$ Hz.`,
     solution: md`Rows $\dimM$: $[0, 0, 1, 1]$, $\dimL$: $[0, 1, -3, 0]$, $\dimT$: $[-1, 0, 0, -2]$ for $(f, D, \rho, \sigma)$: rank 3 ⇒ $n - m = 1$. $\Pi = f D^a\rho^b\sigma^c$: $\dimT$: $-1 - 2c = 0 \Rightarrow c = -\tfrac12$; $\dimM$: $b + c = 0 \Rightarrow b = \tfrac12$; $\dimL$: $a - 3b = 0 \Rightarrow a = \tfrac32$. So $f\sqrt{\rho D^3/\sigma} = C$ and, with the same liquid, $f \propto D^{-3/2}$: $f_2 = 100\,(2)^{-1.5} = 35.4$ Hz.`,
@@ -852,6 +861,7 @@ Same Re ⇒ same $\Pi_1$ (one curve $\tilde\phi$): $\Delta p_\ell = \Pi_1\dfrac{
     id: 'p-cap-number',
     concept: 'dimensional-matrix',
     difficulty: 1,
+    hint: 'Compute Π₂ = σ/(D²γ) with D in metres, then Δh = 4 cos θ · Π₂ · D.',
     q: md`Using $\Delta h/D = 4\cos\theta\,\sigma/(D^2\gamma)$ (Fox p. 254), find the capillary rise of water (σ = 0.0728 N/m, γ = 9790 N/m³, θ ≈ 0) in a glass tube of D = 0.50 mm.`,
     answer: md`$\Pi_2 = 29.7$, $\Delta h \approx 59.5$ mm.`,
     solution: md`$\Pi_2 = \dfrac{0.0728}{(0.50\times10^{-3})^2(9790)} = 29.7$. $\Delta h/D = 4(1)(29.7) = 119$, so $\Delta h = 119 \times 0.50$ mm $= 59.5$ mm. Halving $D$ quadruples $\Pi_2$ and doubles $\Delta h$ (compare ≈ 29.7 mm for D = 1 mm).`,
@@ -1037,6 +1047,31 @@ export const quiz: QuizQ[] = [
     explain: md`False. Fox p. 254: they are independent but **not unique** — a different repeating set gives different (equivalent) groups. What *is* unique is the grouping of one given parameter with a given repeating set (Fox p. 252).`,
     src: F254,
   },
+  {
+    id: 'q-two-params',
+    concept: 'repeating-variables',
+    difficulty: 2,
+    q: md`A student suspects the pipe-wall mass $m$ matters and lists $\Delta p_\ell = f(D, \rho, \mu, V, m)$ (repeating $D$, $V$, $\rho$, MLT). What happens?`,
+    options: [
+      md`3 pi terms; $m$ enters its own group $m/(\rho D^3)$, which experiments would show to be irrelevant`,
+      md`2 pi terms; $m$ must be dropped because $\dimM$ may appear in only one variable`,
+      md`3 pi terms, and $m$ must replace $\rho$ as a repeating variable`,
+      md`The list is invalid because $m$ and $\rho$ are not independent variables`,
+    ],
+    answer: 0,
+    explain: md`$k = 6$, $r = 3$ ⇒ 3 pi terms; $m D^a V^b \rho^c$ gives $c = -1$, $b = 0$, $a = -3$, i.e. $m/(\rho D^3)$. Fox p. 250: an extraneous parameter only adds a group that experiment later eliminates. Slide 7 requires each dimension in **at least** two variables (here $\dimM$ is in four), and sharing a dimension is not dependence — dependence means one variable is fixed by the others (area and diameter; $\gamma = \rho g$).`,
+    src: [L7, F250],
+  },
+  {
+    id: 'q-cap-m',
+    concept: 'dimensional-matrix',
+    difficulty: 2,
+    q: md`Fox Example 7.3, $\Delta h = f(D, \gamma, \sigma)$: in $MLt$ three primary dimensions appear. How many independent Π groups are there?`,
+    options: ['2', '1', '3', '4'],
+    answer: 0,
+    explain: md`Every 3 × 3 determinant of the $MLt$ matrix is zero (the $t$ row is $-2\times$ the $M$ row) but a 2 × 2 one is $4 \neq 0$, so $m = 2$ and $n - m = 4 - 2 = 2$: $\Delta h/D$ and $\sigma/(D^2\gamma)$. Answering 1 means taking $m = r = 3$ blindly.`,
+    src: [F253, F254],
+  },
 ]
 
 /* ------------------------------------------------------------------------------------------ flashcards */
@@ -1150,7 +1185,7 @@ Why the count is fixed: you cannot cancel more than $r$ independent unit types, 
         <Step kind="intro" src={[L7, L8, L9, L10, L11, L12, L17, F250]}>
           <Md>{md`Several methods produce the pi terms; Lecture 13 uses the **method of repeating variables**, a nine-step recipe (summarised on slide 17). The idea: pick $r$ variables that will "repeat" in every group, and combine each remaining variable with them, choosing exponents that cancel all dimensions. Fox §7.3 gives the same procedure in six steps.
 
-**Step 1 — list all the variables.** A *variable* is any quantity that plays a role, **including dimensional and nondimensional constants**. Every dimension must appear in **at least two** variables (otherwise that variable is irrelevant, or a variable containing that dimension is missing). All variables must be **independent**: use the pipe area *or* the diameter, not both; $\gamma = \rho g$ links $\gamma$, $\rho$ and $g$. Fox adds: be generous — if you suspect a parameter matters, include it; an extraneous one only produces a group that experiments later show to be irrelevant.
+**Step 1 — list all the variables.** A *variable* is any quantity that plays a role, **including dimensional and nondimensional constants**. Every dimension must appear in **at least two** variables (otherwise that variable is irrelevant, or a variable containing that dimension is missing). All variables must be **independent**: use the pipe area *or* the diameter, not both; $\gamma = \rho g$ links $\gamma$, $\rho$ and $g$. Fox adds: be generous — if you suspect a parameter matters, include it. Leaving out a pertinent parameter still gives a relation, but not the complete story; including one with no real effect either drops out of the analysis or produces a group that experiments later show to be extraneous.
 
 **Steps 2–3** — express each variable in basic dimensions and compute $k - r$. **Step 4** — select as many repeating variables as there are reference dimensions. **Steps 5–6** — form a Π for each non-repeating variable. **Step 7** — check the Π's are dimensionless and independent. **Step 8** — rearrange to customary forms. **Step 9** — write the final relation and think about what it means.`}</Md>
         </Step>
@@ -1164,7 +1199,7 @@ That picture explains each rule. A good stick must measure *something new* (dime
           </Callout>
         </Step>
 
-        <Step kind="visual" src={L17}>
+        <Step kind="visual" src={[L17, F250]}>
           <FlowSteps
             steps={[
               { title: 'Step 1 — List all variables', md: md`$u_1 = f(u_2, \ldots, u_k)$; include constants; each dimension in ≥ 2 variables; variables independent. Count $k$.` },
@@ -1203,7 +1238,7 @@ That picture explains each rule. A good stick must measure *something new* (dime
 - **Never the dependent variable** — we want it in only one pi term (slide 10; Fox p. 250).
 - Avoid variables whose effect is **questionable or important only part of the time** (slide 10).
 - Prefer variables **as close to dimensionally pure as possible**: a diameter is a pure length, density is almost a pure mass (slide 10).
-- Fox: no repeating parameter whose dimensions are a power of another's (not both $\dimL^2$ and $\dimL^4$); **do not repeat $\mu$** — viscosity should appear in only one group; when possible use $\rho$, $V$ and a length $L$, which give groups that read as force ratios to inertia (p. 254).`}</Md>
+- Fox: no repeating parameter whose dimensions are a power of another's (not both $\dimL^2$ and $\dimL^4$); **do not repeat $\mu$** — viscosity should appear in only one group; when possible use $\rho$, $V$ and a length $L$: they are usually easy to measure, correlate a wide range of data well, and give groups that read as force ratios to inertia (p. 254).`}</Md>
           </Callout>
         </Step>
 
@@ -1236,10 +1271,13 @@ That picture explains each rule. A good stick must measure *something new* (dime
 
       {/* ============================================================== pipe-example */}
       <Concept id="pipe-example">
-        <Step kind="intro" src={[L12, L13]}>
-          <Md>{md`The first worked example returns to the motivating problem: **steady** flow of an **incompressible Newtonian** fluid through a **long, smooth-walled, horizontal, circular** pipe. We want the pressure drop per unit length caused by friction, $\Delta p_\ell = f(D, \rho, \mu, V)$.
+        <Step kind="intro" src={[L2, L12, L13]}>
+          <Md>{md`The first worked example returns to the motivating problem of slide 2: **steady** flow of an **incompressible Newtonian** fluid through a **long, smooth-walled, horizontal, circular** pipe. We want the pressure drop per unit length caused by friction, $\Delta p_\ell = f(D, \rho, \mu, V)$.
 
-Each adjective prunes the variable list: steady (no time), incompressible (no compressibility $E_v$), Newtonian (one viscosity), long (fully developed — only the drop *per unit length* matters, so no pipe length), smooth (no roughness), horizontal (no gravity), circular (one length, $D$). Slide 13: $k = 5$ (don't forget the dependent variable), all three of $\dimF$, $\dimL$, $\dimT$ are needed, so $r = 3$ and $5 - 3 = 2$ pi terms. Repeating variables must come from $D$, $\rho$, $\mu$, $V$ — **not** $\Delta p_\ell$ — and the simplest independent choice is $D$, $V$, $\rho$. Start Step 5 with the dependent variable.`}</Md>
+Slide 13: $k = 5$ (don't forget the dependent variable), all three of $\dimF$, $\dimL$, $\dimT$ are needed, so $r = 3$ and $5 - 3 = 2$ pi terms. Repeating variables must come from $D$, $\rho$, $\mu$, $V$ — **not** $\Delta p_\ell$ — and the simplest independent choice is $D$, $V$, $\rho$. Start Step 5 with the dependent variable.`}</Md>
+          <Supplement title="Why the list is so short">
+            <Md>{md`Each adjective prunes the variable list: steady (no time), incompressible (no compressibility $E_v$), Newtonian (one viscosity $\mu$), long (fully developed — only the drop *per unit length* matters, so no pipe length), smooth (no roughness), horizontal (no gravity), circular (one length, $D$).`}</Md>
+          </Supplement>
         </Step>
 
         <Step kind="intuition">
@@ -1314,7 +1352,7 @@ The new feature: **six variables but only two reference dimensions**, so **four*
         </Step>
 
         <Step kind="intuition">
-          <Md>{md`The physics is static: paint weight pushes, the plate's stiffness resists. Nothing moves in time, and mass enters only as weight ($\gamma$) and stiffness ($E$), both force-like. So forces must cancel against forces — the only "currency" besides length. Three pure lengths ($\delta$, $h$, $d$) simply become ratios to $D$; the one remaining group compares stiffness $E$ with the hydrostatic pressure scale $\gamma D$. A bottom ten times stiffer behaves exactly like a can ten times larger filled with paint ten times heavier, at the same geometric ratios.`}</Md>
+          <Md>{md`The physics is static: paint weight pushes, the plate's stiffness resists. Nothing moves in time, and mass enters only as weight ($\gamma$) and stiffness ($E$), both force-like. So forces must cancel against forces — the only "currency" besides length. Three pure lengths ($\delta$, $h$, $d$) simply become ratios to $D$; the one remaining group compares stiffness $E$ with the hydrostatic pressure scale $\gamma D$. Only the ratio $E/(D\gamma)$ matters: at the same geometric ratios, a bottom ten times stiffer gives the same $\delta/D$ as paint ten times *lighter* — or as a can ten times *smaller* (all lengths scaled down) with the same paint and bottom material.`}</Md>
           <Callout kind="tip">
             <Md>{md`Listing $\gamma$ alone (not $\rho$ and $g$) follows slide 7: only the *weight* of the paint matters, and $\gamma = \rho g$ already contains both.`}</Md>
           </Callout>
@@ -1360,7 +1398,7 @@ The new feature: **six variables but only two reference dimensions**, so **four*
               md`$\dfrac{\delta}{D} = \phi\!\left(\dfrac{h}{D}, \dfrac{d}{D}, \dfrac{E}{D\gamma}\right)$.`,
               md`$r$ is the number of **reference** dimensions: $\dimM\dimT^{-2}$ can serve as one, giving one exponent equation for it.`,
               md`Pure lengths need no algebra: $h/D$, $d/D$ follow at once (slide 19 prints them without equations).`,
-              md`Trap: using 3 repeating variables here — with $r = 2$ any third one makes the set dependent and the equations singular.`,
+              md`Trap: using 3 repeating variables here — with $r = 2$ any three variables can form a dimensionless product among themselves, so the set is never independent and the exponents are not uniquely determined.`,
             ]}
           />
         </Step>

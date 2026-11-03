@@ -128,8 +128,8 @@ export function CapillaryFigure() {
       <line x1={tubeR + 8} x2={330} y1={surf} y2={surf} stroke="var(--ink-3)" strokeDasharray="4 3" />
       <DimArrow x1={315} y1={men + 4} x2={315} y2={surf} color="var(--ink-2)" />
       <TeXLabel x={322} y={(men + surf) / 2} tex="\Delta h" w={40} />
-      <DimArrow x1={tubeL} y1={215} x2={tubeR} y2={215} color="var(--ink-2)" />
-      <TeXLabel x={(tubeL + tubeR) / 2} y={230} tex="D" w={20} anchor="middle" />
+      <DimArrow x1={tubeL} y1={188} x2={tubeR} y2={188} color="var(--ink-2)" />
+      <TeXLabel x={(tubeL + tubeR) / 2} y={212} tex="D" w={20} anchor="middle" />
       <text x={120} y={44} className="fill-ink-2 text-[12px]">
         Tube
       </text>
