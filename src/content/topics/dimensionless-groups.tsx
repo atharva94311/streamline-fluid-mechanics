@@ -36,6 +36,7 @@ export const meta: TopicMeta = {
   sources: [
     { doc: 'fox', pages: '255–257' },
     { doc: 'fox', pages: '268–269' },
+    { doc: 'fox', pages: '245' },
     { doc: 'lec13', pages: '21' },
   ],
   concepts: [
@@ -128,7 +129,7 @@ F_{\text{inertia}} = ma &\sim (\rho L^3)\,\frac{V^2}{L} = \rho V^2 L^2\\
       { sym: md`\sigma`, desc: 'surface tension', units: md`\mathrm{N/m}` },
       { sym: md`E_v`, desc: 'bulk modulus of elasticity', units: md`\mathrm{Pa}` },
     ],
-    conditions: ['each ratio is dimensionless', md`by tradition the **inverse** (inertia ÷ force) is usually the named group: $1/\Rey$, $1/\Fr^2$, $1/\We$, $1/\Ma^2$`],
+    conditions: ['each ratio is dimensionless', md`the viscous, gravity, surface-tension and compressibility ratios equal $1/\Rey$, $1/\Fr^2$, $1/\We$ and $1/\Ma^2$ — by tradition the **inverse** (inertia ÷ force) is the one that carries the name`],
     use: md`A ratio $\ll 1$ means that force is negligible compared with inertia; a ratio $\gg 1$ means it dominates. The five ratios are, respectively, $1/\Rey$, $\tfrac12\Eu$, $1/\Fr^2$, $1/\We$ and $1/\Ma^2$.`,
     src: F255,
   },
@@ -163,7 +164,7 @@ F_{\text{inertia}} = ma &\sim (\rho L^3)\,\frac{V^2}{L} = \rho V^2 L^2\\
       'value depends on which $L$ and $V$ are chosen — always state them',
     ],
     use: md`Compute first for almost every problem (Lec 13: "generally of importance in all types of fluid dynamics problems"). For pipes use the mean velocity and the diameter.`,
-    src: [{ ...F255, note: 'Eq. (7.11)' }, F268, L21],
+    src: [{ ...F255, note: 'Eq. (7.11)' }, F256, F245, F268, L21],
   },
   {
     id: 're-pipe',
@@ -272,7 +273,7 @@ p_{\min} = p + C_{p,\min}\,\tfrac12\rho V^2 &\le p_v\\
       md`flow essentially incompressible when $\Ma \lesssim 0.3$ (Fox p. 245); truly incompressible ⇔ $c = \infty$, $\Ma = 0$`,
     ],
     use: md`Decide whether density changes matter (aircraft, high-speed gas flow, water hammer). Introduced by Ernst Mach in the 1870s.`,
-    src: [{ ...F256, note: 'Eq. (7.16)' }, F245, F268, L21],
+    src: [{ ...F256, note: 'Eq. (7.16)' }, F257, F245, F268, L21],
   },
   {
     id: 'ma-compress',
@@ -538,7 +539,7 @@ Since gravity ∝ $L^3$ and surface tension ∝ $L$, elements much smaller than 
     difficulty: 1,
     q: md`A wind-tunnel model of length $L = 0.5$ m is tested in air at 20 °C ($\rho = 1.204$ kg/m³, $\mu = 1.81\times10^{-5}$ Pa·s, $c = 343.2$ m/s) at $V = 60$ m/s. Find $\Rey$ and $\Ma$. Can the flow be treated as incompressible?`,
     answer: md`$\Rey = 2.0\times10^6$, $\Ma = 0.175$ — yes, incompressible.`,
-    solution: md`$\Rey = \dfrac{1.204\times60\times0.5}{1.81\times10^{-5}} = 2.00\times10^6$.
+    solution: md`$\Rey = \dfrac{1.204\times60\times0.5}{1.81\times10^{-5}} = 1.996\times10^6 \approx 2.0\times10^6$.
 
 $\Ma = 60/343.2 = 0.175 < 0.3$ ⇒ essentially incompressible (Fox p. 245).`,
     check: [
@@ -574,16 +575,18 @@ $\Ma = 60/343.2 = 0.175 < 0.3$ ⇒ essentially incompressible (Fox p. 245).`,
     id: 'pr-euler-convert',
     concept: 'common-groups',
     difficulty: 1,
-    q: md`On a car model in air ($\rho = 1.2$ kg/m³, $V = 40$ m/s) a pressure tap reads $\Delta p = 1.5$ kPa above free stream. Compute the Euler number using Fox's Eq. 7.12 and using the Lecture 13 table form.`,
-    answer: md`Fox: $\Eu = 1.56$; lecture: $\Eu = 0.781$.`,
-    solution: md`Fox: $\Eu = \dfrac{\Delta p}{\tfrac12\rho V^2} = \dfrac{1500}{0.5\times1.2\times1600} = \dfrac{1500}{960} = 1.5625$.
+    q: md`On a car model in air ($\rho = 1.2$ kg/m³, $V = 40$ m/s) a pressure tap reads $\Delta p = 0.6$ kPa above free stream. Compute the Euler number using Fox's Eq. 7.12 and using the Lecture 13 table form.`,
+    answer: md`Fox: $\Eu = C_p = 0.625$; lecture: $\Eu = 0.3125$.`,
+    solution: md`Dynamic pressure: $\tfrac12\rho V^2 = 0.5\times1.2\times40^2 = 960$ Pa.
 
-Lecture: $\dfrac{p}{\rho V^2} = \dfrac{1500}{1920} = 0.781$ — exactly half. Always state the convention.
+Fox (Eq. 7.12): $\Eu = \dfrac{\Delta p}{\tfrac12\rho V^2} = \dfrac{600}{960} = 0.625$.
 
-(A $C_p$ above 1 at a single tap would be unusual in incompressible flow — the stagnation value is 1 — so in practice recheck such a reading.)`,
+Lecture table: $\dfrac{p}{\rho V^2} = \dfrac{600}{1920} = 0.3125$ — exactly half. Always state the convention.
+
+Sanity check (supplementary): in steady incompressible flow Bernoulli caps the pressure rise at the stagnation value $\tfrac12\rho V^2$, so a Fox-convention $C_p$ can never exceed 1 — a reading above 960 Pa here would signal a measurement error.`,
     check: [
-      { label: 'Eu (Fox)', value: 1.5625, units: '' },
-      { label: 'Eu (lecture)', value: 0.78125, units: '' },
+      { label: 'Eu (Fox)', value: 0.625, units: '' },
+      { label: 'Eu (lecture)', value: 0.3125, units: '' },
     ],
   },
   {
@@ -614,6 +617,7 @@ Both inertia and the other forces matter: the jet breaks up into drops (We ≫ 1
     check: [
       { label: 'c', value: 1481, units: 'm/s' },
       { label: 'Ma', value: 0.01688, units: '' },
+      { label: 'Cauchy number', value: 2.85e-4, units: '' },
     ],
   },
   {
@@ -758,6 +762,41 @@ export const quiz: QuizQ[] = [
     answer: 0,
     explain: md`Unsteady (local) acceleration $\sim V\omega$ vs convective acceleration $\sim V^2/\ell$: ratio $\omega\ell/V$. Used for oscillating flows and rotating boundaries.`,
     src: L21,
+  },
+  {
+    id: 'q-fr-squared',
+    concept: 'common-groups',
+    difficulty: 2,
+    q: 'Which quantity does Fox interpret as the ratio of inertia forces to gravity forces?',
+    options: [md`$\Fr^2 = V^2/gL$`, md`$\Fr = V/\sqrt{gL}$`, md`$gL/V^2$`, md`$\sqrt{gL}/V$`],
+    answer: 0,
+    explain: md`Gravity/inertia $\sim gL/V^2$ (p. 255), so inertia/gravity is its inverse $V^2/gL = \Fr^2$ (p. 256). $\Fr$ itself is the square root of a force ratio, and $gL/V^2$ is the ratio the other way round (gravity/inertia).`,
+    src: [F255, F256],
+  },
+  {
+    id: 'q-eu-convert',
+    concept: 'common-groups',
+    difficulty: 2,
+    q: 'A pressure tap gives Δp/(½ρV²) = 0.8. What is the Euler number in the Lecture 13 table form p/(ρV²)?',
+    options: ['0.4', '0.8', '1.6', '0.64'],
+    answer: 0,
+    explain: md`$\Delta p/\rho V^2 = \tfrac12\,\Delta p/(\tfrac12\rho V^2) = 0.4$. Doubling to 1.6 is the classic slip — dividing by the larger denominator $\rho V^2$ must give the **smaller** number.`,
+    src: [F256, L21],
+  },
+  {
+    id: 'q-high-re',
+    concept: 'common-groups',
+    difficulty: 2,
+    q: 'For a flow with a very "large" Reynolds number, what does Fox conclude about viscous effects?',
+    options: [
+      'They can be neglected in most of the flow, but not in the thin boundary layers near walls',
+      'They can be neglected everywhere, including at the wall',
+      'They dominate the flow, so it is laminar',
+      'They make the flow compressible',
+    ],
+    answer: 0,
+    explain: md`Large Re ⇒ viscous effects negligible in **most** of the flow (Fox p. 245); dropping the viscous terms everywhere loses the no-slip condition, and a boundary layer remains where viscosity matters (p. 247). Large Re also means the flow is generally turbulent, not laminar; compressibility is Ma's business.`,
+    src: [F245, F247],
   },
 ]
 
@@ -929,7 +968,7 @@ These groups are among the most commonly used in fluid mechanics: for any flow p
         </Step>
 
         <Step kind="visual">
-          <Figure caption="Regime maps: where typical flows fall on the Re (pipe), Fr (channel) and Ma number lines. Markers are the worked examples of this topic.">
+          <Figure caption="Regime maps: where typical flows fall on the Re (pipe), Fr (channel) and Ma number lines. Markers are flows from this topic's worked examples and practice problems, plus an oil-in-a-tube case computed with the sims' engine-oil preset.">
             <RegimeLines />
           </Figure>
           <WaveFront />
@@ -960,6 +999,9 @@ These groups are among the most commonly used in fluid mechanics: for any flow p
           <Md>{md`#### Froude number — inertia ÷ gravity (squared)`}</Md>
           <FormulaCard id="fr" />
           <Md>{md`William Froude, a British naval architect, and his son Robert Edmund Froude found this parameter significant for flows with **free-surface effects**. It is $\Fr^2 = V^2/gL$, not $\Fr$, that equals the inertia/gravity ratio — the inverse of $gL/V^2$ from the force table. In open-channel flow ($L$ = depth), $\Fr<1$ is **subcritical** and $\Fr>1$ **supercritical** (Fox Ch. 11 treats this in depth).`}</Md>
+          <Callout kind="note" title="Reading Fox p. 256">
+            <Md>{md`The book's sentence calls $\Fr^2$ "the inverse of the third force ratio, $V^2/gL$" — a printing slip: the third ratio in the p. 255 table is $gL/V^2$, and it is *that* which $\Fr^2 = V^2/gL$ inverts.`}</Md>
+          </Callout>
 
           <Md>{md`#### Weber number — inertia ÷ surface tension`}</Md>
           <FormulaCard id="we" />
