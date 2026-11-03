@@ -266,8 +266,9 @@ export function PsiPhiIntegrator() {
       footer={
         <span>
           <b>Try this:</b> step through Lecture 11's problem and watch f′(y) come out as zero. Then pick the u = 2y, v = 4x field: the
-          same recipe produces f′(y) = 2x — a "constant" that depends on x — which is the algebra telling you the flow is rotational. Switch
-          to Fox's convention and every φ changes sign, while the picture (the flow) stays exactly the same.
+          same recipe produces f′(y) = 2x — a "constant" that depends on x — which is the algebra telling you the flow is rotational. For a
+          given ψ, switch to Fox's convention: the φ you find changes sign while the picture (the flow) stays exactly the same. For a
+          given φ (Lec 11, problem 2) the switch instead reverses the flow, so the ψ you find changes sign.
         </span>
       }
     >

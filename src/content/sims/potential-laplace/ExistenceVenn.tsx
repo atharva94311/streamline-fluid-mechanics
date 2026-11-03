@@ -48,7 +48,7 @@ const EXAMPLES: Ex[] = [
   },
   {
     id: 'neither', short: '8', field: md`$u = xy,\ v = x$`, region: 'none', at: [560, 60],
-    why: md`$\nabla\cdot\vb V = y \ne 0$ and $\omega_z = \tfrac12(1 - x) \ne 0$: neither continuity-type nor irrotational structure, so **neither** function exists.`,
+    why: md`$\nabla\cdot\vb V = y \ne 0$ (not incompressible) and $\omega_z = \tfrac12(1 - x) \ne 0$ (rotational), so **neither** function exists.`,
   },
 ]
 

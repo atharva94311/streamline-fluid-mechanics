@@ -202,12 +202,12 @@ export const formulas: FormulaDef[] = [
       { sym: md`r,\ \theta,\ z`, desc: 'cylindrical coordinates', units: md`\mathrm{m,\ rad,\ m}` },
     ],
     conditions: [
-      'irrotational flow',
+      md`irrotational flow; in cylindrical coordinates the test is Fox's Eq. (6.24), $\frac1r\pd{V_z}{\theta} - \pd{V_\theta}{z} = \pd{V_r}{z} - \pd{V_z}{r} = \frac1r\frac{\partial(rV_\theta)}{\partial r} - \frac1r\pd{V_r}{\theta} = 0$ — for plane flow only the last difference is non-trivial`,
       md`course convention $\vb V = +\nabla\phi$ (Lecture 10, slide 8); Fox's Eq. (6.30) has a minus sign on every component`,
       md`the $1/r$ sits on $v_\theta$ — for the stream function (Lecture 10, slide 2) it sits on $v_r$ instead`,
     ],
     use: md`Use for flows with a natural centre or axis (sources, vortices, flow round cylinders). Units check: $\phi$ [m²/s] ÷ $r$ [m] → m/s; forgetting the $1/r$ in $v_\theta$ leaves m²/s.`,
-    src: [L8, L12S3],
+    src: [L8, L12S3, { doc: 'fox', pages: '221', note: 'Eq. (6.24)' }],
   },
   {
     id: 'phi-cyl-fox',
@@ -530,6 +530,8 @@ export const examples: ExampleDef[] = [
     id: 'ex-pp-lec10',
     concept: 'phi-vs-psi',
     title: 'Does the Lecture 10 in-class flow have a velocity potential?',
+    src: { doc: 'lec10', pages: '2', note: 'in-class problem: find ψ (the φ question is added here)' },
+    solutionBy: 'platform',
     difficulty: 2,
     given: md`The plane, incompressible field of the in-class problem on Lecture 10, slide 2: $u = 2y$, $v = 4x$ (coefficients in s⁻¹).`,
     find: md`Its stream function, whether a velocity potential exists, and a Table 6.1 cross-check.`,
@@ -1488,7 +1490,7 @@ export default function Content() {
             <Md>{md`In potential flow the whole velocity field comes from a single, **linear** equation for one scalar. The pressure is found afterwards from the Bernoulli equation — and because the flow is irrotational, Bernoulli's constant is the same between **any** two points, not just along one streamline (Fox p. 222, Eq. 6.26; developed in the Euler-to-Bernoulli topic).`}</Md>
           </Callout>
           <Callout kind="note" title="Any harmonic function is a flow (Fox p. 223)">
-            <Md>{md`In plane potential flow both $\psi$ and $\phi$ satisfy Laplace's equation (Eqs. 6.31 and 6.32), and **any** function ψ or φ that satisfies it represents a possible two-dimensional, incompressible, irrotational flow field. Fox notes that the same equation arises in many areas of physical science and engineering (steady heat conduction, electrostatics and groundwater seepage are familiar examples).`}</Md>
+            <Md>{md`In plane potential flow both $\psi$ and $\phi$ satisfy Laplace's equation (Eqs. 6.31 and 6.32), and **any** function ψ or φ that satisfies it represents a possible two-dimensional, incompressible, irrotational flow field. Fox notes that the same equation arises in many areas of the physical sciences and engineering. (✦ Familiar examples, not listed by Fox: steady heat conduction, electrostatics and groundwater seepage.)`}</Md>
           </Callout>
         </Step>
 
@@ -1586,7 +1588,7 @@ export default function Content() {
             u = \pd{\phi}{x} = \pd{\psi}{y}, \qquad v = \pd{\phi}{y} = -\pd{\psi}{x} .
             $$
 
-            So if you know one function you can find the other by **integration**. Lecture 11, slide 2 sets exactly this task as an in-class problem — the stream function $\psi = 5x^2y - \tfrac53y^3$ of a two-dimensional flow is given, and the corresponding velocity potential is asked for — and Fox ends §6.6 by pointing to Example 6.10 (p. 224), which shows how the velocity potential is computed from the stream function $\psi = ax^2 - ay^2$.
+            So if you know one function you can find the other by **integration**. Lecture 11, slide 2 sets exactly this task as an in-class problem — the stream function $\psi = 5x^2y - \tfrac53y^3$ of a two-dimensional flow is given, and the corresponding velocity potential is asked for — and Fox, right after proving that the two families of curves are orthogonal, points to Example 6.10 (p. 224), which shows how the velocity potential is computed from the stream function $\psi = ax^2 - ay^2$.
           `}</Md>
           <Callout kind="def" title="The method in one sentence">
             <Md>{md`Integrate one of the two relations **partially**, adding an unknown function of the other variable; then differentiate the result with respect to that other variable and match it to the second relation to pin the unknown function down.`}</Md>
