@@ -96,6 +96,7 @@ export const formulas: FormulaDef[] = [
     tag: '9.35',
     tex: md`\tau^{t}_{yz} = \rho\,\ell^{2}\left(\frac{d\overline{v}_z}{dy}\right)^{2}`,
     vars: [
+      { sym: md`\tau^{t}_{yz}`, desc: 'turbulent (Reynolds) shear stress', units: md`\mathrm{Pa}` },
       { sym: md`\rho`, desc: 'fluid density', units: md`\mathrm{kg/m^3}` },
       { sym: md`\ell`, desc: 'mixing length', units: md`\mathrm{m}` },
       { sym: md`\overline{v}_z`, desc: 'time-averaged axial velocity (overline = time average, footnote 6)', units: md`\mathrm{m/s}` },
@@ -112,8 +113,10 @@ export const formulas: FormulaDef[] = [
     tex: md`\tau_w = \rho\,k^{2}y^{2}\left(\frac{d\overline{v}_z}{dy}\right)^{2}`,
     vars: [
       { sym: md`\tau_w`, desc: 'wall shear stress', units: md`\mathrm{Pa}` },
+      { sym: md`\rho`, desc: 'fluid density', units: md`\mathrm{kg/m^3}` },
       { sym: md`k`, desc: md`mixing-length constant, $\doteq 0.4$`, units: md`\text{–}` },
       { sym: md`y`, desc: 'distance from the wall', units: md`\mathrm{m}` },
+      { sym: md`d\overline{v}_z/dy`, desc: 'mean velocity gradient (positive near the wall)', units: md`\mathrm{s^{-1}}` },
     ],
     conditions: [md`(9.33) and (9.34) substituted into (9.35); near-wall turbulent region`],
     use: md`Take the positive square root: $\dfrac{d\overline{v}_z}{dy} = \dfrac{1}{ky}\sqrt{\dfrac{\tau_w}{\rho}}$ — the gradient falls off as $1/y$.`,
@@ -161,7 +164,9 @@ export const formulas: FormulaDef[] = [
     name: 'Velocity-defect law for a linear stress distribution',
     tex: md`\overline{v}_z = (\overline{v}_z)_{r=0} + \frac{1}{k}\sqrt{\frac{\tau_w}{\rho}}\left[\sqrt{\frac{r}{a}} + \ln\left(1-\sqrt{\frac{r}{a}}\right)\right]`,
     vars: [
+      { sym: md`\overline{v}_z`, desc: 'time-averaged axial velocity at radius $r$', units: md`\mathrm{m/s}` },
       { sym: md`(\overline{v}_z)_{r=0}`, desc: 'centreline velocity', units: md`\mathrm{m/s}` },
+      { sym: VS, desc: 'friction velocity', units: md`\mathrm{m/s}` },
       { sym: md`r`, desc: 'radial distance from the centreline', units: md`\mathrm{m}` },
       { sym: md`a`, desc: 'pipe radius', units: md`\mathrm{m}` },
       { sym: md`k`, desc: md`constant, $\doteq 0.4$`, units: md`\text{–}` },
@@ -227,6 +232,9 @@ export const formulas: FormulaDef[] = [
     tag: '9.40',
     tex: md`\frac{\overline{v}_z}{\sqrt{\tau_w/\rho}} = A + B\ln\frac{y\sqrt{\tau_w/\rho}}{\nu}`,
     vars: [
+      { sym: md`\overline{v}_z`, desc: 'time-averaged axial velocity', units: md`\mathrm{m/s}` },
+      { sym: md`y`, desc: 'distance from the wall', units: md`\mathrm{m}` },
+      { sym: VS, desc: 'friction velocity', units: md`\mathrm{m/s}` },
       { sym: md`A`, desc: 'constant of integration (absorbs $c$ and the units of $y$)', units: md`\text{–}` },
       { sym: md`B`, desc: '$= 1/k$', units: md`\text{–}` },
       { sym: md`\nu`, desc: 'kinematic viscosity', units: md`\mathrm{m^2/s}` },
@@ -241,6 +249,7 @@ export const formulas: FormulaDef[] = [
     tag: '9.41',
     tex: md`v_z^{+} = A + B\ln y^{+}`,
     vars: [
+      { sym: md`v_z^{+},\ y^{+}`, desc: 'dimensionless velocity (9.39) and wall distance (9.38)', units: md`\text{–}` },
       { sym: md`A`, desc: 'constant of integration (experimentally 5.5)', units: md`\text{–}` },
       { sym: md`B`, desc: '$1/k$ (experimentally 2.5)', units: md`\text{–}` },
     ],
@@ -302,6 +311,7 @@ export const formulas: FormulaDef[] = [
     tag: '9.47',
     tex: md`v_z^{+} = \frac{1}{0.088}\tan^{-1}\!\left(0.088\,y^{+}\right)`,
     vars: [
+      { sym: md`v_z^{+},\ y^{+}`, desc: 'dimensionless velocity and wall distance', units: md`\text{–}` },
       { sym: md`\tan^{-1}`, desc: 'inverse tangent, in **radians**', units: md`\text{–}` },
       { sym: md`0.088`, desc: 'Sleicher constant', units: md`\text{–}` },
     ],
@@ -359,13 +369,15 @@ export const formulas: FormulaDef[] = [
     tag: '9.58',
     tex: md`\frac{\delta}{D} = 11.6\,\frac{\mu}{\rho\overline{v}_{zm}D}\sqrt{\frac{\rho\overline{v}_{zm}^{2}}{\tau_w}} = \frac{16.4}{\mathrm{Re}\sqrt{f_{\mathrm F}}}`,
     vars: [
+      { sym: md`\delta`, desc: 'laminar-sublayer thickness (two-piece model)', units: md`\mathrm{m}` },
       { sym: md`D`, desc: 'pipe diameter', units: md`\mathrm{m}` },
+      { sym: md`\rho,\ \tau_w`, desc: 'density and wall shear stress', units: md`\mathrm{kg/m^3},\ \mathrm{Pa}` },
       { sym: md`\overline{v}_{zm}`, desc: 'mean (bulk) velocity ($u_m$ of Wilkes Ch. 3)', units: md`\mathrm{m/s}` },
       { sym: md`\mu`, desc: 'viscosity', units: md`\mathrm{Pa\,s}` },
       { sym: md`\mathrm{Re}`, desc: md`Reynolds number $\rho\overline{v}_{zm}D/\mu$`, units: md`\text{–}` },
       { sym: md`f_{\mathrm F}`, desc: md`Fanning friction factor $\tau_w/(\tfrac12\rho\overline{v}_{zm}^2)$, Eq. (9.51)`, units: md`\text{–}` },
     ],
-    conditions: [md`two-piece model; any smooth-pipe $f_{\mathrm F}$ may be used (e.g. Eq. 9.53, valid for $5\times10^3 < \mathrm{Re} < 3.4\times10^6$)`],
+    conditions: [md`two-piece model; any smooth-pipe $f_{\mathrm F}$ may be used (e.g. Eq. 9.53, which agrees with experiment from $\mathrm{Re} = 5\times10^3$ up to at least $3.4\times10^6$)`],
     use: md`$\sqrt{\rho\overline{v}_{zm}^2/\tau_w} = \sqrt{2/f_{\mathrm F}}$ and $11.6\sqrt2 = 16.4$.`,
     src: W('500', 'Eq. (9.58)'),
   },
@@ -402,6 +414,7 @@ export const formulas: FormulaDef[] = [
     tag: '9.61',
     tex: md`\frac{\overline{v}_z}{\overline{v}_{zc}} = \left(\frac{y}{a}\right)^{1/7}`,
     vars: [
+      { sym: md`\overline{v}_z`, desc: 'time-averaged axial velocity at distance $y$ from the wall', units: md`\mathrm{m/s}` },
       { sym: md`\overline{v}_{zc}`, desc: 'centreline velocity', units: md`\mathrm{m/s}` },
       { sym: md`y`, desc: 'distance from the wall', units: md`\mathrm{m}` },
       { sym: md`a`, desc: 'pipe radius', units: md`\mathrm{m}` },
@@ -799,7 +812,7 @@ The whole buffer region is thinner than 0.6 mm, yet the velocity at its outer ed
 
 (b) $0.088 \times 30 = 2.64$; $\tan^{-1}2.64 = 1.2088$ rad; $v_z^+ = 1.2088/0.088 = 13.74$. The core law gives $5.5 + 2.5\ln 30 = 14.00$ — 2 % apart, so the curve hands over smoothly.
 
-(c) As $y^+ \to \infty$, $\tan^{-1} \to \pi/2$ and $v_z^+ \to \pi/(2 \times 0.088) = 17.85$. The log law exceeds this beyond $y^+ \approx 120$ ($5.5 + 2.5\ln 120 = 17.47$, rising to 22.8 at $y^+ = 1000$), so Sleicher's form is meant only for the sublayer and buffer, as Wilkes states.`,
+(c) As $y^+ \to \infty$, $\tan^{-1} \to \pi/2$ and $v_z^+ \to \pi/(2 \times 0.088) = 17.85$. The log law overtakes this ceiling at $y^+ \approx 140$ ($5.5 + 2.5\ln 140 = 17.85$) and keeps rising (22.8 at $y^+ = 1000$), so Sleicher's form is meant only for the sublayer and buffer, as Wilkes states.`,
     check: [
       { label: md`$v_z^+$ at $y^+ = 30$`, value: 13.74 },
       { label: 'limit', value: 17.85 },
@@ -1094,7 +1107,7 @@ export const flashcards: Flashcard[] = [
   { id: 'fc-prandtl', front: md`Prandtl hypothesis (9.33)–(9.34)?`, back: md`$\ell = ky$ (mixing length ∝ distance from the wall) and $\tau^t_{yz} \doteq \tau_w$ (constant stress near the wall). Both are over-estimates whose errors cancel → excellent log profile.`, src: W('493') },
   { id: 'fc-loglaw', front: md`Log law (9.37): form, constant, limits?`, back: md`$\overline{v}_z = \frac{1}{k}\sqrt{\tau_w/\rho}\,\ln y + c$ with $k \doteq 0.4$. Also holds in the pipe core (flat profile); fails as $y \to 0$ ($\overline{v}_z \to -\infty$).`, src: W('494') },
   { id: 'fc-vk', front: md`Von Kármán hypothesis (Example 9.2): formula, merit, drawback?`, back: md`$\ell = -k\,\overline{v}_z'/\overline{v}_z''$. Local length scale (no wall needed) and the same log law; fails where $\overline{v}_z'' = 0$ (inflection points, jets).`, src: W('494–495', 'Example 9.2') },
-  { id: 'fc-defect', front: md`Wilkes' velocity-defect law for $\tau = \tau_w r/a$?`, back: md`$\overline{v}_z = \overline{v}_{zc} + \frac{1}{k}\sqrt{\tau_w/\rho}\left[\sqrt{r/a} + \ln(1 - \sqrt{r/a})\right]$ — "more sophisticated" but less accurate than the simple log law.`, src: W('495') },
+  { id: 'fc-defect', front: md`Wilkes' velocity-defect law for the linear stress $\tau^t_{rz} = -\tau_w\,r/a$?`, back: md`$\overline{v}_z = \overline{v}_{zc} + \frac{1}{k}\sqrt{\tau_w/\rho}\left[\sqrt{r/a} + \ln(1 - \sqrt{r/a})\right]$ — "more sophisticated" but less accurate than the simple log law.`, src: W('495') },
   { id: 'fc-wallvars', front: md`Friction velocity, $y^+$ and $v_z^+$?`, back: md`$\overline{v}_z^* = \sqrt{\tau_w/\rho}$; $y^+ = y\overline{v}_z^*/\nu$ (9.38); $v_z^+ = \overline{v}_z/\overline{v}_z^*$ (9.39). Fox & McDonald's: $u_*$, $y^+$, $u^+$.`, src: W('495–496') },
   { id: 'fc-upv', front: md`Universal velocity profile for smooth pipes?`, back: md`$v_z^+ = A + B\ln y^+$ with $A = 5.5$, $B = 2.5 = 1/k$ (9.41)–(9.42); sublayer $v_z^+ = y^+$ (9.43); they intersect at $y^+ \doteq 11.63$.`, src: W('496') },
   { id: 'fc-three', front: md`Von Kármán's three regions?`, back: md`$0 < y^+ < 5$: $v_z^+ = y^+$; $5 < y^+ < 30$: $v_z^+ = -3.05 + 5\ln y^+$; $y^+ > 30$: $v_z^+ = 5.5 + 2.5\ln y^+$ (9.44)–(9.46).`, src: W('497') },
@@ -1212,7 +1225,7 @@ Put the two together. The eddies must pass the **same** stress $\tau_w$ across e
             <Md>{md`Experimentally — perhaps rather surprisingly — the log profile (9.37) **also holds in the central region of a pipe**, with $k \doteq 0.4$. Since $\ln y$ is fairly insensitive to changes in $y$, it predicts a fairly **"flat"** turbulent profile, in accordance with observation. (Wilkes' sentence cites "Eq. (9.34)" at this point; it is the log law (9.37) that does the predicting.)`}</Md>
           </Callout>
           <Callout kind="warning" title="It cannot hold right at the wall">
-            <Md>{md`As $y \to 0$, $\ln y \to -\infty$: the log law gives an ever more negative velocity and an ever larger velocity gradient — impossible with no-slip. Very close to the wall a viscous **laminar sublayer** takes over (next two concepts). Do not evaluate (9.37) at $y = 0$, and never use it where $y^+ < 30$ in exam problems unless told to.`}</Md>
+            <Md>{md`As $y \to 0$, $\ln y \to -\infty$: the log law gives an ever more negative velocity and an ever larger velocity gradient — impossible with no-slip. Very close to the wall a viscous **laminar sublayer** takes over (next two concepts). Do not evaluate (9.37) at $y = 0$, and do not use it inside the sublayer/buffer: below $y^+ = 30$ in the three-region model, or below $y^+ = 11.6$ if the problem explicitly uses the two-piece model.`}</Md>
           </Callout>
 
           <h4 className="pt-2 font-display text-lg font-bold text-ink">Von Kármán's alternative (Example 9.2)</h4>
@@ -1299,7 +1312,7 @@ Then think about *who carries the stress* at each height:
               { title: 'Turbulent core · y⁺ > 30', md: md`$v_z^+ = 5.5 + 2.5\ln y^+$ (9.46). The **turbulent (Reynolds) stress** dominates; the log law holds out to (nearly) the centreline.`, tone: 'indigo' },
             ]}
           />
-          <Md className="text-sm text-ink-3">{md`Which stress dominates where: Wilkes p. 503 (turbulent stress dominant over most of the cross-section, falling to zero at the wall where the viscous term takes over).`}</Md>
+          <Md className="text-sm text-ink-3">{md`Which stress dominates where: Wilkes p. 503 and Fig. 9.12, p. 504 (turbulent stress dominant over most of the cross-section, falling to zero at the wall where the viscous term takes over).`}</Md>
         </Step>
 
         <Step kind="equations" src={W('495–497', 'Eqs. (9.38)–(9.47)')}>
@@ -1489,7 +1502,7 @@ For water at 1.6 m/s in a 50 mm pipe ($\mathrm{Re} = 8\times10^4$) that is about
               md`Two-piece model: sublayer $v_z^+ = y^+$ meets the core law at $y^+ = 11.6$ ⇒ $\delta = 11.6\,\nu/\sqrt{\tau_w/\rho}$ and $\overline{v}_{z\delta} = 11.6\sqrt{\tau_w/\rho}$ (9.57).`,
               md`$\delta/D = 16.4/(\mathrm{Re}\sqrt{f_{\mathrm F}})$ (9.58); with Blasius $f_{\mathrm F} = 0.0790\,\mathrm{Re}^{-1/4}$ ($\mathrm{Re} < 10^5$): $\delta/D = 58.3/\mathrm{Re}^{7/8}$ (9.60).`,
               md`Alternatives: 1/7 power law → $61.7/\mathrm{Re}^{7/8}$ (9.62, marginally different); three-piece edge $y^+ = 5$ → $25.2/\mathrm{Re}^{7/8}$ (9.63, ≈ 0.43×).`,
-              md`The sublayer is **extremely thin** (≈ 0.1 mm at Re ≈ 10⁵) yet carries the velocity to about half its centreline value; it thins almost as $1/\mathrm{Re}$.`,
+              md`The sublayer is **extremely thin** (≈ 0.12 mm in a 50 mm pipe at Re = 10⁵, $\delta/D \approx 0.0025$) yet carries the velocity to about half its centreline value; it thins almost as $1/\mathrm{Re}$.`,
               md`Exam traps: mixing up 11.6 (two-piece) and 5 (three-piece); using Blasius above $10^5$; forgetting $\tau_w = \tfrac12 f_{\mathrm F}\rho\overline{v}_{zm}^2$ uses the **Fanning** factor (Darcy $f = 4f_{\mathrm F}$).`,
               md`Hydraulically smooth ⇔ $\varepsilon\overline{v}_z^*/\nu < 5$: the roughness hides inside the sublayer (§9.9).`,
             ]}

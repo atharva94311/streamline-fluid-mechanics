@@ -180,7 +180,7 @@ export function UniversalProfileLab() {
         />
       }
       footer={
-        <Md className="md-tight">{md`**Try this:** drag the probe to $y^+ \approx 11.6$. The two-piece model has a sharp corner there, while the buffer law and Sleicher's curve round it off about 2.4 units lower. Switch to **semi-log**: the core law becomes a straight line rising $2.5\ln 10 = 5.76$ for every factor of 10 in $y^+$. Turn on **Laufer data**: the measurements hug $v_z^+ = y^+$ below about 5, bend through the buffer, follow the log law, and lift slightly above it near the centreline (the last point of each set). Sleicher's curve flattens towards ${SLEICHER_MAX.toFixed(2)}$, which is why it is only meant for $y^+ \lesssim 30$.`}</Md>
+        <Md className="md-tight">{md`**Try this:** drag the probe to $y^+ \approx 11.6$. The two-piece model has a sharp corner there, while the buffer law ($v_z^+ = 9.22$) and Sleicher's curve ($9.06$) round it off about 2.4–2.6 units lower. Switch to **semi-log**: the core law becomes a straight line rising $2.5\ln 10 = 5.76$ for every factor of 10 in $y^+$. Turn on **Laufer data**: the measurements hug $v_z^+ = y^+$ below about 5, bend through the buffer, follow the log law, and lift slightly above it near the centreline (the last point of each set). Sleicher's curve flattens towards ${SLEICHER_MAX.toFixed(2)}$, which is why it is only meant for $y^+ \lesssim 30$.`}</Md>
       }
     >
       <Plot

@@ -55,8 +55,8 @@ export function SublayerVsRe() {
             { label: '$\\delta/D$ (9.62) 1/7 law', value: d62, digits: 3 },
             { label: '$\\delta/D$ (9.63) three-piece', value: d63, digits: 3 },
             { label: '$\\delta/D$ (9.58) + (9.53)', value: d58, digits: 3 },
-            { label: `$\\delta$ for $D$ = ${num.fmt(Dmm, 3)} mm`, value: dLen.value, unit: dLen.unit, digits: 3 },
-            { label: '$\\delta$ three-piece edge', value: d3Len.value, unit: d3Len.unit, digits: 3 },
+            { label: `$\\delta$ (9.58 + 9.53), $D$ = ${num.fmt(Dmm, 3)} mm`, value: dLen.value, unit: dLen.unit, digits: 3 },
+            { label: '$\\delta$ three-piece (9.63)', value: d3Len.value, unit: d3Len.unit, digits: 3 },
             { label: '$a^+ = a\\overline{v}_z^*/\\nu$', value: aP, digits: 4 },
             ...(rough
               ? [
